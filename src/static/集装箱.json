@@ -1,0 +1,56 @@
+[
+    {
+        "referenceNo": "MAEU234640215",
+        "date": "2024-03-27 11:30:00",
+        "temperature": -1.1,
+        "humidity": 0.67,
+        "isOpen": false,
+        "vibration": 0.5,
+        "status": 0
+    },
+    {
+        "referenceNo": "MAEU234640215",
+        "date": "2024-03-27 12:00:00",
+        "temperature": -1.0,
+        "humidity": 0.68,
+        "isOpen": false,
+        "vibration": 0.9,
+        "status": 0
+    },
+    {
+        "referenceNo": "MAEU234640215",
+        "date": "2024-03-27 12:30:00",
+        "temperature": -1.3,
+        "humidity": 0.63,
+        "isOpen": false,
+        "vibration": 0.6,
+        "status": 0
+    },
+    {
+        "referenceNo": "MAEU234640215",
+        "date": "2024-03-27 13:00:00",
+        "temperature": -1.8,
+        "humidity": 0.71,
+        "isOpen": false,
+        "vibration": 1.5,
+        "status": 0
+    },
+    {
+        "referenceNo": "MAEU234640215",
+        "date": "2024-03-27 13:30:00",
+        "temperature": -1.1,
+        "humidity": 0.67,
+        "isOpen": false,
+        "vibration": 2.1,
+        "status": 1
+    },
+    {
+        "referenceNo": "MAEU234640215",
+        "date": "2024-03-27 14:00:00",
+        "temperature": 1.1,
+        "humidity": 0.67,
+        "isOpen": false,
+        "vibration": 0.5,
+        "status": 2
+    }
+]
