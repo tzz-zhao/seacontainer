@@ -219,6 +219,9 @@ export default{
     }
   },
   methods:{
+    look(){
+      console.log(11);
+    },
     back(){
       this.$router.replace('/')
     },
