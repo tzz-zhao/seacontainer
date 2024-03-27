@@ -32,21 +32,21 @@ router.beforeEach((to, from, next) => {
   // next: 一个函数，必须调用该函数来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
 
   // 在这里可以添加逻辑来监听路由变化
-  console.log('即将进入的路由:', to);
-  console.log('当前导航正要离开的路由:', from);
+  // console.log('即将进入的路由:', to);
+  // console.log('当前导航正要离开的路由:', from);
 
   // 调用 next() 表示继续导航，调用 next(false) 中断当前导航，调用 next('/') 或 next({ path: '/' }) 跳转到一个不同的地址
   next();
 });
 
 // 全局后置钩子
-router.afterEach((to, from) => {
+router.afterEach(() => {
   // 在导航完成之后执行的逻辑
   // to: 进入的路由对象
   // from: 离开的路由对象
 
   // 在这里可以添加路由变化后的逻辑
-  console.log('已进入的路由:', to);
-  console.log('已离开的路由:', from);
+  // console.log('已进入的路由:', to);
+  // console.log('已离开的路由:', from);
 });
 export default router

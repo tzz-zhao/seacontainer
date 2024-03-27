@@ -3,100 +3,77 @@
     <div class="head">
       <div class="headtitle">货运管理平台</div>
       <div class="headtext">
-        <span class="headtime">
-          2023-12-16
-        </span>
-        <span class="headtime" style="margin-left: 25px;">
-          周四
-        </span>
-        <span class="headtime">
-          上午10:15
-        </span>
+        <span class="headtime"> 2023-12-16 </span>
+        <span class="headtime" style="margin-left: 25px"> 周四 </span>
+        <span class="headtime"> 上午10:15 </span>
       </div>
     </div>
     <div class="main">
       <div class="mainleft">
-        <div class="leftbox" style="background: #031027;position: relative;">
+        <div class="leftbox" style="background: #031027; position: relative">
           <div class="leftboxtitle">
             <div class="arrows">
-              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%;">
+              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">
-              货船统计
-            </div>
+            <div class="lefttext">货船统计</div>
           </div>
           <div class="shiplegend">
             <div>
-              <div style="background-color: #5b8ff9;width: 8px;height: 8px;display: inline-block;"> </div>
-              <div style="display: inline-block;margin-left: 5px;">锚泊</div>
+              <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
+              <div style="display: inline-block; margin-left: 5px">锚泊</div>
             </div>
-            <div style="margin-left:30px ;">
-              <div style="background-color: #4EC09A;width: 8px;height: 8px;display: inline-block;"> </div>
-              <div style="display: inline-block;margin-left: 5px;">靠泊</div>
+            <div style="margin-left: 30px">
+              <div style="background-color: #4ec09a; width: 8px; height: 8px; display: inline-block" />
+              <div style="display: inline-block; margin-left: 5px">靠泊</div>
             </div>
-            <div style="margin-left:30px ;">
-              <div style="background-color:  #CBD1D7;;width: 8px;height: 8px;display: inline-block;"> </div>
-              <div style="display: inline-block;margin-left: 5px;">在航</div>
+            <div style="margin-left: 30px">
+              <div style="background-color: #cbd1d7; width: 8px; height: 8px; display: inline-block" />
+              <div style="display: inline-block; margin-left: 5px">在航</div>
             </div>
-            <div style="margin-left:30px ;">
-              <div style="background-color: #D3AA22;width: 8px;height: 8px;display: inline-block;"> </div>
-              <div style="display: inline-block;margin-left: 5px;">其他</div>
+            <div style="margin-left: 30px">
+              <div style="background-color: #d3aa22; width: 8px; height: 8px; display: inline-block" />
+              <div style="display: inline-block; margin-left: 5px">其他</div>
             </div>
           </div>
-          <div id="shipbar" :style="myChartStyle" style="margin-left: 15px;">
-
-          </div>
+          <div id="shipbar" :style="myChartStyle" style="margin-left: 15px" />
         </div>
-        <div class="leftbotbox" style="background: #031027;position: relative;">
+        <div class="leftbotbox" style="background: #031027; position: relative">
           <div class="leftboxtitle">
             <div class="arrows1">
-              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%;">
+              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">
-              货船信息
-            </div>
+            <div class="lefttext">货船信息</div>
           </div>
           <div class="shipsearch">
             <div class="searchdiv">
-              <div class="searchimg"><img src="../assets/search.svg" alt=""></div>
+              <div class="searchimg">
+                <img src="../assets/search.svg" alt="" />
+              </div>
               <!-- <div class="searchtext">请输入船名</div> -->
-              <input type="text" placeholder="请输入船名" v-model="search" class="searchtext">
+              <input v-model="search" type="text" placeholder="请输入船名" class="searchtext" />
             </div>
-            <div class="searchbutton" @click="shipsearch">
-              搜索
-            </div>
+            <div class="searchbutton" @click="shipsearch">搜索</div>
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">
-                集装箱编号
-              </div>
-              <div class="listtwo listson">
-                状态
-              </div>
-              <div class="listthree listson">
-                操作
-              </div>
+              <div class="listone listson">集装箱编号</div>
+              <div class="listtwo listson">状态</div>
+              <div class="listthree listson">操作</div>
             </div>
 
-            <div style="overflow-x:hidden;height: 200px;position: absolute;width: 332px;">
-              <div class="shipmessage" style="top: 0px;" v-for="(item, index) in this.shipnamearr" :key=index>
-                <div class="messageson" style="left: 33px;">
+            <div style="overflow-x: hidden; height: 200px; position: absolute; width: 332px">
+              <div v-for="(item, index) in shipnamearr" :key="index" class="shipmessage" style="top: 0px">
+                <div class="messageson" style="left: 33px">
                   {{ item.name }}
                 </div>
-                <div class="messageson" style="left: 196px;color: red;">
-
-                </div>
-                <div class="messageson underline" style="left: 271px;" @click="look" :data-v=item.name>
-                  查看
-                </div>
+                <div class="messageson" style="left: 196px; color: red" />
+                <div class="messageson underline" style="left: 271px" :data-v="item.name" @click="look">查看</div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
-      <div class="maincenter" id="container">
+      <div id="container" class="maincenter">
         <!-- <div class="circle" style="right: 274.37px;top: 76px;">
           <div class="circlecolor">
             <div class="circletext">
@@ -106,189 +83,105 @@
         </div> -->
       </div>
       <div class="mainleft">
-        <div class="leftbox" style="background: #031027;">
+        <div class="leftbox" style="background: #031027">
           <div class="leftboxtitle">
             <div class="arrows">
-              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%;">
+              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">
-              新闻咨询
-            </div>
+            <div class="lefttext">新闻咨询</div>
           </div>
-          <div class="searchdiv " style="margin-left: 24px;margin-top: 30px;">
-            <div style="width: 332px;height: 56px;" class="active">
-              <div style="margin: 10px 15px 2.53px 15px ;position: absolute;width: 302px;font-size: 14px;opacity: 0.9;">
+          <div class="searchdiv" style="margin-left: 24px; margin-top: 30px">
+            <div style="width: 332px; height: 56px" class="active">
+              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
                 <div>
-                  <div style="width: 100%;position: absolute;left: 0;top: 0;">
-                    台湾国际港口升级高雄码头设施
-                  </div>
-                  <div style="position: absolute;left: 0;top: 23px;">
-                    2024年3月22日
-                  </div>
-                  <div style="position: absolute;right: 0;top: 11px;" class="underline">
-                    详情
-                  </div>
+                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
+                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
+                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
                 </div>
               </div>
             </div>
-            <div style="width: 332px;height: 56px;">
-              <div style="margin: 10px 15px 2.53px 15px ;position: absolute;width: 302px;font-size: 14px;opacity: 0.9;">
+            <div style="width: 332px; height: 56px">
+              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
                 <div>
-                  <div style="width: 100%;position: absolute;left: 0;top: 0;">
-                    台湾国际港口升级高雄码头设施
-                  </div>
-                  <div style="position: absolute;left: 0;top: 23px;">
-                    2024年3月22日
-                  </div>
-                  <div style="position: absolute;right: 0;top: 11px;" class="underline">
-                    详情
-                  </div>
+                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
+                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
+                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
                 </div>
               </div>
             </div>
-            <div style="width: 332px;height: 56px;" class="active">
-              <div style="margin: 10px 15px 2.53px 15px ;position: absolute;width: 302px;font-size: 14px;opacity: 0.9;">
+            <div style="width: 332px; height: 56px" class="active">
+              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
                 <div>
-                  <div style="width: 100%;position: absolute;left: 0;top: 0;">
-                    台湾国际港口升级高雄码头设施
-                  </div>
-                  <div style="position: absolute;left: 0;top: 23px;">
-                    2024年3月22日
-                  </div>
-                  <div style="position: absolute;right: 0;top: 11px;" class="underline">
-                    详情
-                  </div>
+                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
+                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
+                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
                 </div>
               </div>
             </div>
-            <div style="width: 332px;height: 56px;">
-              <div style="margin: 10px 15px 2.53px 15px ;position: absolute;width: 302px;font-size: 14px;opacity: 0.9;">
+            <div style="width: 332px; height: 56px">
+              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
                 <div>
-                  <div style="width: 100%;position: absolute;left: 0;top: 0;">
-                    台湾国际港口升级高雄码头设施
-                  </div>
-                  <div style="position: absolute;left: 0;top: 23px;">
-                    2024年3月22日
-                  </div>
-                  <div style="position: absolute;right: 0;top: 11px;" class="underline">
-                    详情
-                  </div>
+                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
+                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
+                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
         <div class="leftbotbox">
           <div class="leftboxtitle">
             <div class="arrows1">
-              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%;">
+              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">
-              天气预报
-            </div>
+            <div class="lefttext">天气预报</div>
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson" style="left: 28px;">
-                预报时效（小时）
-              </div>
-              <div class="listtwo listson" style="left: 156px;">
-                天气现象
-              </div>
-              <div class="listthree listson" style="left: 256px;">
-                风向
-              </div>
+              <div class="listone listson" style="left: 28px">预报时效（小时）</div>
+              <div class="listtwo listson" style="left: 156px">天气现象</div>
+              <div class="listthree listson" style="left: 256px">风向</div>
             </div>
-            <div class="shipmessage" style="top: 0px;">
-              <div class="messageson" style="left: 28px;">
-                00-12
-              </div>
-              <div class="messageson" style="left: 156px;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                南风
-              </div>
+            <div class="shipmessage" style="top: 0px">
+              <div class="messageson" style="left: 28px">00-12</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">南风</div>
             </div>
             <div class="shipmessage active">
-              <div class="messageson" style="left: 28px;">
-                12-24
-              </div>
-              <div class="messageson" style="left: 156px;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                东北风
-              </div>
+              <div class="messageson" style="left: 28px">12-24</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">东北风</div>
             </div>
-            <div class="shipmessage" style="top: 0px;">
-              <div class="messageson" style="left: 28px;">
-                00-12
-              </div>
-              <div class="messageson" style="left: 156px;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                南风
-              </div>
+            <div class="shipmessage" style="top: 0px">
+              <div class="messageson" style="left: 28px">00-12</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">南风</div>
             </div>
             <div class="shipmessage active">
-              <div class="messageson" style="left: 28px;">
-                12-24
-              </div>
-              <div class="messageson" style="left: 156px;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                东北风
-              </div>
+              <div class="messageson" style="left: 28px">12-24</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">东北风</div>
             </div>
-            <div class="shipmessage" style="top: 0px;">
-              <div class="messageson" style="left: 28px;">
-                00-12
-              </div>
-              <div class="messageson" style="left: 156px;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                南风
-              </div>
+            <div class="shipmessage" style="top: 0px">
+              <div class="messageson" style="left: 28px">00-12</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">南风</div>
             </div>
             <div class="shipmessage active">
-              <div class="messageson" style="left: 28px;">
-                12-24
-              </div>
-              <div class="messageson" style="left: 156px;;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                东北风
-              </div>
+              <div class="messageson" style="left: 28px">12-24</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">东北风</div>
             </div>
-            <div class="shipmessage" style="top: 0px;">
-              <div class="messageson" style="left: 28px;">
-                00-12
-              </div>
-              <div class="messageson" style="left: 156px;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                南风
-              </div>
+            <div class="shipmessage" style="top: 0px">
+              <div class="messageson" style="left: 28px">00-12</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">南风</div>
             </div>
             <div class="shipmessage active">
-              <div class="messageson" style="left: 28px;">
-                12-24
-              </div>
-              <div class="messageson" style="left: 156px;">
-                阴
-              </div>
-              <div class="messageson underline" style="left: 256px;">
-                东北风
-              </div>
+              <div class="messageson" style="left: 28px">12-24</div>
+              <div class="messageson" style="left: 156px">阴</div>
+              <div class="messageson underline" style="left: 256px">东北风</div>
             </div>
-
           </div>
         </div>
       </div>
@@ -297,158 +190,84 @@
       <div class="ftleft">
         <div class="leftboxtitle">
           <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%;">
+            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
           </div>
-          <div class="lefttext">
-            报警信息
-          </div>
+          <div class="lefttext">报警信息</div>
         </div>
 
-        <div class="listtitle" style="width: 876px;height: 32px;margin-left: 24px;position: relative;">
-          <div class="listone listson" style="left: 33px;">
-            序号
-          </div>
-          <div class="listtwo listson" style="left: 98px;">
-            所属货船
-          </div>
-          <div class="listthree listson" style="left: 234px;">
-            报警内容
-          </div>
-          <div class="listthree listson" style="left:737px ;">
-            报警属性
-          </div>
-          <div class="listthree listson" style="left: 809px;">
-            操作
-          </div>
+        <div class="listtitle" style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+          <div class="listone listson" style="left: 33px">序号</div>
+          <div class="listtwo listson" style="left: 98px">所属货船</div>
+          <div class="listthree listson" style="left: 234px">报警内容</div>
+          <div class="listthree listson" style="left: 737px">报警属性</div>
+          <div class="listthree listson" style="left: 809px">操作</div>
         </div>
         <div>
-          <div style="width: 876px;height: 32px;margin-left: 24px;position: relative;">
-            <div class="listone listson" style="left: 33px;">
-              1
-            </div>
-            <div class="listtwo listson" style="left: 98px;">
-              SHSM1L797700
-            </div>
-            <div class="listthree listson" style="left: 234px;">
-              "冷藏舱温度异常！当前温度超出安全范围，请立即检查并调整。"
-            </div>
-            <div class="listthree listson" style="left:737px ;">
-              温度
-            </div>
-            <div class="listthree listson underline" style="left: 809px;">
-              查看
-            </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+            <div class="listone listson" style="left: 33px">1</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797700</div>
+            <div class="listthree listson" style="left: 234px">"冷藏舱温度异常！当前温度超出安全范围，请立即检查并调整。"</div>
+            <div class="listthree listson" style="left: 737px">温度</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
           </div>
-          <div style="width: 876px;height: 32px;margin-left: 24px;position: relative;" class="active">
-            <div class="listone listson" style="left: 33px;">
-              2
-            </div>
-            <div class="listtwo listson" style="left: 98px;">
-              SHSM1L797701
-            </div>
-            <div class="listthree listson" style="left: 234px;">
-              "湿度异常报警！冷藏舱湿度超出设定范围，请及时处理以避免货物受潮。"
-            </div>
-            <div class="listthree listson" style="left:737px ;">
-              湿度
-            </div>
-            <div class="listthree listson underline" style="left: 809px;">
-              查看
-            </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
+            <div class="listone listson" style="left: 33px">2</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
+            <div class="listthree listson" style="left: 234px">"湿度异常报警！冷藏舱湿度超出设定范围，请及时处理以避免货物受潮。"</div>
+            <div class="listthree listson" style="left: 737px">湿度</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
           </div>
-          <div style="width: 876px;height: 32px;margin-left: 24px;position: relative;">
-            <div class="listone listson" style="left: 33px;">
-              3
-            </div>
-            <div class="listtwo listson" style="left: 98px;">
-              SHSM1L797702
-            </div>
-            <div class="listthree listson" style="left: 234px;">
-              "位置异常报警！集装箱位置偏离计划路线，请尽快核实并调整航行方向。"
-            </div>
-            <div class="listthree listson" style="left:737px ;">
-              位置
-            </div>
-            <div class="listthree listson underline" style="left: 809px;">
-              查看
-            </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+            <div class="listone listson" style="left: 33px">3</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
+            <div class="listthree listson" style="left: 234px">"位置异常报警！集装箱位置偏离计划路线，请尽快核实并调整航行方向。"</div>
+            <div class="listthree listson" style="left: 737px">位置</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
           </div>
-          <div style="width: 876px;height: 32px;margin-left: 24px;position: relative;" class="active">
-            <div class="listone listson" style="left: 33px;">
-              4
-            </div>
-            <div class="listtwo listson" style="left: 98px;">
-              SHSM1L797701
-            </div>
-            <div class="listthree listson" style="left: 234px;">
-              "通风系统故障报警！集装箱内通风系统发生故障，请立即检查并修复。"
-            </div>
-            <div class="listthree listson" style="left:737px ;">
-              通风
-            </div>
-            <div class="listthree listson underline" style="left: 809px;">
-              查看
-            </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
+            <div class="listone listson" style="left: 33px">4</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
+            <div class="listthree listson" style="left: 234px">"通风系统故障报警！集装箱内通风系统发生故障，请立即检查并修复。"</div>
+            <div class="listthree listson" style="left: 737px">通风</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
           </div>
-          <div style="width: 876px;height: 32px;margin-left: 24px;position: relative;">
-            <div class="listone listson" style="left: 33px;">
-              5
-            </div>
-            <div class="listtwo listson" style="left: 98px;">
-              SHSM1L797702
-            </div>
-            <div class="listthree listson" style="left: 234px;">
-              "供电系统故障！冷藏设备停止运行，请立即检查供电系统并采取应急措施。"
-            </div>
-            <div class="listthree listson" style="left:737px ;">
-              供电
-            </div>
-            <div class="listthree listson underline" style="left: 809px;">
-              查看
-            </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+            <div class="listone listson" style="left: 33px">5</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
+            <div class="listthree listson" style="left: 234px">"供电系统故障！冷藏设备停止运行，请立即检查供电系统并采取应急措施。"</div>
+            <div class="listthree listson" style="left: 737px">供电</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
           </div>
         </div>
-
       </div>
-      <div>
-
-      </div>
+      <div />
       <div class="ftright">
         <div class="leftboxtitle">
           <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%;">
+            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
           </div>
-          <div class="lefttext">
-            传感器异常数量
-          </div>
+          <div class="lefttext">传感器异常数量</div>
         </div>
-        <div :style="myChartStyle1" id="line">
-
-        </div>
+        <div id="line" :style="myChartStyle1" />
         <div class="linespan">
           <div>
-            <div style="background-color: #5B8FF9;;width: 8px;height: 8px;display: inline-block;"> </div>
-            <div style="display: inline-block;margin-left: 5px;">传感器</div>
+            <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
+            <div style="display: inline-block; margin-left: 5px">传感器</div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import router from '@/router';
-import AMapLoader from '@amap/amap-jsapi-loader';
-import * as echarts from 'echarts';
-import ship from '../static/船舶.json'
-import shiptracking from '../static/船舶跟踪.json'
-import freighttrack from '../static/货物跟踪.json'
+import AMapLoader from "@amap/amap-jsapi-loader";
+import * as echarts from "echarts";
+import ship from "../static/船舶.json";
+import shiptracking from "../static/船舶跟踪.json";
+import freighttrack from "../static/货物跟踪.json";
 export default {
-  watch: {
-  
-  },
-  name: "map-view",
+  name: "MapView",
   data() {
     return {
       xData: ["锚泊", "靠泊", "在航", "其他"], //横坐标
@@ -456,14 +275,33 @@ export default {
       xData1: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"], //横坐标
       yData1: [600, 300, 200, 350, 250, 650, 750, 450, 750, 550, 750, 650], //数据
       myChartStyle: { float: "left", width: "95%", height: "290px" }, //图表样式
-      myChartStyle1: { float: "left", width: "90%", height: "200px" },//图表样式
+      myChartStyle1: { float: "left", width: "90%", height: "200px" }, //图表样式
       ship: ship,
       shiptracking: shiptracking,
       freighttrack: freighttrack,
       shipnamearr: [],
-      search: '',
-      thisshop: ''
+      search: "",
+      thisshop: "",
     };
+  },
+  watch: {},
+  mounted() {
+    this.initEcharts();
+    this.lineEcharts();
+    this.initAMap();
+    console.log("船舶信息", this.ship);
+    console.log("船舶跟踪", this.shiptracking);
+    console.log("货物跟踪", this.freighttrack);
+    this.datasearch();
+  },
+  unmounted() {
+    this.map?.destroy();
+  },
+  beforeDestroy() {
+    // 销毁地图实例
+    if (this.map) {
+      this.map.destroy();
+    }
   },
   methods: {
     reloadChartsAndMap() {
@@ -488,27 +326,26 @@ export default {
             num++;
           }
         }
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] })
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
       });
 
-
       console.log(this.shipnamearr);
-
     },
     initEcharts() {
       // 基本柱状图
       const option = {
         // legend: { data: ["锚泊", "靠泊", "在航", "其他"] },
         xAxis: {
-          type: 'category',
+          type: "category",
           data: ["锚泊", "靠泊", "在航", "其他"],
 
-          axisLabel: {//x轴文字的配置
+          axisLabel: {
+            //x轴文字的配置
             show: true,
             textStyle: {
               color: "#fff",
-            }
-          }
+            },
+          },
         },
         // grid: {
         //   left: '3%',
@@ -521,18 +358,18 @@ export default {
           max: 1000,
           interval: 250,
 
-          axisLabel: {//x轴文字的配置
+          axisLabel: {
+            //x轴文字的配置
             show: true,
             textStyle: {
               color: "#fff",
-            }
-          }
+            },
+          },
         },
         series: [
-
           {
-            name: '',
-            type: 'bar',
+            name: "",
+            type: "bar",
             data: [750, 950, 550, 250],
             //设置柱子的宽度
             barWidth: 30,
@@ -542,25 +379,19 @@ export default {
               normal: {
                 //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                 color: function (params) {
-                  var colorList = ['#5AD8A6', '#5B8FF9', '#ECECEC', '#F6BD16'];
+                  var colorList = ["#5AD8A6", "#5B8FF9", "#ECECEC", "#F6BD16"];
                   return colorList[params.dataIndex];
-                }
+                },
               },
               //鼠标悬停时：
               emphasis: {
                 shadowBlur: 10,
                 shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
             },
           },
-
-
-
-
-
-
-        ]
+        ],
       };
       const myChart = echarts.init(document.getElementById("shipbar"));
       myChart.setOption(option);
@@ -572,26 +403,24 @@ export default {
     lineEcharts() {
       const option = {
         xAxis: {
-
           axisLine: {
             lineStyle: {
               color: "#ffffff",
             },
             textStyle: {
-              color: '#ccc'
-            }
-
+              color: "#ccc",
+            },
           },
-          type: 'category',
+          type: "category",
           boundaryGap: true,
           data: this.xData1,
         },
         grid: {
-          left: '3%',
-          right: '10%',
-          bottom: '6%',
-          top: '8%',
-          containLabel: true
+          left: "3%",
+          right: "10%",
+          bottom: "6%",
+          top: "8%",
+          containLabel: true,
         },
         yAxis: {
           axisLine: {
@@ -599,24 +428,23 @@ export default {
               color: "#f7f7f7",
             },
             textStyle: {
-              color: '#ccc'
-            }
-
+              color: "#ccc",
+            },
           },
           min: 0,
           max: 1000,
           interval: 250,
 
-          type: 'value'
+          type: "value",
         },
         series: [
           {
             data: this.yData1,
-            type: 'line',
+            type: "line",
             areaStyle: {},
-            symbol: 'none'
-          }
-        ]
+            symbol: "none",
+          },
+        ],
       };
       const myChart = echarts.init(document.getElementById("line"));
       myChart.setOption(option);
@@ -641,37 +469,36 @@ export default {
           });
           for (let i = 0; i < this.shipnamearr.length; i++) {
             var marker = new AMap.Marker({
-              position: this.shipnamearr[i].location,                                        // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+              position: this.shipnamearr[i].location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
               content: `
                   <div class="my_marker" style>
                         <div class="marker" style="color:#fff;background:#0060B5 ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
                            ${this.shipnamearr[i].num}
                         </div>
-                        
-                        
+
+
                   </div>`,
               offset: new AMap.Pixel(-15, -20),
-
             });
-            marker.on('click', mapEvent => {
-              console.log(mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id'))
-              this.$router.push({ name: 'about', params: { name: mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id') } })
-            })
-            marker.on('mouseover', mapEvent => {
+            marker.on("click", (mapEvent) => {
+              console.log(mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id"));
+              // this.$router.push({ name: "about", params: { name: mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") } });
+              this.$router.push({ path: "/about", query: { name: mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") } });
+            });
+            marker.on("mouseover", (mapEvent) => {
               if (this.infoWindow) {
                 this.infoWindow.close();
               }
-              var info = []
-              info.push(`<div style="color:#000;font-size:10px">${mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id')}</div>`)
+              var info = [];
+              info.push(`<div style="color:#000;font-size:10px">${mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id")}</div>`);
               this.infoWindow = new AMap.InfoWindow({
                 offset: new AMap.Pixel(-3, -16),
-                content: info.join("")//使用默认信息窗体框样式，显示信息内容
-              })
-              this.infoWindow.open(this.map, mapEvent.target.getPosition())
-              console.log(mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id'));
-
-            })
+                content: info.join(""), //使用默认信息窗体框样式，显示信息内容
+              });
+              this.infoWindow.open(this.map, mapEvent.target.getPosition());
+              console.log(mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id"));
+            });
             // marker.on('mouseout', () => {
 
             // this.infoWindow.close();
@@ -680,9 +507,7 @@ export default {
 
             // 将创建的点标记添加到已有的地图实例：
             this.map.add([marker]);
-
           }
-
         })
         .catch((e) => {
           console.log(e);
@@ -693,7 +518,7 @@ export default {
     },
     look(e) {
       console.log(e.target.dataset.v);
-      this.$router.push({ name: 'about', params: { name: e.target.dataset.v } })
+      this.$router.push({ path:"/about",query: { name: e.target.dataset.v } });
     },
     // showInfoWindow(shipName, lnglat) {
     //   const infoWindow = new AMap.InfoWindow({
@@ -711,35 +536,14 @@ export default {
     // shipmessage(e){
     //   console.log(e.target.dataset.id);
     // }
-
   },
-  mounted() {
-    this.initEcharts();
-    this.lineEcharts();
-    this.initAMap();
-    console.log("船舶信息", this.ship);
-    console.log("船舶跟踪", this.shiptracking);
-    console.log("货物跟踪", this.freighttrack);
-    this.datasearch()
-  },
-  unmounted() {
-    this.map?.destroy();
-  },
-  beforeDestroy() {
-    // 销毁地图实例
-    if (this.map) {
-      this.map.destroy();
-    }
-  }
-
-
-}
+};
 </script>
 <style scoped>
 .home {
   position: relative;
   overflow: hidden;
-  background-color: #1E6BA3;
+  background-color: #1e6ba3;
   color: #ffffff;
   width: 1920px;
   height: 1080px;
@@ -754,7 +558,7 @@ export default {
 }
 
 .headtitle {
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-family: "Microsoft YaHei";
   font-size: 24px;
@@ -771,7 +575,7 @@ export default {
 }
 
 .headtime {
-  color: #FFF;
+  color: #fff;
   font-family: "Microsoft YaHei";
   font-size: 12px;
   font-style: normal;
@@ -785,7 +589,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main>div {
+.main > div {
   display: inline-block;
 }
 
@@ -794,7 +598,7 @@ export default {
   height: 329px;
   flex-shrink: 0;
 
-  border: 1px solid #98E7FC;
+  border: 1px solid #98e7fc;
   background-color: #031027;
 
   line-height: 1;
@@ -816,10 +620,9 @@ export default {
   width: 378.01px;
   height: 361px;
   flex-shrink: 0;
-  border: 1px solid #98E7FC;
+  border: 1px solid #98e7fc;
   background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
   margin: 24px 0;
-
 }
 
 .mainleft {
@@ -831,15 +634,14 @@ export default {
   height: 30px;
   flex-shrink: 0;
   /* margin-top: 16px */
-  background: linear-gradient(270deg, rgba(47, 186, 255, 0.00) 0%, rgba(77, 210, 255, 0.80) 63.77%, rgba(84, 216, 255, 0.80) 86.69%, rgba(92, 222, 255, 0.00) 100%);
+  background: linear-gradient(270deg, rgba(47, 186, 255, 0) 0%, rgba(77, 210, 255, 0.8) 63.77%, rgba(84, 216, 255, 0.8) 86.69%, rgba(92, 222, 255, 0) 100%);
   margin: 16px 16px 16px 16px;
   position: relative;
-
 }
 
 .lefttext {
   position: absolute;
-  color: #FFF;
+  color: #fff;
   font-family: "Microsoft YaHei";
   font-size: 14px;
   font-style: normal;
@@ -856,14 +658,13 @@ export default {
   position: absolute;
   top: 8px;
   left: 12px;
-
 }
 
 .shiplegend {
   position: absolute;
   top: 78px;
   padding: 0 54px;
-  color: #FFF;
+  color: #fff;
   height: 12px;
   font-family: "Microsoft YaHei";
   font-size: 14px;
@@ -873,7 +674,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend>div {
+.shiplegend > div {
   display: inline-block;
 }
 
@@ -883,7 +684,6 @@ export default {
   position: absolute;
   top: 4px;
   left: 12px;
-
 }
 
 .shipsearch {
@@ -898,24 +698,22 @@ export default {
 .searchbutton {
   width: 82px;
   height: 30px;
-  background-color: #15517A;
+  background-color: #15517a;
   position: absolute;
   right: 0;
   top: 0;
   text-align: center;
   line-height: 30px;
-  color: #FFF;
+  color: #fff;
 
   font-family: "Microsoft YaHei";
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-
 }
 
 .searchdiv {
   position: relative;
-
 }
 
 .searchtext {
@@ -928,9 +726,6 @@ export default {
   background: #031027;
   opacity: 0.3;
   color: #fff;
-
-
-
 }
 
 .searchimg {
@@ -956,15 +751,14 @@ export default {
   background-color: rgba(47, 186, 255, 0.25);
   fill: #fff;
   stroke-width: 1px;
-  stroke: rgba(255, 255, 255, 0.00);
-
+  stroke: rgba(255, 255, 255, 0);
 }
 
 .listson {
   display: inline-block;
   position: absolute;
   top: 6px;
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   opacity: 0.8;
 }
@@ -991,7 +785,6 @@ export default {
   position: absolute;
   font-size: 14px;
   opacity: 0.8;
-
 }
 
 .active {
@@ -1007,7 +800,6 @@ export default {
   top: 810px;
   height: 300px;
   padding: 0 26px;
-
 }
 
 .ftleft {
@@ -1018,10 +810,7 @@ export default {
   background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
   background: #031027;
   margin-bottom: 24px;
-  border: 1px solid #98E7FC;
-
-
-
+  border: 1px solid #98e7fc;
 }
 
 .ftright {
@@ -1033,9 +822,7 @@ export default {
   background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
   background: #031027;
   margin-bottom: 24px;
-  border: 1px solid #98E7FC;
-
-
+  border: 1px solid #98e7fc;
 }
 
 .linespan {
@@ -1065,13 +852,13 @@ export default {
 }
 
 .circlecolor {
-  background-color: #0060B5;
+  background-color: #0060b5;
   width: 22px;
   height: 22px;
   border-radius: 50%;
   position: absolute;
   top: 5px;
-  left: 5px
+  left: 5px;
 }
 
 .circletext {
@@ -1079,12 +866,12 @@ export default {
 }
 
 .marker {
-
   height: 22px;
   width: 22px;
 }
 
-.my_marker {}
+.my_marker {
+}
 
 div::-webkit-scrollbar {
   width: 10px;

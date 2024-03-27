@@ -8,6 +8,9 @@ dependencies:
   '@amap/amap-jsapi-loader':
     specifier: ^1.0.1
     version: 1.0.1
+  '@amap/amap-vue':
+    specifier: ^2.0.13
+    version: 2.0.13(core-js@3.36.1)(vue@2.7.16)
   core-js:
     specifier: ^3.8.3
     version: 3.36.1
@@ -80,6 +83,16 @@ packages:
 
   /@amap/amap-jsapi-loader@1.0.1:
     resolution: {integrity: sha512-nPyLKt7Ow/ThHLkSvn2etQlUzqxmTVgK7bIgwdBRTg2HK5668oN7xVxkaiRe3YZEzGzfV2XgH5Jmu2T73ljejw==}
+    dev: false
+
+  /@amap/amap-vue@2.0.13(core-js@3.36.1)(vue@2.7.16):
+    resolution: {integrity: sha512-aFIehFi01acAcDMvGUsAC9HxIhDNNOnBxb25dHdO/CbFGEegaOfCxDo6l9adkn4mVW5SgD6nPhkT4R+xVWhc7w==}
+    peerDependencies:
+      core-js: ^3.3.2
+      vue: ^2.6.11
+    dependencies:
+      core-js: 3.36.1
+      vue: 2.7.16
     dev: false
 
   /@ampproject/remapping@2.3.0:
