@@ -69,29 +69,29 @@
           <div class="listbox">
             <div class="listtitle">
               <div class="listone listson">
-                船名
+                集装箱编号
               </div>
               <div class="listtwo listson">
-               
+                状态
               </div>
               <div class="listthree listson">
                 操作
               </div>
             </div>
-            
-          <div style="overflow-x:hidden;height: 200px;position: absolute;width: 332px;">
-            <div class="shipmessage" style="top: 0px;" v-for="(item,index) in this.shipnamearr" :key=index>
-              <div class="messageson" style="left: 33px;">
-                {{ item.name }}
-              </div>
-              <div class="messageson" style="left: 196px;color: red;">
-               
-              </div>
-              <div class="messageson underline" style="left: 271px;" @click="look" :data-v=item.name>
-                查看
+
+            <div style="overflow-x:hidden;height: 200px;position: absolute;width: 332px;">
+              <div class="shipmessage" style="top: 0px;" v-for="(item, index) in this.shipnamearr" :key=index>
+                <div class="messageson" style="left: 33px;">
+                  {{ item.name }}
+                </div>
+                <div class="messageson" style="left: 196px;color: red;">
+
+                </div>
+                <div class="messageson underline" style="left: 271px;" @click="look" :data-v=item.name>
+                  查看
+                </div>
               </div>
             </div>
-          </div>
 
           </div>
         </div>
@@ -438,12 +438,16 @@
 </template>
 
 <script>
+
 import AMapLoader from '@amap/amap-jsapi-loader';
 import * as echarts from 'echarts';
 import ship from '../static/船舶.json'
 import shiptracking from '../static/船舶跟踪.json'
 import freighttrack from '../static/货物跟踪.json'
 export default {
+  watch: {
+    '$route': 'reloadChartsAndMap'
+  },
   name: "map-view",
   data() {
     return {
@@ -457,10 +461,23 @@ export default {
       shiptracking: shiptracking,
       freighttrack: freighttrack,
       shipnamearr: [],
-      search:''
+      search: '',
+      thisshop: ''
     };
   },
   methods: {
+    reloadChartsAndMap() {
+      // 在这里执行重新加载 ECharts 和地图控件的逻辑
+      // 例如，重新初始化 ECharts 实例和地图控件
+      // 注意：这里的代码需要根据你的具体情况来实现
+
+      // 重新加载 ECharts
+      this.initECharts();
+      this.lineEcharts();
+      this.datasearch();
+      // 重新加载地图控件
+      this.initMap();
+    },
     datasearch() {
       this.ship.forEach((item) => {
         //  this.shipnamearr.push(item.nameEn)
@@ -471,10 +488,10 @@ export default {
             num++;
           }
         }
-        this.shipnamearr.push({ name: item.nameEn, num: num ,location:[item.lon,item.lat]})
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] })
       });
-      
-     
+
+
       console.log(this.shipnamearr);
 
     },
@@ -627,19 +644,39 @@ export default {
               position: this.shipnamearr[i].location,                                        // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
               content: `
-                  <div class="my_marker">
+                  <div class="my_marker" style>
                         <div class="marker" style="color:#fff;background:#0060B5 ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
                            ${this.shipnamearr[i].num}
                         </div>
+                        
                         
                   </div>`,
               offset: new AMap.Pixel(-15, -20),
 
             });
             marker.on('click', mapEvent => {
-    console.log(mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id'))
-    this.$router.push({name:'about', params:{name:mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id')}})
-})
+              console.log(mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id'))
+              this.$router.push({ name: 'about', params: { name: mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id') } })
+            })
+            marker.on('mouseover', mapEvent => {
+              if (this.infoWindow) {
+                this.infoWindow.close();
+              }
+              var info = []
+              info.push(`<div style="color:#000;font-size:10px">${mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id')}</div>`)
+              this.infoWindow = new AMap.InfoWindow({
+                offset: new AMap.Pixel(-3, -16),
+                content: info.join("")//使用默认信息窗体框样式，显示信息内容
+              })
+              this.infoWindow.open(this.map, mapEvent.target.getPosition())
+              console.log(mapEvent.target.dom.getElementsByClassName('marker')[0].getAttribute('data-id'));
+
+            })
+            // marker.on('mouseout', () => {
+
+            // this.infoWindow.close();
+
+            // })
 
             // 将创建的点标记添加到已有的地图实例：
             this.map.add([marker]);
@@ -651,13 +688,26 @@ export default {
           console.log(e);
         });
     },
-    shipsearch(){
+    shipsearch() {
       console.log(this.search);
     },
-    look(e){
+    look(e) {
       console.log(e.target.dataset.v);
-      this.$router.push({name:'about', params:{name:e.target.dataset.v}})
+      this.$router.push({ name: 'about', params: { name: e.target.dataset.v } })
     },
+    // showInfoWindow(shipName, lnglat) {
+    //   const infoWindow = new AMap.InfoWindow({
+    //     content: `
+    //       <div class="info-window">
+    //         <h3>${shipName}</h3>
+    //         <p>其他相关信息...</p>
+    //       </div>
+    //     `,
+    //     position: lnglat,
+    //     offset: new AMap.Pixel(0, -30) // 设置信息窗体相对于标点的偏移量，使其不会覆盖标点
+    //   });
+    //   infoWindow.open(this.map);
+    // }
     // shipmessage(e){
     //   console.log(e.target.dataset.id);
     // }
@@ -675,6 +725,12 @@ export default {
   unmounted() {
     this.map?.destroy();
   },
+  beforeDestroy() {
+    // 销毁地图实例
+    if (this.map) {
+      this.map.destroy();
+    }
+  }
 
 
 }
@@ -1027,27 +1083,30 @@ export default {
   height: 22px;
   width: 22px;
 }
-.my_marker{
-  
-}
-div::-webkit-scrollbar{
-      width:10px;
-      height:10px;
-      /**/
-    }
-    div::-webkit-scrollbar-track{
-      background: rgb(239, 239, 239);
-      border-radius:2px;
-    }
-    div::-webkit-scrollbar-thumb{
-      background: #bfbfbf;
-      border-radius:10px;
-    }
-    div::-webkit-scrollbar-thumb:hover{
-      background: #333;
-    }
-    div::-webkit-scrollbar-corner{
-      background: #179a16;
-    }
 
+.my_marker {}
+
+div::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  /**/
+}
+
+div::-webkit-scrollbar-track {
+  background: rgb(239, 239, 239);
+  border-radius: 2px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #bfbfbf;
+  border-radius: 10px;
+}
+
+div::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+div::-webkit-scrollbar-corner {
+  background: #179a16;
+}
 </style>
