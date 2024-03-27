@@ -438,7 +438,7 @@
 </template>
 
 <script>
-
+import router from '@/router';
 import AMapLoader from '@amap/amap-jsapi-loader';
 import * as echarts from 'echarts';
 import ship from '../static/船舶.json'
@@ -446,7 +446,7 @@ import shiptracking from '../static/船舶跟踪.json'
 import freighttrack from '../static/货物跟踪.json'
 export default {
   watch: {
-    '$route': 'reloadChartsAndMap'
+  
   },
   name: "map-view",
   data() {
