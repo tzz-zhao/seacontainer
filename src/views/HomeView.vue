@@ -3,9 +3,15 @@
     <div class="head">
       <div class="headtitle">货运管理平台</div>
       <div class="headtext">
-        <span class="headtime"> 2023-12-16 </span>
-        <span class="headtime" style="margin-left: 25px"> 周四 </span>
-        <span class="headtime"> 上午10:15 </span>
+        <span class="headtime">
+          {{ date }}
+        </span>
+        <span class="headtime" style="margin-left: 25px;">
+          {{ week }}
+        </span>
+        <span class="headtime">
+          {{ time }}
+        </span>
       </div>
     </div>
     <div class="main">
@@ -35,9 +41,12 @@
               <div style="display: inline-block; margin-left: 5px">其他</div>
             </div>
           </div>
-          <div id="shipbar" :style="myChartStyle" style="margin-left: 15px" />
+
+          <div id="shipbar" :style="myChartStyle" style="margin-left: 15px;">
+
+          </div>
         </div>
-        <div class="leftbotbox" style="background: #031027; position: relative">
+        <div class="leftbotbox" style="background: #031027;position: relative;">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -56,24 +65,41 @@
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">集装箱编号</div>
-              <div class="listtwo listson">状态</div>
-              <div class="listthree listson">操作</div>
-            </div>
-
-            <div style="overflow-x: hidden; height: 200px; position: absolute; width: 332px">
-              <div v-for="(item, index) in shipnamearr" :key="index" class="shipmessage" style="top: 0px">
-                <div class="messageson" style="left: 33px">
-                  {{ item.name }}
-                </div>
-                <div class="messageson" style="left: 196px; color: red" />
-                <div class="messageson underline" style="left: 271px" :data-v="item.name" @click="look">查看</div>
+              <div class="listone listson">
+                集装箱编号
+              </div>
+              <div class="listtwo listson">
+                船籍
+              </div>
+              <div class="listfour listson">
+                目的地
+              </div>
+              <div class="listthree listson">
+                操作
               </div>
             </div>
+
+            <div style="overflow-x:hidden;height: 200px;position: absolute;width: 332px;">
+              <div class="shipmessage" style="top: 0px;" v-for="(item, index) in shipnamearr" :key=index>
+                <div class="messageson" style="left: 33px;font-size: 9px;">
+                  {{ item.name }}
+                </div>
+                <div class="messageson" style="left: 146px;">
+                  {{ item.flagName }}
+                </div>
+                <div class="messageson" style="left: 196px;font-size: 8px;">
+                  {{ item.dest }}
+                </div>
+                <div class="messageson underline" style="left: 271px;" @click="look" :data-v=item.name>
+                  查看
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-      <div id="container" class="maincenter">
+      <div class="maincenter" id="container">
         <!-- <div class="circle" style="right: 274.37px;top: 76px;">
           <div class="circlecolor">
             <div class="circletext">
@@ -261,17 +287,22 @@
 </template>
 
 <script>
-import AMapLoader from "@amap/amap-jsapi-loader";
-import * as echarts from "echarts";
-import ship from "../static/船舶.json";
-import shiptracking from "../static/船舶跟踪.json";
-import freighttrack from "../static/货物跟踪.json";
+
+import AMapLoader from '@amap/amap-jsapi-loader';
+import * as echarts from 'echarts';
+import ship from '../static/船舶.json'
+import shiptracking from '../static/船舶跟踪.json'
+import freighttrack from '../static/货物跟踪.json'
 export default {
-  name: "MapView",
+  watch: {
+
+  },
+  name: "map-view",
+
   data() {
     return {
       xData: ["锚泊", "靠泊", "在航", "其他"], //横坐标
-      yData: [750, 900, 600, 250], //数据
+      yData: [], //数据
       xData1: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"], //横坐标
       yData1: [600, 300, 200, 350, 250, 650, 750, 450, 750, 550, 750, 650], //数据
       myChartStyle: { float: "left", width: "95%", height: "290px" }, //图表样式
@@ -280,43 +311,71 @@ export default {
       shiptracking: shiptracking,
       freighttrack: freighttrack,
       shipnamearr: [],
-      search: "",
-      thisshop: "",
+      search: '',
+      thisshop: '',
+      date: '',
+      time: '',
+      week: ''
     };
   },
-  watch: {},
-  mounted() {
-    this.initEcharts();
-    this.lineEcharts();
-    this.initAMap();
-    console.log("船舶信息", this.ship);
-    console.log("船舶跟踪", this.shiptracking);
-    console.log("货物跟踪", this.freighttrack);
-    this.datasearch();
-  },
-  unmounted() {
-    this.map?.destroy();
-  },
-  beforeDestroy() {
-    // 销毁地图实例
-    if (this.map) {
-      this.map.destroy();
-    }
-  },
   methods: {
-    reloadChartsAndMap() {
-      // 在这里执行重新加载 ECharts 和地图控件的逻辑
-      // 例如，重新初始化 ECharts 实例和地图控件
-      // 注意：这里的代码需要根据你的具体情况来实现
+    currentTime() {
+      var date = new Date();
 
-      // 重新加载 ECharts
-      this.initECharts();
-      this.lineEcharts();
-      this.datasearch();
-      // 重新加载地图控件
-      this.initMap();
+      var year = date.getFullYear(); //月份从0~11，所以加一
+
+
+      var dateArr = [
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+      ];
+      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+      for (var i = 0; i < dateArr.length; i++) {
+        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+          dateArr[i] = "0" + dateArr[i];
+        }
+      }
+      var strDate =
+        year +
+        "-" +
+        dateArr[0] +
+        "-" +
+        dateArr[1]
+
+      //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
+      //this.date = strDate;
+      var strtime =
+        dateArr[2] +
+        ":" +
+        dateArr[3] +
+        ":" +
+        dateArr[4];
+
+      var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      var strDate1 =
+        year +
+        "/" +
+        dateArr[0] +
+        "/" +
+        dateArr[1]
+      var date1 = new Date(strDate1)
+      let w = week[date1.getDay()]
+      this.week = w
+      this.time = strtime
+      this.date = strDate
+
+
     },
+
+
     datasearch() {
+      let underway = 0;
+      let mooring = 0;
+      let mooralongside = 0;
+      let or = 0;
       this.ship.forEach((item) => {
         //  this.shipnamearr.push(item.nameEn)
         console.log(item);
@@ -326,15 +385,34 @@ export default {
             num++;
           }
         }
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
-      });
 
-      console.log(this.shipnamearr);
+        if (item.navStatus == 0) {
+          underway++;
+        } else if (item.navStatus == 1) {
+          mooring++;
+        } else if (item.navStatus == 5) {
+          mooralongside++;
+        } else {
+          or++;
+        }
+
+
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat],flagName:item.flagName,dest:item.dest })
+      });
+      this.yData = [underway, mooring, mooralongside, or]
+      console.log(this.yData);
+      this.initEcharts()
+      console.log(this.shipnamearr,"信息");
+
     },
     initEcharts() {
       // 基本柱状图
       const option = {
         // legend: { data: ["锚泊", "靠泊", "在航", "其他"] },
+  //       legend: {
+  //   show: true,
+  //   data: ["锚泊", "靠泊", "在航", "其他"]
+  // },
         xAxis: {
           type: "category",
           data: ["锚泊", "靠泊", "在航", "其他"],
@@ -347,16 +425,11 @@ export default {
             },
           },
         },
-        // grid: {
-        //   left: '3%',
-        //   right: '4%',
-        //   bottom: '3%',
-        //   containLabel: true
-        // },
+
         yAxis: {
           min: 0,
-          max: 1000,
-          interval: 250,
+          max: 10,
+          interval: 2,
 
           axisLabel: {
             //x轴文字的配置
@@ -368,9 +441,9 @@ export default {
         },
         series: [
           {
-            name: "",
-            type: "bar",
-            data: [750, 950, 550, 250],
+            name: '靠泊',
+            type: 'bar',
+            data: this.yData,
             //设置柱子的宽度
             barWidth: 30,
             //配置样式
@@ -391,7 +464,14 @@ export default {
               },
             },
           },
-        ],
+          
+
+
+
+
+
+
+        ]
       };
       const myChart = echarts.init(document.getElementById("shipbar"));
       myChart.setOption(option);
@@ -454,7 +534,7 @@ export default {
       });
     },
     initAMap() {
-      // let arr = [[174.10, 24.52], [-123.6, 49.18], [113.474725, 30.692175]];
+     
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
         version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -514,30 +594,55 @@ export default {
         });
     },
     shipsearch() {
-      console.log(this.search);
+      console.log('search',this.search);
+      let arr = []
+      for(let i=0;i< this.shipnamearr.length;i++){
+        if(this.search===this.shipnamearr[i].name){
+          arr.push(this.shipnamearr[i])
+          console.log(this.shipnamearr);
+        }
+      }
+
+      this.shipnamearr = arr
+      console.log('search',this.shipnamearr);
     },
     look(e) {
       console.log(e.target.dataset.v);
       this.$router.push({ path:"/about",query: { name: e.target.dataset.v } });
     },
-    // showInfoWindow(shipName, lnglat) {
-    //   const infoWindow = new AMap.InfoWindow({
-    //     content: `
-    //       <div class="info-window">
-    //         <h3>${shipName}</h3>
-    //         <p>其他相关信息...</p>
-    //       </div>
-    //     `,
-    //     position: lnglat,
-    //     offset: new AMap.Pixel(0, -30) // 设置信息窗体相对于标点的偏移量，使其不会覆盖标点
-    //   });
-    //   infoWindow.open(this.map);
-    // }
-    // shipmessage(e){
-    //   console.log(e.target.dataset.id);
-    // }
+    
+
   },
-};
+  mounted() {
+    // this.$nextTick(() => {
+    this.initEcharts();
+    this.lineEcharts();
+    this.initAMap();
+    // console.log("船舶信息", this.ship);
+    // console.log("船舶跟踪", this.shiptracking);
+    // console.log("货物跟踪", this.freighttrack);
+    this.datasearch()
+    this.currentTime()
+    setInterval(() => {
+      this.currentTime()
+    }, 500)
+    // })
+
+
+  },
+  
+  unmounted() {
+    this.map?.destroy();
+  },
+  beforeDestroy() {
+    // 销毁地图实例
+    if (this.map) {
+      this.map.destroy();
+    }
+  }
+
+
+}
 </script>
 <style scoped>
 .home {
@@ -768,9 +873,11 @@ export default {
 }
 
 .listtwo {
+  left: 146px;
+}
+.listfour{
   left: 196px;
 }
-
 .listthree {
   left: 271px;
 }
@@ -783,7 +890,7 @@ export default {
 
 .messageson {
   position: absolute;
-  font-size: 14px;
+  font-size: 10px;
   opacity: 0.8;
 }
 

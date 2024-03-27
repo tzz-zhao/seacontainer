@@ -39,7 +39,7 @@
                 {{ "集装箱" + index.toString().padStart(4, "0") }}
               </div>
               <div class="messageson" style="left: 196px" :style="{ color: index % 4 === 0 ? 'red' : '#fff' }" v-text="index % 4 === 0 ? '异常' : '正常'"></div>
-              <div class="messageson underline" style="left: 271px" :data-v="item.name">查看</div>
+              <div class="messageson underline" style="left: 271px" :data-v="item.name" @click="gosensor">查看</div>
             </div>
           </div>
         </div>
@@ -241,6 +241,9 @@ export default {
     };
   },
   methods: {
+    gosensor(){
+      this.$router.push('conter')
+    },
     reloadChartsAndMap() {
       // 在这里执行重新加载 ECharts 和地图控件的逻辑
       // 例如，重新初始化 ECharts 实例和地图控件
