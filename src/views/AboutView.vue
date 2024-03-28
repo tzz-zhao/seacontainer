@@ -12,6 +12,7 @@
         <span class="headtime">
           {{ time }}
         </span>
+        <div class="back"><img src="../assets/return.svg"  style="width: 18px;position: absolute;top: 2px;"/><span @click="back" style="font-size: 14px;position: absolute;top: 2px;width: 50px;left: 11px;">返回</span></div>
       </div>
     </div>
     <div class="main">
@@ -451,6 +452,9 @@ export default {
       console.log(this.search);
 
     },
+    back(){
+      this.$router.push('/')
+    }
   },
   mounted() {
     this.lineEcharts();
@@ -951,5 +955,10 @@ div::-webkit-scrollbar-corner {
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
+}
+.back{
+  position: absolute;
+  left: 30px;
+  top: 25px;
 }
 </style>

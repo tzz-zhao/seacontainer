@@ -3,17 +3,18 @@
         <div class="header">
             <div class="headertitle">货运管理平台</div>
             <div class="headertext">
-                <span class="headertime">
-                    2023-12-16
+                <span class="headtime">
+                    {{ date }}
                 </span>
-                <span class="headertime" style="margin-left: 25px;">
-                    周四
+                <span class="headtime" style="margin-left: 25px;">
+                    {{ week }}
                 </span>
-                <span class="headertime">
-                    上午10:15
+                <span class="headtime">
+                    {{ time }}
                 </span>
             </div>
-            <div><img src="../assets/return.svg" /><span @click="back">返回</span></div>
+            <div><img src="../assets/return.svg" style="width: 17px;height: 17px;position: absolute;top: -4px;" /><span
+                    @click="back" style="position: absolute;left: 20px;width: 40px;top: -4px;">返回</span></div>
         </div>
         <div class="center">
             <div class="left-list">
@@ -82,16 +83,69 @@ export default {
                 { title: "CO2", type: "co2Type", data: [50, 17, 23, 20, 56, 58, 38, 60], y: { min: 0, max: 80, interval: 20 } },
                 { title: "O2", type: "o2Type", data: [50, 17, 23, 20, 36, 38, 38, 40], y: { min: 0, max: 40, interval: 10 } },
                 { title: "震动", type: "vibration", data: [50, 17, 23, 20, 36, 38, 38, 40], y: { min: 0, max: 40, interval: 10 } },
-            ]
+            ],
+            date: '',
+            time: '',
+            week: '',
         }
     },
     mounted() {
         this.echartsData.forEach(item => {
             this.tempType(item)
         })
+        this.currentTime()
+        setInterval(() => {
+            this.currentTime()
+        }, 500)
     },
     methods: {
-        back(){
+        currentTime() {
+            var date = new Date();
+            var year = date.getFullYear(); //月份从0~11，所以加一
+            var dateArr = [
+                date.getMonth() + 1,
+                date.getDate(),
+                date.getHours(),
+                date.getMinutes(),
+                date.getSeconds(),
+            ];
+            //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+            for (var i = 0; i < dateArr.length; i++) {
+                if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+                    dateArr[i] = "0" + dateArr[i];
+                }
+            }
+            var strDate =
+                year +
+                "-" +
+                dateArr[0] +
+                "-" +
+                dateArr[1]
+
+            //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
+            //this.date = strDate;
+            var strtime =
+                dateArr[2] +
+                ":" +
+                dateArr[3] +
+                ":" +
+                dateArr[4];
+
+            var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+            var strDate1 =
+                year +
+                "/" +
+                dateArr[0] +
+                "/" +
+                dateArr[1]
+            var date1 = new Date(strDate1)
+            let w = week[date1.getDay()]
+            this.week = w
+            this.time = strtime
+            this.date = strDate
+        },
+
+        back() {
             this.$router.replace('about')
         },
         tableRowClassName({ row, rowIndex }) {
@@ -389,5 +443,13 @@ export default {
 
 .echartsTable>div .echartImg {
     height: 90%;
+}
+.headtime{
+    color: #fff;
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px
 }
 </style>
