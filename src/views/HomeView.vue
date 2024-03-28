@@ -6,7 +6,7 @@
         <span class="headtime">
           {{ date }}
         </span>
-        <span class="headtime" style="margin-left: 25px;">
+        <span class="headtime" style="margin-left: 25px">
           {{ week }}
         </span>
         <span class="headtime">
@@ -25,15 +25,15 @@
           </div>
           <div class="shiplegend">
             <div>
-              <div style="background-color: #CBD1D7; width: 8px; height: 8px; display: inline-block" />
+              <div style="background-color: #cbd1d7; width: 8px; height: 8px; display: inline-block" />
               <div style="display: inline-block; margin-left: 5px">锚泊</div>
             </div>
             <div style="margin-left: 30px">
-              <div style="background-color: #5B8FF9; width: 8px; height: 8px; display: inline-block" />
+              <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
               <div style="display: inline-block; margin-left: 5px">靠泊</div>
             </div>
             <div style="margin-left: 30px">
-              <div style="background-color: #5AD8A6; width: 8px; height: 8px; display: inline-block" />
+              <div style="background-color: #5ad8a6; width: 8px; height: 8px; display: inline-block" />
               <div style="display: inline-block; margin-left: 5px">在航</div>
             </div>
             <div style="margin-left: 30px">
@@ -42,11 +42,9 @@
             </div>
           </div>
 
-          <div id="shipbar" :style="myChartStyle" style="margin-left: 15px;">
-
-          </div>
+          <div id="shipbar" :style="myChartStyle" style="margin-left: 15px"></div>
         </div>
-        <div class="leftbotbox" style="background: #031027;position: relative;">
+        <div class="leftbotbox" style="background: #031027; position: relative">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -65,37 +63,26 @@
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">
-                集装箱编号
-              </div>
-              <div class="listtwo listson">
-                船籍
-              </div>
-              <div class="listfour listson">
-                目的地
-              </div>
-              <div class="listthree listson">
-                操作
-              </div>
+              <div class="listone listson">集装箱编号</div>
+              <div class="listtwo listson">船籍</div>
+              <div class="listfour listson">目的地</div>
+              <div class="listthree listson">操作</div>
             </div>
 
-            <div style="overflow-x:hidden;height: 200px;position: absolute;width: 332px;">
-              <div class="shipmessage" style="top: 0px;" v-for="(item, index) in shipnamearr" :key=index>
-                <div class="messageson" style="left: 33px;font-size: 9px;">
+            <div style="overflow-x: hidden; height: 200px; position: absolute; width: 332px">
+              <div class="shipmessage" style="top: 0px" v-for="(item, index) in shipnamearr" :key="index">
+                <div class="messageson" style="left: 33px; font-size: 9px">
                   {{ item.name }}
                 </div>
-                <div class="messageson" style="left: 146px;">
+                <div class="messageson" style="left: 146px">
                   {{ item.flagName }}
                 </div>
-                <div class="messageson" style="left: 196px;font-size: 8px;">
+                <div class="messageson" style="left: 196px; font-size: 8px">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" style="left: 271px;" @click="look" :data-v=item.name>
-                  查看
-                </div>
+                <div class="messageson underline" style="left: 271px" @click="look" :data-v="item.name">查看</div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -117,16 +104,30 @@
             <div class="lefttext">报警信息</div>
           </div>
 
-          <div class="listtitle"
-            style="width: 348px; height: 32px; margin-left: 18px; position: relative;line-height: 20px;">
+          <div class="listtitle" style="width: 348px; height: 32px; margin-left: 18px; position: relative; line-height: 20px; display: flex; align-items: center">
             <div class="listone listson" style="left: 10px">序号</div>
             <div class="listtwo listson" style="left: 58px">所属货船</div>
-            <div class="listthree listson" style="left: 140px">报警内容</div>
+            <div class="listthree listson" style="left: 140px">时间</div>
             <div class="listthree listson" style="left: 220px">报警属性</div>
             <div class="listthree listson" style="left: 300px">操作</div>
           </div>
-          <!-- <div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+          <div style="height: 221px; position: absolute; overflow: auto">
+            <div
+              v-for="(item, index) in sensor.filter((p) => p.status !== 0)"
+              :key="index"
+              style="width: 348px; height: 32px; margin-left: 18px; position: relative; display: flex; align-items: center">
+              <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">{{ index + 1 }}</div>
+              <div class="listtwo listson" style="left: 58px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">
+                {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
+              </div>
+              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">{{ item.updateTime }}</div>
+              <div class="listthree listson" style="left: 220px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div>
+              <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center">查看</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div>
+          <div >
             <div class="listone listson" style="left: 33px">1</div>
             <div class="listtwo listson" style="left: 98px">SHSM1L797700</div>
             <div class="listthree listson" style="left: 234px">"冷藏舱温度异常！当前温度超出安全范围，请立即检查并调整。"</div>
@@ -162,7 +163,7 @@
             <div class="listthree listson underline" style="left: 809px">查看</div>
           </div>
         </div> -->
-          <!-- <div class="leftboxtitle">
+        <!-- <div class="leftboxtitle">
             <div class="arrows">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
@@ -206,23 +207,23 @@
               </div>
             </div>
           </div> -->
+      </div>
+      <div class="leftbotbox" style="position: relative">
+        <div class="leftboxtitle">
+          <div class="arrows1">
+            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
+          </div>
+          <div class="lefttext">传感器异常数量</div>
         </div>
-        <div class="leftbotbox" style="position: relative;">
-          <div class="leftboxtitle">
-            <div class="arrows1">
-              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
-            </div>
-            <div class="lefttext">传感器异常数量</div>
+        <div class="linespan">
+          <div>
+            <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
+            <div style="display: inline-block; margin-left: 5px">传感器</div>
           </div>
-          <div class="linespan">
-            <div>
-              <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
-              <div style="display: inline-block; margin-left: 5px">传感器</div>
-            </div>
-          </div>
-          <div id="line" :style="myChartStyle1" style="position: absolute;top: 100px;"/>
-          
-          <!-- <div class="leftboxtitle">
+        </div>
+        <div id="line" :style="myChartStyle1" style="position: absolute; top: 100px" />
+
+        <!-- <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
@@ -275,24 +276,21 @@
               <div class="messageson underline" style="left: 256px">东北风</div>
             </div>
           </div> -->
-        </div>
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-
-import AMapLoader from '@amap/amap-jsapi-loader';
-import * as echarts from 'echarts';
-import ship from '../static/船舶.json'
-import shiptracking from '../static/船舶跟踪.json'
-import freighttrack from '../static/货物跟踪.json'
+import AMapLoader from "@amap/amap-jsapi-loader";
+import * as echarts from "echarts";
+import ship from "../static/船舶.json";
+import shiptracking from "../static/船舶跟踪.json";
+import freighttrack from "../static/货物跟踪.json";
+import sensor from "../static/传感器.json";
+import containerList from "../static/集装箱.json";
 export default {
-  watch: {
-
-  },
+  watch: {},
   name: "map-view",
 
   data() {
@@ -306,12 +304,14 @@ export default {
       ship: ship,
       shiptracking: shiptracking,
       freighttrack: freighttrack,
+      sensor: sensor,
+      containerList: containerList,
       shipnamearr: [],
-      search: '',
-      thisshop: '',
-      date: '',
-      time: '',
-      week: ''
+      search: "",
+      thisshop: "",
+      date: "",
+      time: "",
+      week: "",
     };
   },
   methods: {
@@ -320,52 +320,27 @@ export default {
 
       var year = date.getFullYear(); //月份从0~11，所以加一
 
-
-      var dateArr = [
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-      ];
+      var dateArr = [date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
       //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
       for (var i = 0; i < dateArr.length; i++) {
         if (dateArr[i] >= 1 && dateArr[i] <= 9) {
           dateArr[i] = "0" + dateArr[i];
         }
       }
-      var strDate =
-        year +
-        "-" +
-        dateArr[0] +
-        "-" +
-        dateArr[1]
+      var strDate = year + "-" + dateArr[0] + "-" + dateArr[1];
 
       //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
       //this.date = strDate;
-      var strtime =
-        dateArr[2] +
-        ":" +
-        dateArr[3] +
-        ":" +
-        dateArr[4];
+      var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
 
       var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-      var strDate1 =
-        year +
-        "/" +
-        dateArr[0] +
-        "/" +
-        dateArr[1]
-      var date1 = new Date(strDate1)
-      let w = week[date1.getDay()]
-      this.week = w
-      this.time = strtime
-      this.date = strDate
-
-
+      var strDate1 = year + "/" + dateArr[0] + "/" + dateArr[1];
+      var date1 = new Date(strDate1);
+      let w = week[date1.getDay()];
+      this.week = w;
+      this.time = strtime;
+      this.date = strDate;
     },
-
 
     datasearch() {
       let underway = 0;
@@ -392,14 +367,12 @@ export default {
           or++;
         }
 
-
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest })
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest });
       });
-      this.yData = [mooring, mooralongside,underway , or]
+      this.yData = [mooring, mooralongside, underway, or];
       console.log(this.yData);
-      this.initEcharts()
+      this.initEcharts();
       console.log(this.shipnamearr, "信息");
-
     },
     initEcharts() {
       // 基本柱状图
@@ -437,8 +410,8 @@ export default {
         },
         series: [
           {
-            name: '靠泊',
-            type: 'bar',
+            name: "靠泊",
+            type: "bar",
             data: this.yData,
             //设置柱子的宽度
             barWidth: 30,
@@ -460,14 +433,7 @@ export default {
               },
             },
           },
-
-
-
-
-
-
-
-        ]
+        ],
       };
       const myChart = echarts.init(document.getElementById("shipbar"));
       myChart.setOption(option);
@@ -530,7 +496,6 @@ export default {
       });
     },
     initAMap() {
-
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
         version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -590,24 +555,22 @@ export default {
         });
     },
     shipsearch() {
-      console.log('search', this.search);
-      let arr = []
+      console.log("search", this.search);
+      let arr = [];
       for (let i = 0; i < this.shipnamearr.length; i++) {
         if (this.search === this.shipnamearr[i].name) {
-          arr.push(this.shipnamearr[i])
+          arr.push(this.shipnamearr[i]);
           console.log(this.shipnamearr);
         }
       }
 
-      this.shipnamearr = arr
-      console.log('search', this.shipnamearr);
+      this.shipnamearr = arr;
+      console.log("search", this.shipnamearr);
     },
     look(e) {
       console.log(e.target.dataset.v);
       this.$router.push({ path: "/about", query: { name: e.target.dataset.v } });
     },
-
-
   },
   mounted() {
     // this.$nextTick(() => {
@@ -617,14 +580,12 @@ export default {
     // console.log("船舶信息", this.ship);
     // console.log("船舶跟踪", this.shiptracking);
     // console.log("货物跟踪", this.freighttrack);
-    this.datasearch()
-    this.currentTime()
+    this.datasearch();
+    this.currentTime();
     setInterval(() => {
-      this.currentTime()
-    }, 500)
+      this.currentTime();
+    }, 500);
     // })
-
-
   },
 
   unmounted() {
@@ -635,10 +596,8 @@ export default {
     if (this.map) {
       this.map.destroy();
     }
-  }
-
-
-}
+  },
+};
 </script>
 <style scoped>
 .home {
@@ -690,7 +649,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main>div {
+.main > div {
   display: inline-block;
 }
 
@@ -775,7 +734,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend>div {
+.shiplegend > div {
   display: inline-block;
 }
 
@@ -975,7 +934,8 @@ export default {
   width: 22px;
 }
 
-.my_marker {}
+.my_marker {
+}
 
 div::-webkit-scrollbar {
   width: 10px;
