@@ -123,7 +123,8 @@
               <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{ item.updateTime.split(":")[0]+":"+item.updateTime.split(":")[1] }}</div>
               <!-- <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div> -->
               <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center"><span v-if="item.status==1" style="color: yellow;">警告</span><span v-if="item.status==2" style="color: red;">异常</span></div>
-              <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer">查看</div>
+       
+              <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer" @click="sensoralarm" :data-v=item.containerNumber >查看</div>
             </div>
           </div>
         </div>
@@ -262,7 +263,11 @@ export default {
       this.time = strtime;
       this.date = strDate;
     },
-
+    //右侧报警信息跳转
+    sensoralarm(e){
+      console.log(e.target.dataset.v);
+      this.$router.push({ path: "conter", query: { name: e.target.dataset.v } });
+    },
     datasearch() {
       let underway = 0;
       let mooring = 0;

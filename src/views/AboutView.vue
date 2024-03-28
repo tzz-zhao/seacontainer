@@ -82,15 +82,15 @@
         </div>
         <div class="titleSec">
           <div>
-            <span>SHANHGAI</span>
-            <span>ETD: 12-12 21:00</span>
+            <span>{{Trajectoryinformation.polName}}</span>
+            <span>ETD:{{Trajectoryinformation.atd}}</span>
           </div>
           <div>
             <img src="../assets/Group 39.svg" />
           </div>
           <div>
-            <span>CHICAGO,LI</span>
-            <span>ETA: 12-30 00:00</span>
+            <span>{{Trajectoryinformation.podName}}</span>
+            <span>ETA: {{Trajectoryinformation.ata}}</span>
           </div>
         </div>
         <div class="listArticle">
@@ -198,26 +198,26 @@ export default {
         // 添加更多坐标点...
       ],
       polyline: null,
+      Trajectoryinformation:{}
     };
   },
   methods: {
     datatreating() {
       console.log(this.receive);
+      this.ship.forEach((item)=>{
+        if(item.nameEn==this.receive){
+          this.Trajectoryinformation=item
+        }
+      })
+      console.log(this.Trajectoryinformation,"右侧信息");
       this.freighttrack.forEach((item) => {
         if (item.vessel == this.receive) {
           const currentcontainerList = this.containerdata.filter((p) => p.containerNumber == item.containerNumber) || [];
           console.log("当前绑定", currentcontainerList);
-          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length]?.status || 0 : 0 });
+          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length-1]?.status || 0 : 0 });
         }
       });
-      // this.containerarr = this.containerdata.map(item => {
-      //   const matchingContainer = this.containerarr.find(container => container.number === item.containerNumber);
-      //   if (matchingContainer) {
-      //     return { number: item.containerNumber, status: matchingContainer.status };
-      //   } else {
-      //     return { number: item.containerNumber, status: 0 };
-      //   }
-      // });
+     
 
       console.log(this.containerarr, "船只关联货物");
     },

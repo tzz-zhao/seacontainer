@@ -116,6 +116,7 @@ export default {
     },
     beforeCreate() {
         console.log(this.$route.query.name);
+        console.log(this.$route.query.last);
     },
     methods: {
         currentTime() {
@@ -186,7 +187,12 @@ export default {
         },
         back() {
 
+           if(typeof(this.last)=="undefined"){
+            this.$router.push("/");
+            
+           }else{
             this.$router.push({ path: "/about", query: { name: this.last } });
+           }
         },
         sensorsearch() {
             console.log(this.search);
