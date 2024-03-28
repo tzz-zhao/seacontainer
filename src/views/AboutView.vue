@@ -48,7 +48,7 @@
               </div>
               <div class="messageson" style="left: 196px" :style="{ color: index % 4 === 0 ? 'red' : '#fff' }"
                 v-text="index % 4 === 0 ? '异常' : '正常'"></div>
-              <div class="messageson underline" style="left: 271px" :data-v=item.number @click="gosensor">查看</div>
+              <div class="messageson underline" style="left: 271px;cursor:pointer" :data-v=item.number @click="gosensor">查看</div>
             </div>
           </div>
         </div>

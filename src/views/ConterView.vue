@@ -23,8 +23,8 @@
                     <span>传感器信息</span>
                 </div>
                 <div class="list-search">
-                    <input placeholder="请输入传感器名称" />
-                    <button>搜索</button>
+                    <input placeholder="请输入传感器名称" style="color: #fff;" v-model="search" />
+                    <button @click="sensorsearch">搜索</button>
                 </div>
                 <div class="list-table">
                     <el-table :data="sensorarr" style="width: 100%"
@@ -35,12 +35,12 @@
                         <el-table-column prop="status" label="状态" width="180">
                             <template slot-scope="scope">
 
-                                <span v-if="scope.row.status==0">正常</span>
-                                <span v-if="scope.row.status==1">警告</span>
-                                <span v-if="scope.row.status==2">异常</span>
+                                <span v-if="scope.row.status == 0">正常</span>
+                                <span v-if="scope.row.status == 1" style="color: yellow;">警告</span>
+                                <span v-if="scope.row.status == 2" style="color: red;">异常</span>
                             </template>
 
-                            
+
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
@@ -88,8 +88,7 @@ export default {
                 { title: "温度", type: "temperature", data: [-8, -33, -24, -30, -10, -12, -10, -8, 10, 5], y: { min: -50, max: 30, interval: 20 } },
                 { title: "湿度", type: "humidity", data: [500, 150, 230, 200, 560, 580, 380, 600], y: { min: 0, max: 800, interval: 200 } },
                 { title: "开关", type: "open", data: [50, 17, 23, 20, 56, 58, 38, 60], y: { min: 0, max: 80, interval: 20 } },
-                { title: "CO2", type: "co2Type", data: [50, 17, 23, 20, 56, 58, 38, 60], y: { min: 0, max: 80, interval: 20 } },
-                { title: "O2", type: "o2Type", data: [50, 17, 23, 20, 36, 38, 38, 40], y: { min: 0, max: 40, interval: 10 } },
+
                 { title: "震动", type: "vibration", data: [50, 17, 23, 20, 36, 38, 38, 40], y: { min: 0, max: 40, interval: 10 } },
             ],
             date: '',
@@ -98,7 +97,8 @@ export default {
             name: '',
             last: '',
             sensordata: sensor,
-            sensorarr: []
+            sensorarr: [],
+            search: ''
 
         }
     },
@@ -170,10 +170,37 @@ export default {
                 }
             })
             console.log(this.sensorarr);
+            for (var i = 0; i < this.sensorarr.length; i++) {
+                for (var j = i + 1; j < this.sensorarr.length; j++) {
+                    if (this.sensorarr[i].equipmentName == this.sensorarr[j].equipmentName) { //第一个等同于第二个，splice方法删除第二个
+                        // this.sensorarr.splice(j, 1);
+
+                        // this.$delete(this.sensorarr, j)
+                        this.$delete(this.sensorarr, i)
+                        j--;
+                    }
+                }
+            }
+            console.log(this.sensorarr);
+
         },
         back() {
 
             this.$router.push({ path: "/about", query: { name: this.last } });
+        },
+        sensorsearch() {
+            console.log(this.search);
+            let arr = []
+            for (let i = 0; i < this.sensorarr.length; i++) {
+                if (this.search === this.sensorarr[i].equipmentName) {
+                    arr.push(this.sensorarr[i])
+                    console.log(this.sensorarr);
+                }
+            }
+
+            this.sensorarr = arr
+            console.log('search', this.sensorarr);
+
         },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2 === 0 && row) {
@@ -464,7 +491,7 @@ export default {
 
 .echartsTable>div {
     width: 48%;
-    height: 31%;
+    height: 49%;
     box-sizing: border-box;
     border: 1px solid #2499BC;
     padding: 1%;

@@ -80,7 +80,7 @@
                 <div class="messageson" style="left: 196px; font-size: 8px">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" style="left: 271px" @click="look" :data-v="item.name">查看</div>
+                <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look" :data-v="item.name">查看</div>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
           </div>
         </div> -->
       </div>
-      <div class="mainleft">
+      <div class="mainleft" >
         <div class="leftbox" style="background: #031027">
           <div class="leftboxtitle">
             <div class="arrows1">
@@ -120,95 +120,13 @@
               <div class="listtwo listson" style="left: 58px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
-              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">{{ item.updateTime }}</div>
-              <div class="listthree listson" style="left: 220px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div>
-              <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center">查看</div>
+              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{ item.updateTime }}</div>
+              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div>
+              <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer">查看</div>
             </div>
           </div>
         </div>
-        <!-- <div>
-          <div >
-            <div class="listone listson" style="left: 33px">1</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797700</div>
-            <div class="listthree listson" style="left: 234px">"冷藏舱温度异常！当前温度超出安全范围，请立即检查并调整。"</div>
-            <div class="listthree listson" style="left: 737px">温度</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
-            <div class="listone listson" style="left: 33px">2</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
-            <div class="listthree listson" style="left: 234px">"湿度异常报警！冷藏舱湿度超出设定范围，请及时处理以避免货物受潮。"</div>
-            <div class="listthree listson" style="left: 737px">湿度</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">3</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
-            <div class="listthree listson" style="left: 234px">"位置异常报警！集装箱位置偏离计划路线，请尽快核实并调整航行方向。"</div>
-            <div class="listthree listson" style="left: 737px">位置</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
-            <div class="listone listson" style="left: 33px">4</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
-            <div class="listthree listson" style="left: 234px">"通风系统故障报警！集装箱内通风系统发生故障，请立即检查并修复。"</div>
-            <div class="listthree listson" style="left: 737px">通风</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">5</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
-            <div class="listthree listson" style="left: 234px">"供电系统故障！冷藏设备停止运行，请立即检查供电系统并采取应急措施。"</div>
-            <div class="listthree listson" style="left: 737px">供电</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-        </div> -->
-        <!-- <div class="leftboxtitle">
-            <div class="arrows">
-              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
-            </div>
-            <div class="lefttext">新闻咨询</div>
-          </div>
-          <div class="searchdiv" style="margin-left: 24px; margin-top: 30px">
-            <div style="width: 332px; height: 56px" class="active">
-              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
-                <div>
-                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
-                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
-                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
-                </div>
-              </div>
-            </div>
-            <div style="width: 332px; height: 56px">
-              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
-                <div>
-                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
-                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
-                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
-                </div>
-              </div>
-            </div>
-            <div style="width: 332px; height: 56px" class="active">
-              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
-                <div>
-                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
-                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
-                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
-                </div>
-              </div>
-            </div>
-            <div style="width: 332px; height: 56px">
-              <div style="margin: 10px 15px 2.53px 15px; position: absolute; width: 302px; font-size: 14px; opacity: 0.9">
-                <div>
-                  <div style="width: 100%; position: absolute; left: 0; top: 0">台湾国际港口升级高雄码头设施</div>
-                  <div style="position: absolute; left: 0; top: 23px">2024年3月22日</div>
-                  <div style="position: absolute; right: 0; top: 11px" class="underline">详情</div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-      </div>
-      <div class="leftbotbox" style="position: relative">
+        <div class="leftbotbox" style="position: relative">
         <div class="leftboxtitle">
           <div class="arrows1">
             <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -277,6 +195,8 @@
             </div>
           </div> -->
       </div>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -687,6 +607,7 @@ export default {
 
 .mainleft {
   padding: 0 23px;
+  
 }
 
 .leftboxtitle {
