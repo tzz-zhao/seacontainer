@@ -3,9 +3,15 @@
     <div class="head">
       <div class="headtitle">货运管理平台</div>
       <div class="headtext">
-        <span class="headtime"> 2023-12-16 </span>
-        <span class="headtime" style="margin-left: 25px"> 周四 </span>
-        <span class="headtime"> 上午10:15 </span>
+        <span class="headtime">
+          {{ date }}
+        </span>
+        <span class="headtime" style="margin-left: 25px;">
+          {{ week }}
+        </span>
+        <span class="headtime">
+          {{ time }}
+        </span>
       </div>
     </div>
     <div class="main">
@@ -22,7 +28,7 @@
               <img src="../assets/search.svg" alt="" />
             </div>
             <!-- <div class="searchtext">请输入船名</div> -->
-            <input v-model="search" type="text" placeholder="请输入船名" class="searchtext" />
+            <input v-model="search" type="text" placeholder="请输入集装箱编号" class="searchtext" />
           </div>
           <div class="searchbutton" @click="shipsearch">搜索</div>
         </div>
@@ -238,9 +244,67 @@ export default {
       shipnamearr: [],
       search: "",
       thisshop: "",
+      date: '',
+      time: '',
+      week: '',
+      receive:'',
+      containerarr:[]
     };
   },
   methods: {
+    datatreating(){
+      this.freighttrack.forEach((item)=>{
+        if(item.vessel==this.receive){
+          this.containerarr.push({number:item.referenceNo})
+        }
+      })
+    },
+    currentTime() {
+      var date = new Date();
+      var year = date.getFullYear(); //月份从0~11，所以加一
+      var dateArr = [
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+      ];
+      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+      for (var i = 0; i < dateArr.length; i++) {
+        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+          dateArr[i] = "0" + dateArr[i];
+        }
+      }
+      var strDate =
+        year +
+        "-" +
+        dateArr[0] +
+        "-" +
+        dateArr[1]
+
+      //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
+      //this.date = strDate;
+      var strtime =
+        dateArr[2] +
+        ":" +
+        dateArr[3] +
+        ":" +
+        dateArr[4];
+
+      var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      var strDate1 =
+        year +
+        "/" +
+        dateArr[0] +
+        "/" +
+        dateArr[1]
+      var date1 = new Date(strDate1)
+      let w = week[date1.getDay()]
+      this.week = w
+      this.time = strtime
+      this.date = strDate
+    },
+
     gosensor(){
       this.$router.push('conter')
     },
@@ -385,6 +449,7 @@ export default {
     },
     shipsearch() {
       console.log(this.search);
+
     },
   },
   mounted() {
@@ -394,6 +459,10 @@ export default {
     console.log("船舶跟踪", this.shiptracking);
     console.log("货物跟踪", this.freighttrack);
     this.datasearch();
+    this.currentTime()
+    setInterval(() => {
+      this.currentTime()
+    }, 500)
   },
   unmounted() {
     this.map?.destroy();
@@ -404,6 +473,10 @@ export default {
       this.map.destroy();
     }
   },
+  beforeCreate(){
+    console.log(this.$route.query.name,"接受信息");
+    this.receive=this.$route.query.name
+  }
 };
 </script>
 <style scoped>
@@ -815,7 +888,7 @@ div::-webkit-scrollbar-corner {
   box-sizing: border-box;
   margin: 20px 16px;
   padding: 0 15px;
-  height: 529px;
+  height: 514px;
   overflow: auto;
 }
 .listArticle > div:nth-child(1) {
