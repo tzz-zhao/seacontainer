@@ -3,7 +3,7 @@
         "equipmentId": 1,
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:00:00",
         "value": -1.2,
         "status": 0
@@ -12,7 +12,7 @@
         "equipmentId": 1,
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:30:00",
         "value": -1.5,
         "status": 0
@@ -21,7 +21,7 @@
         "equipmentId": 1,
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:00:00",
         "value": -1.3,
         "status": 0
@@ -30,7 +30,7 @@
         "equipmentId": 1,
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:30:00",
         "value": -2.2,
         "status": 0
@@ -39,7 +39,7 @@
         "equipmentId": 1,
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 13:00:00",
         "value": 1.2,
         "status": 1
@@ -48,7 +48,7 @@
         "equipmentId": 1,
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 13:30:00",
         "value": 1.1,
         "status": 2
@@ -57,7 +57,7 @@
         "equipmentId": 2,
         "equipmentName": "湿度传感器1",
         "equipmentType": "humidity",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:00:00",
         "value": 0.66,
         "status": 0
@@ -66,7 +66,7 @@
         "equipmentId": 2,
         "equipmentName": "湿度传感器1",
         "equipmentType": "humidity",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:30:00",
         "value": 0.68,
         "status": 0
@@ -75,7 +75,7 @@
         "equipmentId": 2,
         "equipmentName": "湿度传感器1",
         "equipmentType": "humidity",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:00:00",
         "value": 0.63,
         "status": 0
@@ -84,7 +84,7 @@
         "equipmentId": 2,
         "equipmentName": "湿度传感器1",
         "equipmentType": "humidity",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:30:00",
         "value": 0.66,
         "status": 0
@@ -93,7 +93,7 @@
         "equipmentId": 2,
         "equipmentName": "湿度传感器1",
         "equipmentType": "humidity",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 13:00:00",
         "value": 0.46,
         "status": 2
@@ -102,7 +102,7 @@
         "equipmentId": 3,
         "equipmentName": "开关传感器1",
         "equipmentType": "open",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:00:00",
         "value": false,
         "status": 0
@@ -111,7 +111,7 @@
         "equipmentId": 3,
         "equipmentName": "开关传感器1",
         "equipmentType": "open",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:30:00",
         "value": false,
         "status": 0
@@ -120,7 +120,7 @@
         "equipmentId": 3,
         "equipmentName": "开关传感器1",
         "equipmentType": "open",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:00:00",
         "value": false,
         "status": 0
@@ -129,7 +129,7 @@
         "equipmentId": 3,
         "equipmentName": "开关传感器1",
         "equipmentType": "open",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:30:00",
         "value": false,
         "status": 0
@@ -138,7 +138,7 @@
         "equipmentId": 3,
         "equipmentName": "开关传感器1",
         "equipmentType": "open",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 13:00:00",
         "value": false,
         "status": 0
@@ -147,7 +147,7 @@
         "equipmentId": 4,
         "equipmentName": "震动传感器1",
         "equipmentType": "vibration",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:00:00",
         "value": 0.5,
         "status": 0
@@ -156,7 +156,7 @@
         "equipmentId": 4,
         "equipmentName": "震动传感器1",
         "equipmentType": "vibration",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 11:30:00",
         "value": 0.8,
         "status": 0
@@ -165,7 +165,7 @@
         "equipmentId": 4,
         "equipmentName": "震动传感器1",
         "equipmentType": "vibration",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:00:00",
         "value": 1.5,
         "status": 0
@@ -174,7 +174,7 @@
         "equipmentId": 4,
         "equipmentName": "震动传感器1",
         "equipmentType": "vibration",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 12:30:00",
         "value": 0.5,
         "status": 0
@@ -183,7 +183,7 @@
         "equipmentId": 4,
         "equipmentName": "震动传感器1",
         "equipmentType": "vibration",
-        "containerNumber": "MAEU234640215",
+        "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-27 13:00:00",
         "value": 2.5,
         "status": 1
