@@ -200,7 +200,7 @@ export default {
         if (item.vessel == this.receive) {
           const currentcontainerList = this.containerdata.filter((p) => p.containerNumber == item.containerNumber) || [];
           console.log("当前绑定", currentcontainerList);
-          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length]?.status || 0 : 0 });
+          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length -1]?.status || 0 : 0 });
         }
       });
       // this.containerarr = this.containerdata.map(item => {
