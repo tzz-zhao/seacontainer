@@ -25,15 +25,15 @@
           </div>
           <div class="shiplegend">
             <div>
-              <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
+              <div style="background-color: #CBD1D7; width: 8px; height: 8px; display: inline-block" />
               <div style="display: inline-block; margin-left: 5px">锚泊</div>
             </div>
             <div style="margin-left: 30px">
-              <div style="background-color: #4ec09a; width: 8px; height: 8px; display: inline-block" />
+              <div style="background-color: #5B8FF9; width: 8px; height: 8px; display: inline-block" />
               <div style="display: inline-block; margin-left: 5px">靠泊</div>
             </div>
             <div style="margin-left: 30px">
-              <div style="background-color: #cbd1d7; width: 8px; height: 8px; display: inline-block" />
+              <div style="background-color: #5AD8A6; width: 8px; height: 8px; display: inline-block" />
               <div style="display: inline-block; margin-left: 5px">在航</div>
             </div>
             <div style="margin-left: 30px">
@@ -111,6 +111,58 @@
       <div class="mainleft">
         <div class="leftbox" style="background: #031027">
           <div class="leftboxtitle">
+            <div class="arrows1">
+              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
+            </div>
+            <div class="lefttext">报警信息</div>
+          </div>
+
+          <div class="listtitle"
+            style="width: 348px; height: 32px; margin-left: 18px; position: relative;line-height: 20px;">
+            <div class="listone listson" style="left: 10px">序号</div>
+            <div class="listtwo listson" style="left: 58px">所属货船</div>
+            <div class="listthree listson" style="left: 140px">报警内容</div>
+            <div class="listthree listson" style="left: 220px">报警属性</div>
+            <div class="listthree listson" style="left: 300px">操作</div>
+          </div>
+          <!-- <div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+            <div class="listone listson" style="left: 33px">1</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797700</div>
+            <div class="listthree listson" style="left: 234px">"冷藏舱温度异常！当前温度超出安全范围，请立即检查并调整。"</div>
+            <div class="listthree listson" style="left: 737px">温度</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
+          </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
+            <div class="listone listson" style="left: 33px">2</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
+            <div class="listthree listson" style="left: 234px">"湿度异常报警！冷藏舱湿度超出设定范围，请及时处理以避免货物受潮。"</div>
+            <div class="listthree listson" style="left: 737px">湿度</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
+          </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+            <div class="listone listson" style="left: 33px">3</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
+            <div class="listthree listson" style="left: 234px">"位置异常报警！集装箱位置偏离计划路线，请尽快核实并调整航行方向。"</div>
+            <div class="listthree listson" style="left: 737px">位置</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
+          </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
+            <div class="listone listson" style="left: 33px">4</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
+            <div class="listthree listson" style="left: 234px">"通风系统故障报警！集装箱内通风系统发生故障，请立即检查并修复。"</div>
+            <div class="listthree listson" style="left: 737px">通风</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
+          </div>
+          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
+            <div class="listone listson" style="left: 33px">5</div>
+            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
+            <div class="listthree listson" style="left: 234px">"供电系统故障！冷藏设备停止运行，请立即检查供电系统并采取应急措施。"</div>
+            <div class="listthree listson" style="left: 737px">供电</div>
+            <div class="listthree listson underline" style="left: 809px">查看</div>
+          </div>
+        </div> -->
+          <!-- <div class="leftboxtitle">
             <div class="arrows">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
@@ -153,10 +205,24 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
-        <div class="leftbotbox">
+        <div class="leftbotbox" style="position: relative;">
           <div class="leftboxtitle">
+            <div class="arrows1">
+              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
+            </div>
+            <div class="lefttext">传感器异常数量</div>
+          </div>
+          <div class="linespan">
+            <div>
+              <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
+              <div style="display: inline-block; margin-left: 5px">传感器</div>
+            </div>
+          </div>
+          <div id="line" :style="myChartStyle1" style="position: absolute;top: 100px;"/>
+          
+          <!-- <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
@@ -208,79 +274,20 @@
               <div class="messageson" style="left: 156px">阴</div>
               <div class="messageson underline" style="left: 256px">东北风</div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <div class="foot">
       <div class="ftleft">
-        <div class="leftboxtitle">
-          <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
-          </div>
-          <div class="lefttext">报警信息</div>
-        </div>
 
-        <div class="listtitle" style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-          <div class="listone listson" style="left: 33px">序号</div>
-          <div class="listtwo listson" style="left: 98px">所属货船</div>
-          <div class="listthree listson" style="left: 234px">报警内容</div>
-          <div class="listthree listson" style="left: 737px">报警属性</div>
-          <div class="listthree listson" style="left: 809px">操作</div>
-        </div>
-        <div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">1</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797700</div>
-            <div class="listthree listson" style="left: 234px">"冷藏舱温度异常！当前温度超出安全范围，请立即检查并调整。"</div>
-            <div class="listthree listson" style="left: 737px">温度</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
-            <div class="listone listson" style="left: 33px">2</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
-            <div class="listthree listson" style="left: 234px">"湿度异常报警！冷藏舱湿度超出设定范围，请及时处理以避免货物受潮。"</div>
-            <div class="listthree listson" style="left: 737px">湿度</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">3</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
-            <div class="listthree listson" style="left: 234px">"位置异常报警！集装箱位置偏离计划路线，请尽快核实并调整航行方向。"</div>
-            <div class="listthree listson" style="left: 737px">位置</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
-            <div class="listone listson" style="left: 33px">4</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
-            <div class="listthree listson" style="left: 234px">"通风系统故障报警！集装箱内通风系统发生故障，请立即检查并修复。"</div>
-            <div class="listthree listson" style="left: 737px">通风</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">5</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
-            <div class="listthree listson" style="left: 234px">"供电系统故障！冷藏设备停止运行，请立即检查供电系统并采取应急措施。"</div>
-            <div class="listthree listson" style="left: 737px">供电</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-        </div>
+
+
       </div>
       <div />
       <div class="ftright">
-        <div class="leftboxtitle">
-          <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
-          </div>
-          <div class="lefttext">传感器异常数量</div>
-        </div>
-        <div id="line" :style="myChartStyle1" />
-        <div class="linespan">
-          <div>
-            <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
-            <div style="display: inline-block; margin-left: 5px">传感器</div>
-          </div>
-        </div>
+
+
       </div>
     </div>
   </div>
@@ -306,7 +313,7 @@ export default {
       xData1: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"], //横坐标
       yData1: [600, 300, 200, 350, 250, 650, 750, 450, 750, 550, 750, 650], //数据
       myChartStyle: { float: "left", width: "95%", height: "290px" }, //图表样式
-      myChartStyle1: { float: "left", width: "90%", height: "200px" }, //图表样式
+      myChartStyle1: { float: "left", width: "95%", height: "250px" }, //图表样式
       ship: ship,
       shiptracking: shiptracking,
       freighttrack: freighttrack,
@@ -397,22 +404,22 @@ export default {
         }
 
 
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat],flagName:item.flagName,dest:item.dest })
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest })
       });
-      this.yData = [underway, mooring, mooralongside, or]
+      this.yData = [mooring, mooralongside,underway , or]
       console.log(this.yData);
       this.initEcharts()
-      console.log(this.shipnamearr,"信息");
+      console.log(this.shipnamearr, "信息");
 
     },
     initEcharts() {
       // 基本柱状图
       const option = {
         // legend: { data: ["锚泊", "靠泊", "在航", "其他"] },
-  //       legend: {
-  //   show: true,
-  //   data: ["锚泊", "靠泊", "在航", "其他"]
-  // },
+        //       legend: {
+        //   show: true,
+        //   data: ["锚泊", "靠泊", "在航", "其他"]
+        // },
         xAxis: {
           type: "category",
           data: ["锚泊", "靠泊", "在航", "其他"],
@@ -452,7 +459,7 @@ export default {
               normal: {
                 //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                 color: function (params) {
-                  var colorList = ["#5AD8A6", "#5B8FF9", "#ECECEC", "#F6BD16"];
+                  var colorList = ["#CBD1D7", "#5B8FF9", "#5AD8A6", "#D3AA22"];
                   return colorList[params.dataIndex];
                 },
               },
@@ -464,7 +471,7 @@ export default {
               },
             },
           },
-          
+
 
 
 
@@ -534,7 +541,7 @@ export default {
       });
     },
     initAMap() {
-     
+
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
         version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -594,23 +601,23 @@ export default {
         });
     },
     shipsearch() {
-      console.log('search',this.search);
+      console.log('search', this.search);
       let arr = []
-      for(let i=0;i< this.shipnamearr.length;i++){
-        if(this.search===this.shipnamearr[i].name){
+      for (let i = 0; i < this.shipnamearr.length; i++) {
+        if (this.search === this.shipnamearr[i].name) {
           arr.push(this.shipnamearr[i])
           console.log(this.shipnamearr);
         }
       }
 
       this.shipnamearr = arr
-      console.log('search',this.shipnamearr);
+      console.log('search', this.shipnamearr);
     },
     look(e) {
       console.log(e.target.dataset.v);
-      this.$router.push({ path:"/about",query: { name: e.target.dataset.v } });
+      this.$router.push({ path: "/about", query: { name: e.target.dataset.v } });
     },
-    
+
 
   },
   mounted() {
@@ -630,7 +637,7 @@ export default {
 
 
   },
-  
+
   unmounted() {
     this.map?.destroy();
   },
@@ -694,7 +701,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main > div {
+.main>div {
   display: inline-block;
 }
 
@@ -779,7 +786,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend > div {
+.shiplegend>div {
   display: inline-block;
 }
 
@@ -875,9 +882,11 @@ export default {
 .listtwo {
   left: 146px;
 }
-.listfour{
+
+.listfour {
   left: 196px;
 }
+
 .listthree {
   left: 271px;
 }
@@ -934,8 +943,8 @@ export default {
 
 .linespan {
   position: absolute;
-  right: 41px;
-  top: 139px;
+  right: 170px;
+  top: 64px;
   font-size: 14px;
 }
 
@@ -977,8 +986,7 @@ export default {
   width: 22px;
 }
 
-.my_marker {
-}
+.my_marker {}
 
 div::-webkit-scrollbar {
   width: 10px;
