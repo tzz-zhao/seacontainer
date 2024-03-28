@@ -6,14 +6,19 @@
         <span class="headtime">
           {{ date }}
         </span>
-        <span class="headtime" style="margin-left: 25px;">
+        <span class="headtime" style="margin-left: 25px">
           {{ week }}
         </span>
         <span class="headtime">
           {{ time }}
         </span>
-        <div class="back"><img src="../assets/return.svg" style="width: 18px;position: absolute;top: 2px;" /><span
-            @click="back" style="font-size: 14px;position: absolute;top: 2px;width: 50px;left: 11px;">返回</span></div>
+        <div class="back">
+          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px" /><span
+            @click="back"
+            style="font-size: 14px; position: absolute; top: 2px; width: 50px; left: 11px"
+            >返回</span
+          >
+        </div>
       </div>
     </div>
     <div class="main">
@@ -46,9 +51,12 @@
               <div class="messageson" style="left: 33px">
                 {{ item.number }}
               </div>
-              <div class="messageson" style="left: 196px" :style="{ color: index % 4 === 0 ? 'red' : '#fff' }"
-                v-text="index % 4 === 0 ? '异常' : '正常'"></div>
-              <div class="messageson underline" style="left: 271px;cursor:pointer" :data-v=item.number @click="gosensor">查看</div>
+              <div
+                class="messageson"
+                style="left: 196px"
+                :style="{ color: item.status === 0 ? '#fff' : item.status === 1 ? 'yellow' : 'red' }"
+                v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
+              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number" @click="gosensor">查看</div>
             </div>
           </div>
         </div>
@@ -150,7 +158,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -160,7 +167,7 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 import ship from "../static/船舶.json";
 import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
-import containerdata from '../static/集装箱.json'
+import containerdata from "../static/集装箱.json";
 export default {
   watch: {},
   name: "map-view",
@@ -179,11 +186,11 @@ export default {
       shipnamearr: [],
       search: "",
       thisshop: "",
-      date: '',
-      time: '',
-      week: '',
-      receive: '',
-      containerarr: []
+      date: "",
+      time: "",
+      week: "",
+      receive: "",
+      containerarr: [],
     };
   },
   methods: {
@@ -191,23 +198,11 @@ export default {
       console.log(this.receive);
       this.freighttrack.forEach((item) => {
         if (item.vessel == this.receive) {
-          this.containerarr.push({ number: item.containerNumber })
-
+          const currentcontainerList = this.containerdata.filter((p) => p.containerNumber == item.containerNumber) || [];
+          console.log("当前绑定", currentcontainerList);
+          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length]?.status || 0 : 0 });
         }
-
-
-
-      })
-      console.log(this.containerarr, "船只关联货物");
-      for (let i = 0; i < this.containerarr; i++) {
-        for (let j = 0; j < this.containerdata.length; j++) {
-          if(this.containerdata[j].containerNumber==this.containerarr[i].number){
-            console.log(j);
-          }else{
-            console.log(false);
-          }
-        }
-      }
+      });
       // this.containerarr = this.containerdata.map(item => {
       //   const matchingContainer = this.containerarr.find(container => container.number === item.containerNumber);
       //   if (matchingContainer) {
@@ -217,59 +212,36 @@ export default {
       //   }
       // });
 
-
       console.log(this.containerarr, "船只关联货物");
     },
     currentTime() {
       var date = new Date();
       var year = date.getFullYear(); //月份从0~11，所以加一
-      var dateArr = [
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-      ];
+      var dateArr = [date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
       //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
       for (var i = 0; i < dateArr.length; i++) {
         if (dateArr[i] >= 1 && dateArr[i] <= 9) {
           dateArr[i] = "0" + dateArr[i];
         }
       }
-      var strDate =
-        year +
-        "-" +
-        dateArr[0] +
-        "-" +
-        dateArr[1]
+      var strDate = year + "-" + dateArr[0] + "-" + dateArr[1];
 
       //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
       //this.date = strDate;
-      var strtime =
-        dateArr[2] +
-        ":" +
-        dateArr[3] +
-        ":" +
-        dateArr[4];
+      var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
 
       var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-      var strDate1 =
-        year +
-        "/" +
-        dateArr[0] +
-        "/" +
-        dateArr[1]
-      var date1 = new Date(strDate1)
-      let w = week[date1.getDay()]
-      this.week = w
-      this.time = strtime
-      this.date = strDate
+      var strDate1 = year + "/" + dateArr[0] + "/" + dateArr[1];
+      var date1 = new Date(strDate1);
+      let w = week[date1.getDay()];
+      this.week = w;
+      this.time = strtime;
+      this.date = strDate;
     },
 
     gosensor(e) {
       console.log(e.target.dataset.v);
-      this.$router.push({ path: "conter", query: { name: e.target.dataset.v ,last:this.receive} });
-      
+      this.$router.push({ path: "conter", query: { name: e.target.dataset.v, last: this.receive } });
     },
 
     datasearch() {
@@ -310,8 +282,8 @@ export default {
                         <div class="marker" style="color:#fff;background:#0060B5 ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
                            ${this.shipnamearr[i].num}
                         </div>
-                        
-                        
+
+
                   </div>`,
               offset: new AMap.Pixel(-15, -20),
             });
@@ -347,32 +319,30 @@ export default {
         });
     },
     shipsearch() {
-
-      console.log('search', this.search);
-      let arr = []
+      console.log("search", this.search);
+      let arr = [];
       for (let i = 0; i < this.containerarr.length; i++) {
         if (this.search === this.containerarr[i].number) {
-          arr.push(this.containerarr[i])
+          arr.push(this.containerarr[i]);
           console.log(this.containerarr);
         }
       }
 
-      this.containerarr = arr
-      console.log('search', this.containerarr);
-
+      this.containerarr = arr;
+      console.log("search", this.containerarr);
     },
     back() {
-      this.$router.push('/')
-    }
+      this.$router.push("/");
+    },
   },
   mounted() {
-    this.currentTime()
+    this.currentTime();
     setInterval(() => {
-      this.currentTime()
-    }, 500)
+      this.currentTime();
+    }, 500);
 
-    this.receive = this.$route.query.name
-    this.datatreating()
+    this.receive = this.$route.query.name;
+    this.datatreating();
     this.datasearch();
     this.initAMap();
     console.log("船舶信息", this.ship);
@@ -380,7 +350,7 @@ export default {
     console.log("集装箱", this.containerdata);
     console.log("货物跟踪", this.freighttrack);
   },
-   
+
   unmounted() {
     this.map?.destroy();
   },
@@ -392,10 +362,7 @@ export default {
   },
   beforeCreate() {
     console.log(this.$route.query.name, "接受信息");
-  
-    
-
-  }
+  },
 };
 </script>
 <style scoped>
@@ -448,7 +415,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main>div {
+.main > div {
   display: inline-block;
 }
 
@@ -533,7 +500,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend>div {
+.shiplegend > div {
   display: inline-block;
 }
 
@@ -729,7 +696,8 @@ export default {
   width: 22px;
 }
 
-.my_marker {}
+.my_marker {
+}
 
 div::-webkit-scrollbar {
   width: 10px;
@@ -782,7 +750,7 @@ div::-webkit-scrollbar-corner {
   justify-content: space-between;
 }
 
-.title>div>span {
+.title > div > span {
   margin: 0 15px;
 }
 
@@ -798,12 +766,12 @@ div::-webkit-scrollbar-corner {
   border-bottom: 1px solid #ebebeb;
 }
 
-.titleSec>div {
+.titleSec > div {
   display: flex;
   flex-direction: column;
 }
 
-.titleSec>div>img {
+.titleSec > div > img {
   width: 60px;
   height: 8.8px;
   margin: 0 10px;
@@ -817,74 +785,74 @@ div::-webkit-scrollbar-corner {
   overflow: auto;
 }
 
-.listArticle>div:nth-child(1) {
+.listArticle > div:nth-child(1) {
   display: flex;
   align-items: center;
 }
 
-.listArticle>div:nth-child(1)>img {
+.listArticle > div:nth-child(1) > img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle>div:nth-child(2) {
+.listArticle > div:nth-child(2) {
   height: 26px;
-  border-left: 1px solid #2CE7E7;
+  border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle>div:nth-child(3) {
+.listArticle > div:nth-child(3) {
   display: flex;
   align-items: center;
 }
 
-.listArticle>div:nth-child(3)>img {
+.listArticle > div:nth-child(3) > img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle>div:nth-child(4) {
-  border-left: 1px solid #2CE7E7;
+.listArticle > div:nth-child(4) {
+  border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle>div:nth-child(4)>div {
+.listArticle > div:nth-child(4) > div {
   margin: 20px 29px;
 }
 
-.listArticle>div:nth-child(4)>div>div {
+.listArticle > div:nth-child(4) > div > div {
   height: 18px;
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
 
-.listArticle>div:nth-child(5) {
+.listArticle > div:nth-child(5) {
   display: flex;
   align-items: center;
 }
 
-.listArticle>div:nth-child(5)>img {
+.listArticle > div:nth-child(5) > img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle>div:nth-child(6) {
-  border-left: 1px solid #D0D0D0;
+.listArticle > div:nth-child(6) {
+  border-left: 1px solid #d0d0d0;
   margin-left: 10px;
 }
 
-.listArticle>div:nth-child(6)>div {
+.listArticle > div:nth-child(6) > div {
   margin: 20px 29px;
 }
 
-.listArticle>div:nth-child(6)>div>div {
+.listArticle > div:nth-child(6) > div > div {
   height: 18px;
   padding: 10px 0;
   display: flex;
