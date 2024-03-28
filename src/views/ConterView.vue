@@ -28,12 +28,19 @@
                 </div>
                 <div class="list-table">
                     <el-table :data="sensorarr" style="width: 100%"
-                        :header-cell-style="{ background: '#11517C', color: 'white' }" :cell-style="tableCell"
-                        :highlight-current-row="false" :row-class-name="tableRowClassName">
+                        :header-cell-style="{ background: '#11517C', color: 'white' }" :highlight-current-row="false"
+                        :row-class-name="tableRowClassName">
                         <el-table-column prop="equipmentName" label="传感器名称" width="180">
                         </el-table-column>
                         <el-table-column prop="status" label="状态" width="180">
-                            {{ status ==0 ? "正常" : (status==1?"警告":"异常") }}
+                            <template slot-scope="scope">
+
+                                <span v-if="scope.row.status==0">正常</span>
+                                <span v-if="scope.row.status==1">警告</span>
+                                <span v-if="scope.row.status==2">异常</span>
+                            </template>
+
+                            
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
@@ -88,16 +95,16 @@ export default {
             date: '',
             time: '',
             week: '',
-            name:'',
-            last:'',
-            sensordata:sensor,
-            sensorarr:[]
-            
+            name: '',
+            last: '',
+            sensordata: sensor,
+            sensorarr: []
+
         }
     },
     mounted() {
-        this.name=this.$route.query.name
-        this.last=this.$route.query.last
+        this.name = this.$route.query.name
+        this.last = this.$route.query.last
         this.echartsData.forEach(item => {
             this.tempType(item)
         })
@@ -107,7 +114,7 @@ export default {
             this.currentTime()
         }, 500)
     },
-    beforeCreate(){
+    beforeCreate() {
         console.log(this.$route.query.name);
     },
     methods: {
@@ -156,17 +163,17 @@ export default {
             this.time = strtime
             this.date = strDate
         },
-        datadispose(){
-            this.sensordata.forEach((item)=>{
-                if(this.name==item.containerNumber){
-                    this.sensorarr.push({equipmentName:item.equipmentName,status:item.status})
+        datadispose() {
+            this.sensordata.forEach((item) => {
+                if (this.name == item.containerNumber) {
+                    this.sensorarr.push({ equipmentName: item.equipmentName, status: item.status })
                 }
             })
             console.log(this.sensorarr);
         },
         back() {
-        
-            this.$router.push({ path: "/about", query: { name: this.last} });
+
+            this.$router.push({ path: "/about", query: { name: this.last } });
         },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2 === 0 && row) {
@@ -175,17 +182,17 @@ export default {
                 return 'success-row';
             }
         },
-        tableCell({ row, column, rowIndex, columnIndex }) {
-            if (row.status == 2 && columnIndex === 1) {
-                console.log(column, rowIndex);
-                return "color:red"
-            } else if (row.status == 1 && columnIndex === 1) {
-                return "color:orange"
-            }
-            else {
-                return "color:white"
-            }
-        },
+        // tableCell({ row, column, rowIndex, columnIndex }) {
+        //     if (row.status == 2 && columnIndex === 1) {
+        //         console.log(column, rowIndex);
+        //         return "color:red"
+        //     } else if (row.status == 1 && columnIndex === 1) {
+        //         return "color:orange"
+        //     }
+        //     else {
+        //         return "color:white"
+        //     }
+        // },
         tempType(item) {
             var chartDom = document.getElementById(`${item.type}`);
             var myChart = echarts.init(chartDom);
@@ -400,7 +407,7 @@ export default {
     margin-top: 11px;
     width: 463px;
     height: 720px;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 ::v-deep .el-table .el-table__body tr:hover>td {
@@ -466,7 +473,8 @@ export default {
 .echartsTable>div .echartImg {
     height: 90%;
 }
-.headtime{
+
+.headtime {
     color: #fff;
     font-family: "Microsoft YaHei";
     font-size: 12px;
@@ -474,27 +482,28 @@ export default {
     font-weight: 400;
     line-height: 14px
 }
+
 div::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  /**/
+    width: 10px;
+    height: 10px;
+    /**/
 }
 
 div::-webkit-scrollbar-track {
-  background: rgb(239, 239, 239);
-  border-radius: 2px;
+    background: rgb(239, 239, 239);
+    border-radius: 2px;
 }
 
 div::-webkit-scrollbar-thumb {
-  background: #bfbfbf;
-  border-radius: 10px;
+    background: #bfbfbf;
+    border-radius: 10px;
 }
 
 div::-webkit-scrollbar-thumb:hover {
-  background: #333;
+    background: #333;
 }
 
 div::-webkit-scrollbar-corner {
-  background: #179a16;
+    background: #179a16;
 }
 </style>
