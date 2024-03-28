@@ -12,7 +12,8 @@
         <span class="headtime">
           {{ time }}
         </span>
-        <div class="back"><img src="../assets/return.svg"  style="width: 18px;position: absolute;top: 2px;"/><span @click="back" style="font-size: 14px;position: absolute;top: 2px;width: 50px;left: 11px;">返回</span></div>
+        <div class="back"><img src="../assets/return.svg" style="width: 18px;position: absolute;top: 2px;" /><span
+            @click="back" style="font-size: 14px;position: absolute;top: 2px;width: 50px;left: 11px;">返回</span></div>
       </div>
     </div>
     <div class="main">
@@ -41,12 +42,13 @@
           </div>
 
           <div style="overflow-x: hidden; position: absolute; width: 332px; height: 552px">
-            <div v-for="(item, index) in 20" :key="index" class="shipmessage" style="top: 0px">
+            <div v-for="(item, index) in containerarr" :key="index" class="shipmessage" style="top: 0px">
               <div class="messageson" style="left: 33px">
-                {{ "集装箱" + index.toString().padStart(4, "0") }}
+                {{ item.number }}
               </div>
-              <div class="messageson" style="left: 196px" :style="{ color: index % 4 === 0 ? 'red' : '#fff' }" v-text="index % 4 === 0 ? '异常' : '正常'"></div>
-              <div class="messageson underline" style="left: 271px" :data-v="item.name" @click="gosensor">查看</div>
+              <div class="messageson" style="left: 196px" :style="{ color: index % 4 === 0 ? 'red' : '#fff' }"
+                v-text="index % 4 === 0 ? '异常' : '正常'"></div>
+              <div class="messageson underline" style="left: 271px" :data-v=item.number @click="gosensor">查看</div>
             </div>
           </div>
         </div>
@@ -148,86 +150,17 @@
         </div>
       </div>
     </div>
-    <div class="foot">
-      <div class="ftleft">
-        <div class="leftboxtitle">
-          <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
-          </div>
-          <div class="lefttext">报警信息</div>
-        </div>
 
-        <div class="listtitle" style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-          <div class="listone listson" style="left: 33px">序号</div>
-          <div class="listtwo listson" style="left: 98px">所属货船</div>
-          <div class="listthree listson" style="left: 234px">报警内容</div>
-          <div class="listthree listson" style="left: 737px">报警属性</div>
-          <div class="listthree listson" style="left: 809px">操作</div>
-        </div>
-        <div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">1</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797700</div>
-            <div class="listthree listson" style="left: 234px">"冷藏舱温度异常！当前温度超出安全范围，请立即检查并调整。"</div>
-            <div class="listthree listson" style="left: 737px">温度</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
-            <div class="listone listson" style="left: 33px">2</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
-            <div class="listthree listson" style="left: 234px">"湿度异常报警！冷藏舱湿度超出设定范围，请及时处理以避免货物受潮。"</div>
-            <div class="listthree listson" style="left: 737px">湿度</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">3</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
-            <div class="listthree listson" style="left: 234px">"位置异常报警！集装箱位置偏离计划路线，请尽快核实并调整航行方向。"</div>
-            <div class="listthree listson" style="left: 737px">位置</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative" class="active">
-            <div class="listone listson" style="left: 33px">4</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797701</div>
-            <div class="listthree listson" style="left: 234px">"通风系统故障报警！集装箱内通风系统发生故障，请立即检查并修复。"</div>
-            <div class="listthree listson" style="left: 737px">通风</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-          <div style="width: 876px; height: 32px; margin-left: 24px; position: relative">
-            <div class="listone listson" style="left: 33px">5</div>
-            <div class="listtwo listson" style="left: 98px">SHSM1L797702</div>
-            <div class="listthree listson" style="left: 234px">"供电系统故障！冷藏设备停止运行，请立即检查供电系统并采取应急措施。"</div>
-            <div class="listthree listson" style="left: 737px">供电</div>
-            <div class="listthree listson underline" style="left: 809px">查看</div>
-          </div>
-        </div>
-      </div>
-      <div></div>
-      <div class="ftright">
-        <div class="leftboxtitle">
-          <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
-          </div>
-          <div class="lefttext">传感器异常数量</div>
-        </div>
-        <div :style="myChartStyle1" id="line"></div>
-        <div class="linespan">
-          <div>
-            <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block"></div>
-            <div style="display: inline-block; margin-left: 5px">传感器</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import AMapLoader from "@amap/amap-jsapi-loader";
-import * as echarts from "echarts";
+// import * as echarts from "echarts";
 import ship from "../static/船舶.json";
 import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
+import containerdata from '../static/集装箱.json'
 export default {
   watch: {},
   name: "map-view",
@@ -242,23 +175,50 @@ export default {
       ship: ship,
       shiptracking: shiptracking,
       freighttrack: freighttrack,
+      containerdata: containerdata,
       shipnamearr: [],
       search: "",
       thisshop: "",
       date: '',
       time: '',
       week: '',
-      receive:'',
-      containerarr:[]
+      receive: '',
+      containerarr: []
     };
   },
   methods: {
-    datatreating(){
-      this.freighttrack.forEach((item)=>{
-        if(item.vessel==this.receive){
-          this.containerarr.push({number:item.referenceNo})
+    datatreating() {
+      console.log(this.receive);
+      this.freighttrack.forEach((item) => {
+        if (item.vessel == this.receive) {
+          this.containerarr.push({ number: item.containerNumber })
+
         }
+
+
+
       })
+      console.log(this.containerarr, "船只关联货物");
+      for (let i = 0; i < this.containerarr; i++) {
+        for (let j = 0; j < this.containerdata.length; j++) {
+          if(this.containerdata[j].containerNumber==this.containerarr[i].number){
+            console.log(j);
+          }else{
+            console.log(false);
+          }
+        }
+      }
+      // this.containerarr = this.containerdata.map(item => {
+      //   const matchingContainer = this.containerarr.find(container => container.number === item.containerNumber);
+      //   if (matchingContainer) {
+      //     return { number: item.containerNumber, status: matchingContainer.status };
+      //   } else {
+      //     return { number: item.containerNumber, status: 0 };
+      //   }
+      // });
+
+
+      console.log(this.containerarr, "船只关联货物");
     },
     currentTime() {
       var date = new Date();
@@ -306,25 +266,16 @@ export default {
       this.date = strDate
     },
 
-    gosensor(){
-      this.$router.push('conter')
+    gosensor(e) {
+      console.log(e.target.dataset.v);
+      this.$router.push({ path: "conter", query: { name: e.target.dataset.v ,last:this.receive} });
+      
     },
-    reloadChartsAndMap() {
-      // 在这里执行重新加载 ECharts 和地图控件的逻辑
-      // 例如，重新初始化 ECharts 实例和地图控件
-      // 注意：这里的代码需要根据你的具体情况来实现
 
-      // 重新加载 ECharts
-      this.initECharts();
-      this.lineEcharts();
-      this.datasearch();
-      // 重新加载地图控件
-      this.initMap();
-    },
     datasearch() {
       this.ship.forEach((item) => {
         //  this.shipnamearr.push(item.nameEn)
-        console.log(item);
+        // console.log(item);
         let num = 0;
         for (let i = 0; i < this.freighttrack.length; i++) {
           if (this.freighttrack[i].vessel == item.nameEn) {
@@ -335,59 +286,6 @@ export default {
       });
 
       console.log(this.shipnamearr);
-    },
-    lineEcharts() {
-      const option = {
-        xAxis: {
-          axisLine: {
-            lineStyle: {
-              color: "#ffffff",
-            },
-            textStyle: {
-              color: "#ccc",
-            },
-          },
-          type: "category",
-          boundaryGap: true,
-          data: this.xData1,
-        },
-        grid: {
-          left: "3%",
-          right: "10%",
-          bottom: "6%",
-          top: "8%",
-          containLabel: true,
-        },
-        yAxis: {
-          axisLine: {
-            lineStyle: {
-              color: "#f7f7f7",
-            },
-            textStyle: {
-              color: "#ccc",
-            },
-          },
-          min: 0,
-          max: 1000,
-          interval: 250,
-
-          type: "value",
-        },
-        series: [
-          {
-            data: this.yData1,
-            type: "line",
-            areaStyle: {},
-            symbol: "none",
-          },
-        ],
-      };
-      const myChart = echarts.init(document.getElementById("line"));
-      myChart.setOption(option);
-      //随着屏幕大小调节图表
-      window.addEventListener("resize", () => {
-        myChart.resize();
-      });
     },
     initAMap() {
       // let arr = [[174.10, 24.52], [-123.6, 49.18], [113.474725, 30.692175]];
@@ -449,25 +347,40 @@ export default {
         });
     },
     shipsearch() {
-      console.log(this.search);
+
+      console.log('search', this.search);
+      let arr = []
+      for (let i = 0; i < this.containerarr.length; i++) {
+        if (this.search === this.containerarr[i].number) {
+          arr.push(this.containerarr[i])
+          console.log(this.containerarr);
+        }
+      }
+
+      this.containerarr = arr
+      console.log('search', this.containerarr);
 
     },
-    back(){
+    back() {
       this.$router.push('/')
     }
   },
   mounted() {
-    this.lineEcharts();
-    this.initAMap();
-    console.log("船舶信息", this.ship);
-    console.log("船舶跟踪", this.shiptracking);
-    console.log("货物跟踪", this.freighttrack);
-    this.datasearch();
     this.currentTime()
     setInterval(() => {
       this.currentTime()
     }, 500)
+
+    this.receive = this.$route.query.name
+    this.datatreating()
+    this.datasearch();
+    this.initAMap();
+    console.log("船舶信息", this.ship);
+    console.log("船舶跟踪", this.shiptracking);
+    console.log("集装箱", this.containerdata);
+    console.log("货物跟踪", this.freighttrack);
   },
+   
   unmounted() {
     this.map?.destroy();
   },
@@ -477,9 +390,11 @@ export default {
       this.map.destroy();
     }
   },
-  beforeCreate(){
-    console.log(this.$route.query.name,"接受信息");
-    this.receive=this.$route.query.name
+  beforeCreate() {
+    console.log(this.$route.query.name, "接受信息");
+  
+    
+
   }
 };
 </script>
@@ -490,7 +405,7 @@ export default {
   background-color: #1e6ba3;
   color: #ffffff;
   width: 1920px;
-  height: 1080px;
+  height: 945px;
 }
 
 .head {
@@ -533,7 +448,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main > div {
+.main>div {
   display: inline-block;
 }
 
@@ -618,7 +533,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend > div {
+.shiplegend>div {
   display: inline-block;
 }
 
@@ -814,8 +729,7 @@ export default {
   width: 22px;
 }
 
-.my_marker {
-}
+.my_marker {}
 
 div::-webkit-scrollbar {
   width: 10px;
@@ -848,6 +762,7 @@ div::-webkit-scrollbar-corner {
   display: flex;
   justify-content: space-evenly;
 }
+
 .container-box {
   flex-shrink: 0;
   width: 378px;
@@ -856,6 +771,7 @@ div::-webkit-scrollbar-corner {
   border: 1px solid #98e7fc;
   box-sizing: border-box;
 }
+
 .title {
   margin: 20px 16px;
   width: 348px;
@@ -865,9 +781,11 @@ div::-webkit-scrollbar-corner {
   align-items: center;
   justify-content: space-between;
 }
-.title > div > span {
+
+.title>div>span {
   margin: 0 15px;
 }
+
 .titleSec {
   width: 348px;
   margin: 20px 16px;
@@ -879,15 +797,18 @@ div::-webkit-scrollbar-corner {
   padding-bottom: 16px;
   border-bottom: 1px solid #ebebeb;
 }
-.titleSec > div {
+
+.titleSec>div {
   display: flex;
   flex-direction: column;
 }
-.titleSec > div > img {
+
+.titleSec>div>img {
   width: 60px;
   height: 8.8px;
   margin: 0 10px;
 }
+
 .listArticle {
   box-sizing: border-box;
   margin: 20px 16px;
@@ -895,68 +816,82 @@ div::-webkit-scrollbar-corner {
   height: 514px;
   overflow: auto;
 }
-.listArticle > div:nth-child(1) {
+
+.listArticle>div:nth-child(1) {
   display: flex;
   align-items: center;
 }
-.listArticle > div:nth-child(1) > img {
+
+.listArticle>div:nth-child(1)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
-.listArticle > div:nth-child(2){
+
+.listArticle>div:nth-child(2) {
   height: 26px;
-  border-left:1px solid #2CE7E7;
+  border-left: 1px solid #2CE7E7;
   margin-left: 10px;
 }
-.listArticle > div:nth-child(3) {
+
+.listArticle>div:nth-child(3) {
   display: flex;
   align-items: center;
 }
-.listArticle > div:nth-child(3) > img {
+
+.listArticle>div:nth-child(3)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
-.listArticle > div:nth-child(4) {
-  border-left:1px solid #2CE7E7;
+
+.listArticle>div:nth-child(4) {
+  border-left: 1px solid #2CE7E7;
   margin-left: 10px;
 }
-.listArticle > div:nth-child(4)>div{
-  margin: 20px 29px ;
+
+.listArticle>div:nth-child(4)>div {
+  margin: 20px 29px;
 }
-.listArticle > div:nth-child(4)>div>div{
+
+.listArticle>div:nth-child(4)>div>div {
   height: 18px;
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
-.listArticle > div:nth-child(5) {
+
+.listArticle>div:nth-child(5) {
   display: flex;
   align-items: center;
 }
-.listArticle > div:nth-child(5) > img {
+
+.listArticle>div:nth-child(5)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
-.listArticle > div:nth-child(6) {
-  border-left:1px solid #D0D0D0;
+
+.listArticle>div:nth-child(6) {
+  border-left: 1px solid #D0D0D0;
   margin-left: 10px;
 }
-.listArticle > div:nth-child(6)>div{
-  margin: 20px 29px ;
+
+.listArticle>div:nth-child(6)>div {
+  margin: 20px 29px;
 }
-.listArticle > div:nth-child(6)>div>div{
+
+.listArticle>div:nth-child(6)>div>div {
   height: 18px;
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
-.back{
+
+.back {
   position: absolute;
   left: 30px;
   top: 25px;

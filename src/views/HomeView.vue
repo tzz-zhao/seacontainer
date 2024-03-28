@@ -278,18 +278,7 @@
         </div>
       </div>
     </div>
-    <div class="foot">
-      <div class="ftleft">
-
-
-
-      </div>
-      <div />
-      <div class="ftright">
-
-
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -551,8 +540,8 @@ export default {
           this.map = new AMap.Map("container", {
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
-            zoom: 3, // 初始化地图级别
-            center: [116.397428, 39.90923], // 初始化地图中心点位置
+            zoom: 2, // 初始化地图级别
+            center: [50, 40], // 初始化地图中心点位置
           });
           for (let i = 0; i < this.shipnamearr.length; i++) {
             var marker = new AMap.Marker({
@@ -658,7 +647,7 @@ export default {
   background-color: #1e6ba3;
   color: #ffffff;
   width: 1920px;
-  height: 1080px;
+  height: 945px;
 }
 
 .head {

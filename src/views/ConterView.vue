@@ -27,13 +27,13 @@
                     <button>搜索</button>
                 </div>
                 <div class="list-table">
-                    <el-table :data="tableData" style="width: 100%"
+                    <el-table :data="sensorarr" style="width: 100%"
                         :header-cell-style="{ background: '#11517C', color: 'white' }" :cell-style="tableCell"
                         :highlight-current-row="false" :row-class-name="tableRowClassName">
                         <el-table-column prop="equipmentName" label="传感器名称" width="180">
                         </el-table-column>
                         <el-table-column prop="status" label="状态" width="180">
-                            {{ status =0 ? "正常" : "异常" }}
+                            {{ status ==0 ? "正常" : (status==1?"警告":"异常") }}
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
@@ -66,6 +66,7 @@
 </template>
 <script>
 import * as echarts from 'echarts';
+import sensor from "../static/传感器.json";
 export default {
     data() {
         return {
@@ -87,16 +88,27 @@ export default {
             date: '',
             time: '',
             week: '',
+            name:'',
+            last:'',
+            sensordata:sensor,
+            sensorarr:[]
+            
         }
     },
     mounted() {
+        this.name=this.$route.query.name
+        this.last=this.$route.query.last
         this.echartsData.forEach(item => {
             this.tempType(item)
         })
+        this.datadispose()
         this.currentTime()
         setInterval(() => {
             this.currentTime()
         }, 500)
+    },
+    beforeCreate(){
+        console.log(this.$route.query.name);
     },
     methods: {
         currentTime() {
@@ -144,9 +156,17 @@ export default {
             this.time = strtime
             this.date = strDate
         },
-
+        datadispose(){
+            this.sensordata.forEach((item)=>{
+                if(this.name==item.containerNumber){
+                    this.sensorarr.push({equipmentName:item.equipmentName,status:item.status})
+                }
+            })
+            console.log(this.sensorarr);
+        },
         back() {
-            this.$router.replace('about')
+        
+            this.$router.push({ path: "/about", query: { name: this.last} });
         },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2 === 0 && row) {
@@ -379,6 +399,8 @@ export default {
 .list-table {
     margin-top: 11px;
     width: 463px;
+    height: 720px;
+    overflow-x:hidden;
 }
 
 ::v-deep .el-table .el-table__body tr:hover>td {
@@ -451,5 +473,28 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 14px
+}
+div::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  /**/
+}
+
+div::-webkit-scrollbar-track {
+  background: rgb(239, 239, 239);
+  border-radius: 2px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #bfbfbf;
+  border-radius: 10px;
+}
+
+div::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+div::-webkit-scrollbar-corner {
+  background: #179a16;
 }
 </style>
