@@ -63,7 +63,7 @@
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">集装箱编号</div>
+              <div class="listone listson">船名</div>
               <div class="listtwo listson">船籍</div>
               <div class="listfour listson">目的地</div>
               <div class="listthree listson">操作</div>
@@ -120,8 +120,9 @@
               <div class="listtwo listson" style="left: 58px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
-              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{ item.updateTime }}</div>
-              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div>
+              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{ item.updateTime.split(":")[0]+":"+item.updateTime.split(":")[1] }}</div>
+              <!-- <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div> -->
+              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center"><span v-if="item.status==1" style="color: yellow;">警告</span><span v-if="item.status==2" style="color: red;">异常</span></div>
               <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer">查看</div>
             </div>
           </div>
