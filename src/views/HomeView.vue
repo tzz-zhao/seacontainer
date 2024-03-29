@@ -80,7 +80,7 @@
                 <div class="messageson" style="left: 196px; font-size: 8px">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look" :data-v="item.name">查看</div>
+                <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look" :data-v="item.name">查看</div>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
           </div>
         </div> -->
       </div>
-      <div class="mainleft" >
+      <div class="mainleft">
         <div class="leftbox" style="background: #031027">
           <div class="leftboxtitle">
             <div class="arrows1">
@@ -113,37 +113,49 @@
           </div>
           <div style="height: 221px; position: absolute; overflow: auto">
             <div
-              v-for="(item, index) in sensor.filter((p) => p.status !== 0)"
+              v-for="(item, index) in containerList.filter((p) => p.status !== 0)"
               :key="index"
               style="width: 348px; height: 32px; margin-left: 18px; position: relative; display: flex; align-items: center">
               <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">{{ index + 1 }}</div>
-              <div class="listtwo listson" style="left: 58px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">
+              <div
+                class="listtwo listson"
+                :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel"
+                style="width: 80px; left: 58px; top: 0; height: 100%;line-height: 32px; font-size: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
-              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{ item.updateTime.split(":")[0]+":"+item.updateTime.split(":")[1] }}</div>
-              <!-- <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div> -->
-              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center"><span v-if="item.status==1" style="color: yellow;">警告</span><span v-if="item.status==2" style="color: red;">异常</span></div>
-       
-              <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer" @click="sensoralarm" :data-v=item.containerNumber >查看</div>
+              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">
+                {{ item.date.split(":")[0] + ":" + item.date.split(":")[1] }}
+              </div>
+              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">
+                <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2" style="color: red">异常</span>
+              </div>
+
+              <div
+                class="listthree listson"
+                style="left: 300px; top: 0; height: 100%; display: flex; align-items: center; cursor: pointer"
+                @click="sensoralarm"
+                :data-v="item.containerNumber">
+                查看
+              </div>
             </div>
           </div>
         </div>
         <div class="leftbotbox" style="position: relative">
-        <div class="leftboxtitle">
-          <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
+          <div class="leftboxtitle">
+            <div class="arrows1">
+              <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
+            </div>
+            <div class="lefttext">传感器异常数量</div>
           </div>
-          <div class="lefttext">传感器异常数量</div>
-        </div>
-        <div class="linespan">
-          <div>
-            <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
-            <div style="display: inline-block; margin-left: 5px">传感器</div>
+          <div class="linespan">
+            <div>
+              <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
+              <div style="display: inline-block; margin-left: 5px">传感器</div>
+            </div>
           </div>
-        </div>
-        <div id="line" :style="myChartStyle1" style="position: absolute; top: 100px" />
+          <div id="line" :style="myChartStyle1" style="position: absolute; top: 100px" />
 
-        <!-- <div class="leftboxtitle">
+          <!-- <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
@@ -196,9 +208,8 @@
               <div class="messageson underline" style="left: 256px">东北风</div>
             </div>
           </div> -->
+        </div>
       </div>
-      </div>
-      
     </div>
   </div>
 </template>
@@ -264,7 +275,7 @@ export default {
       this.date = strDate;
     },
     //右侧报警信息跳转
-    sensoralarm(e){
+    sensoralarm(e) {
       console.log(e.target.dataset.v);
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v } });
     },
@@ -293,7 +304,7 @@ export default {
           or++;
         }
 
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest ,status:item.navStatus});
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
       });
       this.yData = [mooring, mooralongside, underway, or];
       console.log(this.yData);
@@ -435,7 +446,7 @@ export default {
             center: [50, 40], // 初始化地图中心点位置
           });
           for (let i = 0; i < this.shipnamearr.length; i++) {
-            let backgroundColor = this.shipnamearr[i].status == 0 ? '#5AD8A6' : (this.shipnamearr[i].status==1?'#CBD1D7':'#5B8FF9');
+            let backgroundColor = this.shipnamearr[i].status == 0 ? "#5AD8A6" : this.shipnamearr[i].status == 1 ? "#CBD1D7" : "#5B8FF9";
             var marker = new AMap.Marker({
               position: this.shipnamearr[i].location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
@@ -615,7 +626,6 @@ export default {
 
 .mainleft {
   padding: 0 23px;
-  
 }
 
 .leftboxtitle {
@@ -862,7 +872,6 @@ export default {
   height: 22px;
   width: 22px;
 }
-
 
 div::-webkit-scrollbar {
   width: 10px;
