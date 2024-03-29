@@ -164,6 +164,7 @@ import ship from "../static/船舶.json";
 import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
 import containerdata from "../static/集装箱.json";
+import A05 from "../static/定位563201600.json"
 export default {
   watch: {},
   name: "map-view",
@@ -195,11 +196,24 @@ export default {
       ],
       polyline: null,
       Trajectoryinformation: {},
-      Trajectorydata: {}
+      Trajectorydata: {},
+      A05:A05,
+      path:[],
+      patharr:[]
     };
   },
   methods: {
     datatreating() {
+      // console.log(A05,"船舶路线");
+      this.A05.forEach((item)=>{
+        const latDecimal = item.lat / 1e6;
+        const lonDecimal = item.lon / 1e6;
+        this.path.push({coures:item.course,location:[lonDecimal.toFixed(6),latDecimal.toFixed(6)],posTime:item.posTime})
+      })
+      console.log(this.path,"船舶路线");
+      this.path.forEach((item)=>{
+        this.patharr.push(item.location)
+      })
       console.log(this.receive,"接收的船名");
      
       this.ship.forEach((item) => {
@@ -302,18 +316,18 @@ export default {
             zoom: 2, // 初始化地图级别
             center: [116.397428, 39.90923], // 初始化地图中心点位置
           });
-          console.log("123==>", this.trackPoints);
-          // if (this.trackPoints.length > 0) {
-          //   this.polyline = new AMap.Polyline({
-          //     path: this.trackPoints, // 设置轨迹线的坐标点数组
-          //     strokeColor: "#3366FF", // 线颜色
-          //     strokeWeight: 4, // 线宽度
-          //     strokeOpacity: 1, // 线透明度
-          //     strokeStyle: "solid", // 线样式
-          //     showDir: true, // 显示方向箭头
-          //   });
-          //   this.polyline.setMap(this.map);
-          // }
+          // console.log("123==>", this.path);
+          if (this.patharr.length > 0) {
+            this.polyline = new AMap.Polyline({
+              path: this.patharr, // 设置轨迹线的坐标点数组
+              strokeColor: "#3366FF", // 线颜色
+              strokeWeight: 4, // 线宽度
+              strokeOpacity: 1, // 线透明度
+              strokeStyle: "solid", // 线样式
+              showDir: true, // 显示方向箭头
+            });
+            this.polyline.setMap(this.map);
+          }
 
           // 自动调整地图视野，使整条轨迹可见
           // this.map.setFitView(this.polyline);
