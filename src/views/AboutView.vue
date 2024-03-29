@@ -13,11 +13,8 @@
           {{ time }}
         </span>
         <div class="back">
-          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px" /><span
-            @click="back"
-            style="font-size: 14px; position: absolute; top: 2px; width: 50px; left: 11px"
-            >返回</span
-          >
+          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px;cursor:pointer" /><span @click="back"
+            style="font-size: 14px; position: absolute; top: 2px; width: 50px; left: 11px;cursor:pointer">返回</span>
         </div>
       </div>
     </div>
@@ -51,12 +48,11 @@
               <div class="messageson" style="left: 33px">
                 {{ item.number }}
               </div>
-              <div
-                class="messageson"
-                style="left: 196px"
+              <div class="messageson" style="left: 196px"
                 :style="{ color: item.status === 0 ? '#fff' : item.status === 1 ? 'yellow' : 'red' }"
                 v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
-              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number" @click="gosensor">查看</div>
+              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number"
+                @click="gosensor">查看</div>
             </div>
           </div>
         </div>
@@ -82,8 +78,8 @@
         </div>
         <div class="titleSec">
           <div>
-            <span>{{ Trajectoryinformation.polName }}</span>
-            <span>ETD:{{ Trajectoryinformation.atd }}</span>
+            <span>{{ Trajectoryinformation?.polName }}</span>
+            <span>ETD:{{ Trajectoryinformation?.atd }}</span>
           </div>
           <div>
             <img src="../assets/Group 39.svg" />
@@ -199,39 +195,37 @@ export default {
       ],
       polyline: null,
       Trajectoryinformation: {},
-      Trajectorydata: {},
+      Trajectorydata: {}
     };
   },
   methods: {
     datatreating() {
-      console.log(this.receive);
+      console.log(this.receive,"接收的船名");
+     
       this.ship.forEach((item) => {
         if (this.receive == item.nameEn) {
           let num = 0;
           for (let i = 0; i < this.freighttrack.length; i++) {
             if (this.freighttrack[i].vessel == item.nameEn) {
               num++;
+             
             }
           }
           this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
-        }
-        //  this.shipnamearr.push(item.nameEn)
-        // console.log(item);
-
-        // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
+        } 
       });
 
-      console.log(this.shipnamearr);
+      console.log(this.shipnamearr,"船只数据");
       this.ship.forEach((item) => {
         if (item.nameEn == this.receive) {
-          this.Trajectoryinformation = item;
+          this.Trajectoryinformation = item
         }
-      });
+      })
       console.log(this.Trajectoryinformation, "右侧信息");
 
       this.shiptracking.forEach((item) => {
         if (item.nameEn == this.receive) {
-          this.Trajectorydata = item;
+          this.Trajectorydata = item
         }
       });
       console.log(this.Trajectorydata, "获得的右侧数据");
@@ -290,30 +284,18 @@ export default {
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v, last: this.receive } });
     },
 
-    datasearch() {
-      // this.ship.forEach((item) => {
-      //   //  this.shipnamearr.push(item.nameEn)
-      //   // console.log(item);
-      //   let num = 0;
-      //   for (let i = 0; i < this.freighttrack.length; i++) {
-      //     if (this.freighttrack[i].vessel == item.nameEn) {
-      //       num++;
-      //     }
-      //   }
-      //   this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
-      // });
-
-      console.log(this.shipnamearr);
-    },
+    
     initAMap() {
+      
       // let arr = [[174.10, 24.52], [-123.6, 49.18], [113.474725, 30.692175]];
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
-        version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+        version: "1.4.15", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
         plugins: ["AMap.Scale"], //需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
       })
         .then((AMap) => {
           this.map = new AMap.Map("container", {
+            lang:'en',
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
             zoom: 2, // 初始化地图级别
@@ -335,43 +317,32 @@ export default {
           // 自动调整地图视野，使整条轨迹可见
           // this.map.setFitView(this.polyline);
           for (let i = 0; i < this.shipnamearr.length; i++) {
+            let backgroundColor = this.shipnamearr[i].status == 0 ? '#5AD8A6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
             var marker = new AMap.Marker({
               position: this.shipnamearr[i]?.location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
-              content: `
-                  <div class="my_marker" style>
-                        <div class="marker" style="color:#fff;background:#0060B5 ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
-                           ${this.shipnamearr[i].num}
-                        </div>
-
-
-                  </div>`,
-              offset: new AMap.Pixel(-15, -20),
+              content: `<div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;color='#fff'" @click='shipmessage' data-id="${this.shipnamearr[i].name}">${this.shipnamearr[i].num} </div> `,
+              offset: new AMap.Pixel(0,0),
             });
-            // marker.on("click", (mapEvent) => {
-            //   console.log(mapEvent.target.dom.getElementsByClassName("marker").length > 0 ? mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") : null);
-            //   this.$router.push({
-            //     name: "about",
-            //     params: {
-            //       name: mapEvent.target.dom.getElementsByClassName("marker").length > 0 ? mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") : "",
-            //     },
-            //   });
-            // });
+         
             marker.on("mouseover", (mapEvent) => {
-              if (this.infoWindow) {
+              // if (this.infoWindow) {
+              //   this.infoWindow.close();
+              // }
+              if (mapEvent.originEvent.target.className !== 'marker') return
+              if (this.infoWindow && mapEvent.originEvent.target.dataset.id) {
                 this.infoWindow.close();
               }
               var info = [];
-              info.push(
-                `<div style="color:#000;font-size:10px">${
-                  mapEvent.target.dom.getElementsByClassName("marker").length > 0 ? mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") : ""
-                }</div>`
-              );
+              info.push(`<div style="color:#000;font-size:10px">${mapEvent.originEvent.target.dataset.id}</div>`);
               this.infoWindow = new AMap.InfoWindow({
-                offset: new AMap.Pixel(-3, -16),
+                offset: new AMap.Pixel(0, 25),
                 content: info.join(""), //使用默认信息窗体框样式，显示信息内容
               });
-              this.infoWindow.open(this.map, mapEvent.target.getPosition());
+              if (mapEvent.originEvent.target.dataset.id) {
+                this.infoWindow.open(this.map, mapEvent.target.getPosition());
+
+              }
             });
             // marker.on('mouseout', () => {
 
@@ -405,14 +376,15 @@ export default {
     },
   },
   mounted() {
+    this.receive = this.$route.query.name;
     this.currentTime();
     setInterval(() => {
       this.currentTime();
     }, 500);
 
-    this.receive = this.$route.query.name;
+
     this.datatreating();
-    this.datasearch();
+    // this.datasearch();
     this.initAMap();
     console.log("船舶信息", this.ship);
     console.log("船舶跟踪", this.shiptracking);
@@ -431,6 +403,7 @@ export default {
   },
   beforeCreate() {
     console.log(this.$route.query.name, "接受信息");
+    
   },
 };
 </script>
@@ -484,7 +457,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main > div {
+.main>div {
   display: inline-block;
 }
 
@@ -569,7 +542,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend > div {
+.shiplegend>div {
   display: inline-block;
 }
 
@@ -816,7 +789,7 @@ div::-webkit-scrollbar-corner {
   justify-content: space-between;
 }
 
-.title > div > span {
+.title>div>span {
   margin: 0 15px;
 }
 
@@ -833,12 +806,12 @@ div::-webkit-scrollbar-corner {
   border-bottom: 1px solid #ebebeb;
 }
 
-.titleSec > div {
+.titleSec>div {
   display: flex;
   flex-direction: column;
 }
 
-.titleSec > div > img {
+.titleSec>div>img {
   width: 60px;
   height: 8.8px;
   margin: 0 10px;
@@ -852,74 +825,74 @@ div::-webkit-scrollbar-corner {
   overflow: auto;
 }
 
-.listArticle > div:nth-child(1) {
+.listArticle>div:nth-child(1) {
   display: flex;
   align-items: center;
 }
 
-.listArticle > div:nth-child(1) > img {
+.listArticle>div:nth-child(1)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle > div:nth-child(2) {
+.listArticle>div:nth-child(2) {
   height: 26px;
   border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle > div:nth-child(3) {
+.listArticle>div:nth-child(3) {
   display: flex;
   align-items: center;
 }
 
-.listArticle > div:nth-child(3) > img {
+.listArticle>div:nth-child(3)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle > div:nth-child(4) {
+.listArticle>div:nth-child(4) {
   border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle > div:nth-child(4) > div {
+.listArticle>div:nth-child(4)>div {
   margin: 20px 29px;
 }
 
-.listArticle > div:nth-child(4) > div > div {
+.listArticle>div:nth-child(4)>div>div {
   height: 18px;
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
 
-.listArticle > div:nth-child(5) {
+.listArticle>div:nth-child(5) {
   display: flex;
   align-items: center;
 }
 
-.listArticle > div:nth-child(5) > img {
+.listArticle>div:nth-child(5)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle > div:nth-child(6) {
+.listArticle>div:nth-child(6) {
   border-left: 1px solid #d0d0d0;
   margin-left: 10px;
 }
 
-.listArticle > div:nth-child(6) > div {
+.listArticle>div:nth-child(6)>div {
   margin: 20px 29px;
 }
 
-.listArticle > div:nth-child(6) > div > div {
+.listArticle>div:nth-child(6)>div>div {
   height: 18px;
   padding: 10px 0;
   display: flex;
@@ -931,4 +904,13 @@ div::-webkit-scrollbar-corner {
   left: 30px;
   top: 25px;
 }
+
+.amap-marker-content {
+        width: 22px!important; /* 设置宽度 */
+        height: 22px!important; /* 设置高度 */
+    }
+//     /deep/ .amap-marker-content {
+//     width: 100px;
+//     height: 100px;
+// }
 </style>
