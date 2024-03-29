@@ -13,11 +13,8 @@
           {{ time }}
         </span>
         <div class="back">
-          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px" /><span
-            @click="back"
-            style="font-size: 14px; position: absolute; top: 2px; width: 50px; left: 11px"
-            >返回</span
-          >
+          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px;cursor:pointer" /><span @click="back"
+            style="font-size: 14px; position: absolute; top: 2px; width: 50px; left: 11px;cursor:pointer">返回</span>
         </div>
       </div>
     </div>
@@ -51,12 +48,11 @@
               <div class="messageson" style="left: 33px">
                 {{ item.number }}
               </div>
-              <div
-                class="messageson"
-                style="left: 196px"
+              <div class="messageson" style="left: 196px"
                 :style="{ color: item.status === 0 ? '#fff' : item.status === 1 ? 'yellow' : 'red' }"
                 v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
-              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number" @click="gosensor">查看</div>
+              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number"
+                @click="gosensor">查看</div>
             </div>
           </div>
         </div>
@@ -82,15 +78,15 @@
         </div>
         <div class="titleSec">
           <div>
-            <span>{{Trajectoryinformation.polName}}</span>
-            <span>ETD:{{Trajectoryinformation.atd}}</span>
+            <span>{{ Trajectoryinformation?.polName }}</span>
+            <span>ETD:{{ Trajectoryinformation?.atd }}</span>
           </div>
           <div>
             <img src="../assets/Group 39.svg" />
           </div>
           <div>
-            <span>{{Trajectoryinformation.podName}}</span>
-            <span>ETA: {{Trajectoryinformation.ata}}</span>
+            <span>{{ Trajectoryinformation.podName }}</span>
+            <span>ETA: {{ Trajectoryinformation.ata }}</span>
           </div>
         </div>
         <div class="listArticle">
@@ -137,7 +133,7 @@
           </div>
           <div>
             <img src="../assets/Check.svg" alt="" />
-            <span>起运港：{{ Trajectorydata.delivery.name }}</span>
+            <span>起运港：{{ Trajectorydata?.delivery.name }}</span>
           </div>
           <div>
             <div>
@@ -198,52 +194,50 @@ export default {
         // 添加更多坐标点...
       ],
       polyline: null,
-      Trajectoryinformation:{},
-      Trajectorydata:{}
+      Trajectoryinformation: {},
+      Trajectorydata: {}
     };
   },
   methods: {
     datatreating() {
-      console.log(this.receive);
+      console.log(this.receive,"接收的船名");
+     
       this.ship.forEach((item) => {
-        if(this.receive==item.nameEn){
+        if (this.receive == item.nameEn) {
           let num = 0;
-        for (let i = 0; i < this.freighttrack.length; i++) {
-          if (this.freighttrack[i].vessel == item.nameEn) {
-            num++;
+          for (let i = 0; i < this.freighttrack.length; i++) {
+            if (this.freighttrack[i].vessel == item.nameEn) {
+              num++;
+             
+            }
           }
-        }
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
-        }
-        //  this.shipnamearr.push(item.nameEn)
-        // console.log(item);
-      
-        // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
+          this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
+        } 
       });
 
-      console.log(this.shipnamearr);
-      this.ship.forEach((item)=>{
-        if(item.nameEn==this.receive){
-          this.Trajectoryinformation=item
+      console.log(this.shipnamearr,"船只数据");
+      this.ship.forEach((item) => {
+        if (item.nameEn == this.receive) {
+          this.Trajectoryinformation = item
         }
       })
-      console.log(this.Trajectoryinformation,"右侧信息");
-      
-      this.shiptracking.forEach((item)=>{
-        if(item.nameEn==this.receive){
-          this.Trajectorydata=item
+      console.log(this.Trajectoryinformation, "右侧信息");
+
+      this.shiptracking.forEach((item) => {
+        if (item.nameEn == this.receive) {
+          this.Trajectorydata = item
         }
       })
-      console.log(this.Trajectorydata,"获得的右侧数据");
-      this.trackPoints=[[this.Trajectorydata.receipt.lon,this.Trajectorydata.receipt.lat],[this.Trajectorydata.delivery.lon,this.Trajectorydata.delivery.lat]]
+      console.log(this.Trajectorydata, "获得的右侧数据");
+      this.trackPoints = [[this.Trajectorydata?.receipt.lon, this.Trajectorydata?.receipt.lat], [this.Trajectorydata?.delivery.lon, this.Trajectorydata?.delivery.lat]]
       this.freighttrack.forEach((item) => {
         if (item.vessel == this.receive) {
           const currentcontainerList = this.containerdata.filter((p) => p.containerNumber == item.containerNumber) || [];
           console.log("当前绑定", currentcontainerList);
-          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length -1]?.status || 0 : 0 });
+          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length - 1]?.status || 0 : 0 });
         }
       });
-     
+
 
       console.log(this.containerarr, "船只关联货物");
     },
@@ -290,7 +284,7 @@ export default {
       //   this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
       // });
 
-      console.log(this.shipnamearr);
+      // console.log(this.shipnamearr);
     },
     initAMap() {
       // let arr = [[174.10, 24.52], [-123.6, 49.18], [113.474725, 30.692175]];
@@ -307,17 +301,17 @@ export default {
             center: [116.397428, 39.90923], // 初始化地图中心点位置
           });
           this.polyline = new AMap.Polyline({
-        path: this.trackPoints, // 设置轨迹线的坐标点数组
-        strokeColor: '#3366FF', // 线颜色
-        strokeWeight: 4, // 线宽度
-        strokeOpacity: 1, // 线透明度
-        strokeStyle: 'solid', // 线样式
-        showDir: true // 显示方向箭头
-      });
-      this.polyline.setMap(this.map);
+            path: this.trackPoints, // 设置轨迹线的坐标点数组
+            strokeColor: '#3366FF', // 线颜色
+            strokeWeight: 4, // 线宽度
+            strokeOpacity: 1, // 线透明度
+            strokeStyle: 'solid', // 线样式
+            showDir: true // 显示方向箭头
+          });
+          this.polyline.setMap(this.map);
 
-// 自动调整地图视野，使整条轨迹可见
-// this.map.setFitView(this.polyline);
+          // 自动调整地图视野，使整条轨迹可见
+          // this.map.setFitView(this.polyline);
           for (let i = 0; i < this.shipnamearr.length; i++) {
             var marker = new AMap.Marker({
               position: this.shipnamearr[i].location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
@@ -381,12 +375,13 @@ export default {
     },
   },
   mounted() {
+    this.receive = this.$route.query.name;
     this.currentTime();
     setInterval(() => {
       this.currentTime();
     }, 500);
 
-    this.receive = this.$route.query.name;
+
     this.datatreating();
     this.datasearch();
     this.initAMap();
@@ -407,6 +402,7 @@ export default {
   },
   beforeCreate() {
     console.log(this.$route.query.name, "接受信息");
+    
   },
 };
 </script>
@@ -460,7 +456,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main > div {
+.main>div {
   display: inline-block;
 }
 
@@ -545,7 +541,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend > div {
+.shiplegend>div {
   display: inline-block;
 }
 
@@ -794,7 +790,7 @@ div::-webkit-scrollbar-corner {
   justify-content: space-between;
 }
 
-.title > div > span {
+.title>div>span {
   margin: 0 15px;
 }
 
@@ -811,12 +807,12 @@ div::-webkit-scrollbar-corner {
   border-bottom: 1px solid #ebebeb;
 }
 
-.titleSec > div {
+.titleSec>div {
   display: flex;
   flex-direction: column;
 }
 
-.titleSec > div > img {
+.titleSec>div>img {
   width: 60px;
   height: 8.8px;
   margin: 0 10px;
@@ -830,74 +826,74 @@ div::-webkit-scrollbar-corner {
   overflow: auto;
 }
 
-.listArticle > div:nth-child(1) {
+.listArticle>div:nth-child(1) {
   display: flex;
   align-items: center;
 }
 
-.listArticle > div:nth-child(1) > img {
+.listArticle>div:nth-child(1)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle > div:nth-child(2) {
+.listArticle>div:nth-child(2) {
   height: 26px;
   border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle > div:nth-child(3) {
+.listArticle>div:nth-child(3) {
   display: flex;
   align-items: center;
 }
 
-.listArticle > div:nth-child(3) > img {
+.listArticle>div:nth-child(3)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle > div:nth-child(4) {
+.listArticle>div:nth-child(4) {
   border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle > div:nth-child(4) > div {
+.listArticle>div:nth-child(4)>div {
   margin: 20px 29px;
 }
 
-.listArticle > div:nth-child(4) > div > div {
+.listArticle>div:nth-child(4)>div>div {
   height: 18px;
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
 
-.listArticle > div:nth-child(5) {
+.listArticle>div:nth-child(5) {
   display: flex;
   align-items: center;
 }
 
-.listArticle > div:nth-child(5) > img {
+.listArticle>div:nth-child(5)>img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle > div:nth-child(6) {
+.listArticle>div:nth-child(6) {
   border-left: 1px solid #d0d0d0;
   margin-left: 10px;
 }
 
-.listArticle > div:nth-child(6) > div {
+.listArticle>div:nth-child(6)>div {
   margin: 20px 29px;
 }
 
-.listArticle > div:nth-child(6) > div > div {
+.listArticle>div:nth-child(6)>div>div {
   height: 18px;
   padding: 10px 0;
   display: flex;

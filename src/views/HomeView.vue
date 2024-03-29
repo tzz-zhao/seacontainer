@@ -80,7 +80,8 @@
                 <div class="messageson" style="left: 196px; font-size: 8px">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look" :data-v="item.name">查看</div>
+                <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look" :data-v="item.name">
+                  查看</div>
               </div>
             </div>
           </div>
@@ -95,7 +96,7 @@
           </div>
         </div> -->
       </div>
-      <div class="mainleft" >
+      <div class="mainleft">
         <div class="leftbox" style="background: #031027">
           <div class="leftboxtitle">
             <div class="arrows1">
@@ -104,7 +105,8 @@
             <div class="lefttext">报警信息</div>
           </div>
 
-          <div class="listtitle" style="width: 348px; height: 32px; margin-left: 18px; position: relative; line-height: 20px; display: flex; align-items: center">
+          <div class="listtitle"
+            style="width: 348px; height: 32px; margin-left: 18px; position: relative; line-height: 20px; display: flex; align-items: center">
             <div class="listone listson" style="left: 10px">序号</div>
             <div class="listtwo listson" style="left: 58px">所属货船</div>
             <div class="listthree listson" style="left: 140px">时间</div>
@@ -112,93 +114,75 @@
             <div class="listthree listson" style="left: 300px">操作</div>
           </div>
           <div style="height: 221px; position: absolute; overflow: auto">
-            <div
-              v-for="(item, index) in sensor.filter((p) => p.status !== 0)"
-              :key="index"
+            <div v-for="(item, index) in sensor.filter((p) => p.status !== 0)" :key="index"
               style="width: 348px; height: 32px; margin-left: 18px; position: relative; display: flex; align-items: center">
-              <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">{{ index + 1 }}</div>
-              <div class="listtwo listson" style="left: 58px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">
+              <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
+                {{ index + 1 }}</div>
+              <div class="listtwo listson"
+                style="left: 58px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
-              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{ item.updateTime.split(":")[0]+":"+item.updateTime.split(":")[1] }}</div>
+              <div class="listthree listson"
+                style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{
+            item.updateTime.split(":")[0] + ":" + item.updateTime.split(":")[1] }}</div>
               <!-- <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div> -->
-              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center"><span v-if="item.status==1" style="color: yellow;">警告</span><span v-if="item.status==2" style="color: red;">异常</span></div>
-       
-              <div class="listthree listson" style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer" @click="sensoralarm" :data-v=item.containerNumber >查看</div>
+              <div class="listthree listson"
+                style="left: 235px; top: 0; height: 100%; display: flex; align-items: center"><span
+                  v-if="item.status == 1" style="color: yellow;">警告</span><span v-if="item.status == 2"
+                  style="color: red;">异常</span></div>
+
+              <div class="listthree listson"
+                style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer"
+                @click="sensoralarm" :data-v=item.containerNumber>查看</div>
             </div>
           </div>
         </div>
         <div class="leftbotbox" style="position: relative">
-        <div class="leftboxtitle">
-          <div class="arrows1">
-            <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
-          </div>
-          <div class="lefttext">传感器异常数量</div>
-        </div>
-        <div class="linespan">
-          <div>
-            <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
-            <div style="display: inline-block; margin-left: 5px">传感器</div>
-          </div>
-        </div>
-        <div id="line" :style="myChartStyle1" style="position: absolute; top: 100px" />
-
-        <!-- <div class="leftboxtitle">
+          <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">天气预报</div>
+            <div class="lefttext">货单统计</div>
+          </div>
+          <div class="shipsearch">
+            <div class="searchdiv">
+              <div class="searchimg">
+                <img src="../assets/search.svg" alt="" />
+              </div>
+              <!-- <div class="searchtext">请输入船名</div> -->
+              <input v-model="freightnumber" type="text" placeholder="请输入货单号" class="searchtext" />
+            </div>
+            <div class="searchbutton" @click="freightsearch">搜索</div>
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson" style="left: 28px">预报时效（小时）</div>
-              <div class="listtwo listson" style="left: 156px">天气现象</div>
-              <div class="listthree listson" style="left: 256px">风向</div>
+              <div class="listone listson">船名</div>
+              <div class="listtwo listson">单号</div>
+              <div class="listfour listson">箱号</div>
+              <div class="listthree listson">操作</div>
             </div>
-            <div class="shipmessage" style="top: 0px">
-              <div class="messageson" style="left: 28px">00-12</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">南风</div>
+
+            <div style="overflow-x: hidden; height: 200px; position: absolute; width: 332px">
+              <div class="shipmessage" style="top: 0px" v-for="(item, index) in freightarr" :key="index">
+                <div class="messageson" style="left: 33px; font-size: 9px">
+                  {{ item.vessel }}
+                </div>
+                <div class="messageson" style="left: 146px">
+                  {{ item.billNumber }}
+                </div>
+                <div class="messageson" style="left: 196px; font-size: 8px">
+                  {{ item.containerNumber }}
+                </div>
+                <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look" :data-v="item.vessel">
+                  查看</div>
+              </div>
             </div>
-            <div class="shipmessage active">
-              <div class="messageson" style="left: 28px">12-24</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">东北风</div>
-            </div>
-            <div class="shipmessage" style="top: 0px">
-              <div class="messageson" style="left: 28px">00-12</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">南风</div>
-            </div>
-            <div class="shipmessage active">
-              <div class="messageson" style="left: 28px">12-24</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">东北风</div>
-            </div>
-            <div class="shipmessage" style="top: 0px">
-              <div class="messageson" style="left: 28px">00-12</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">南风</div>
-            </div>
-            <div class="shipmessage active">
-              <div class="messageson" style="left: 28px">12-24</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">东北风</div>
-            </div>
-            <div class="shipmessage" style="top: 0px">
-              <div class="messageson" style="left: 28px">00-12</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">南风</div>
-            </div>
-            <div class="shipmessage active">
-              <div class="messageson" style="left: 28px">12-24</div>
-              <div class="messageson" style="left: 156px">阴</div>
-              <div class="messageson underline" style="left: 256px">东北风</div>
-            </div>
-          </div> -->
+          </div>
+
+
+        </div>
       </div>
-      </div>
-      
+
     </div>
   </div>
 </template>
@@ -234,9 +218,14 @@ export default {
       date: "",
       time: "",
       week: "",
+      freightnumber:'',
+      freightarr:[]
     };
   },
   methods: {
+    freightsearch(){
+      console.log(this.freightnumber);
+    },
     currentTime() {
       var date = new Date();
 
@@ -264,11 +253,12 @@ export default {
       this.date = strDate;
     },
     //右侧报警信息跳转
-    sensoralarm(e){
+    sensoralarm(e) {
       console.log(e.target.dataset.v);
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v } });
     },
     datasearch() {
+      this.freightarr=this.freighttrack
       let underway = 0;
       let mooring = 0;
       let mooralongside = 0;
@@ -293,7 +283,7 @@ export default {
           or++;
         }
 
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest ,status:item.navStatus});
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
       });
       this.yData = [mooring, mooralongside, underway, or];
       console.log(this.yData);
@@ -368,59 +358,59 @@ export default {
         myChart.resize();
       });
     },
-    lineEcharts() {
-      const option = {
-        xAxis: {
-          axisLine: {
-            lineStyle: {
-              color: "#ffffff",
-            },
-            textStyle: {
-              color: "#ccc",
-            },
-          },
-          type: "category",
-          boundaryGap: true,
-          data: this.xData1,
-        },
-        grid: {
-          left: "3%",
-          right: "10%",
-          bottom: "6%",
-          top: "8%",
-          containLabel: true,
-        },
-        yAxis: {
-          axisLine: {
-            lineStyle: {
-              color: "#f7f7f7",
-            },
-            textStyle: {
-              color: "#ccc",
-            },
-          },
-          min: 0,
-          max: 1000,
-          interval: 250,
+    // lineEcharts() {
+    //   const option = {
+    //     xAxis: {
+    //       axisLine: {
+    //         lineStyle: {
+    //           color: "#ffffff",
+    //         },
+    //         textStyle: {
+    //           color: "#ccc",
+    //         },
+    //       },
+    //       type: "category",
+    //       boundaryGap: true,
+    //       data: this.xData1,
+    //     },
+    //     grid: {
+    //       left: "3%",
+    //       right: "10%",
+    //       bottom: "6%",
+    //       top: "8%",
+    //       containLabel: true,
+    //     },
+    //     yAxis: {
+    //       axisLine: {
+    //         lineStyle: {
+    //           color: "#f7f7f7",
+    //         },
+    //         textStyle: {
+    //           color: "#ccc",
+    //         },
+    //       },
+    //       min: 0,
+    //       max: 1000,
+    //       interval: 250,
 
-          type: "value",
-        },
-        series: [
-          {
-            data: this.yData1,
-            type: "line",
-            areaStyle: {},
-            symbol: "none",
-          },
-        ],
-      };
-      const myChart = echarts.init(document.getElementById("line"));
-      myChart.setOption(option);
-      //随着屏幕大小调节图表
-      window.addEventListener("resize", () => {
-        myChart.resize();
-      });
-    },
+    //       type: "value",
+    //     },
+    //     series: [
+    //       {
+    //         data: this.yData1,
+    //         type: "line",
+    //         areaStyle: {},
+    //         symbol: "none",
+    //       },
+    //     ],
+    //   };
+    //   const myChart = echarts.init(document.getElementById("line"));
+    //   myChart.setOption(option);
+    //   //随着屏幕大小调节图表
+    //   window.addEventListener("resize", () => {
+    //     myChart.resize();
+    //   });
+    // },
     initAMap() {
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -429,30 +419,29 @@ export default {
       })
         .then((AMap) => {
           this.map = new AMap.Map("container", {
+            lang: 'ja_JP',
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
             zoom: 2, // 初始化地图级别
             center: [50, 40], // 初始化地图中心点位置
           });
           for (let i = 0; i < this.shipnamearr.length; i++) {
-            let backgroundColor = this.shipnamearr[i].status == 0 ? '#5AD8A6' : (this.shipnamearr[i].status==1?'#CBD1D7':'#5B8FF9');
+            let backgroundColor = this.shipnamearr[i].status == 0 ? '#5AD8A6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
             var marker = new AMap.Marker({
               position: this.shipnamearr[i].location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
+              lang: 'ja_JP',
               content: `
                   <div class="my_marker" >
                         <div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage'
                          data-id="${this.shipnamearr[i].name}" >
                            ${this.shipnamearr[i].num}
                         </div>
-
-
                   </div>`,
               offset: new AMap.Pixel(-15, -20),
             });
             marker.on("click", (mapEvent) => {
               console.log(mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id"));
-              // this.$router.push({ name: "about", params: { name: mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") } });
               this.$router.push({ path: "/about", query: { name: mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") } });
             });
             marker.on("mouseover", (mapEvent) => {
@@ -503,7 +492,7 @@ export default {
   mounted() {
     // this.$nextTick(() => {
     this.initEcharts();
-    this.lineEcharts();
+    // this.lineEcharts();
     this.initAMap();
     // console.log("船舶信息", this.ship);
     // console.log("船舶跟踪", this.shiptracking);
@@ -577,7 +566,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main > div {
+.main>div {
   display: inline-block;
 }
 
@@ -615,7 +604,7 @@ export default {
 
 .mainleft {
   padding: 0 23px;
-  
+
 }
 
 .leftboxtitle {
@@ -663,7 +652,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend > div {
+.shiplegend>div {
   display: inline-block;
 }
 

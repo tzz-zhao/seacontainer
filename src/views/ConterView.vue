@@ -13,8 +13,8 @@
                     {{ time }}
                 </span>
             </div>
-            <div><img src="../assets/return.svg" style="width: 17px;height: 17px;position: absolute;top: -4px;" /><span
-                    @click="back" style="position: absolute;left: 20px;width: 40px;top: -4px;">返回</span></div>
+            <div><img src="../assets/return.svg" style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span
+                    @click="back" style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">返回</span></div>
         </div>
         <div class="center">
             <div class="left-list">
