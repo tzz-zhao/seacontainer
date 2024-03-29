@@ -366,14 +366,17 @@ export default {
 }
 
 .center {
-    margin: 0 1%;
+    padding: 0 1%;
+    box-sizing: border-box;
     display: flex;
+    height: 100%;
+    width: 100%;
     flex-direction: row;
     justify-content: space-between;
 }
 
 .left-list {
-    width: 529px;
+    width: 27%;
     height: 90vh;
     border: 1px solid #98E7FC;
     background: #07365D !important;
@@ -384,7 +387,7 @@ export default {
 
 .title {
     background: linear-gradient(270deg, rgba(47, 186, 255, 0.0001) 0%, rgba(77, 210, 255, 0.8) 63.77%, rgba(84, 216, 255, 0.8) 86.69%, rgba(92, 222, 255, 0.0001) 100%);
-    width: 348px;
+    width: 70%;
     height: 30px;
     color: white;
     display: flex;
@@ -412,7 +415,7 @@ export default {
 }
 
 .list-search {
-    width: 472px;
+    width: 100%;
     height: 30px;
     border: 0.8px solid #FFFFFF5C;
     margin-top: 18px;
@@ -438,8 +441,8 @@ export default {
 
 .list-table {
     margin-top: 11px;
-    width: 463px;
-    height: 720px;
+    width: 100%;
+    height: 90%;
     overflow-x: hidden;
 }
 
@@ -463,8 +466,8 @@ export default {
 
 
 .right-echarts {
-    width: 1300px;
-    height: 90vh;
+    width: 71%;
+    height: 90%;
     border: 1px solid #98E7FC;
     background: #07365D !important;
     box-sizing: border-box;
@@ -475,7 +478,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    ;
+    height: 5%;
 }
 
 .echartTitle>button {
@@ -489,7 +492,7 @@ export default {
 .echartsTable {
     margin: 1%;
     width: 100%;
-    height: 98%;
+    height: 93%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;

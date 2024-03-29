@@ -80,8 +80,7 @@
                 <div class="messageson" style="left: 196px; font-size: 8px">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look" :data-v="item.name">
-                  查看</div>
+                <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look" :data-v="item.name">查看</div>
               </div>
             </div>
           </div>
@@ -114,26 +113,31 @@
             <div class="listthree listson" style="left: 300px">操作</div>
           </div>
           <div style="height: 221px; position: absolute; overflow: auto">
-            <div v-for="(item, index) in sensor.filter((p) => p.status !== 0)" :key="index"
+            <div
+              v-for="(item, index) in containerList.filter((p) => p.status !== 0)"
+              :key="index"
               style="width: 348px; height: 32px; margin-left: 18px; position: relative; display: flex; align-items: center">
-              <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
-                {{ index + 1 }}</div>
-              <div class="listtwo listson"
-                style="left: 58px; top: 0; height: 100%; display: flex; align-items: center; font-size: 10px">
+              <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">{{ index + 1 }}</div>
+              <div
+                class="listtwo listson"
+                :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel"
+                style="width: 80px; left: 58px; top: 0; height: 100%;line-height: 32px; font-size: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
-              <div class="listthree listson"
-                style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">{{
-            item.updateTime.split(":")[0] + ":" + item.updateTime.split(":")[1] }}</div>
-              <!-- <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">{{ item.status === 1 ? "警告" : "异常" }}</div> -->
-              <div class="listthree listson"
-                style="left: 235px; top: 0; height: 100%; display: flex; align-items: center"><span
-                  v-if="item.status == 1" style="color: yellow;">警告</span><span v-if="item.status == 2"
-                  style="color: red;">异常</span></div>
+              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">
+                {{ item.date.split(":")[0] + ":" + item.date.split(":")[1] }}
+              </div>
+              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">
+                <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2" style="color: red">异常</span>
+              </div>
 
-              <div class="listthree listson"
-                style="left: 300px; top: 0; height: 100%; display: flex; align-items: center;cursor:pointer"
-                @click="sensoralarm" :data-v=item.containerNumber>查看</div>
+              <div
+                class="listthree listson"
+                style="left: 300px; top: 0; height: 100%; display: flex; align-items: center; cursor: pointer"
+                @click="sensoralarm"
+                :data-v="item.containerNumber">
+                查看
+              </div>
             </div>
           </div>
         </div>
@@ -254,6 +258,7 @@ export default {
     },
     //右侧报警信息跳转
     sensoralarm(e) {
+    sensoralarm(e) {
       console.log(e.target.dataset.v);
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v } });
     },
@@ -283,6 +288,7 @@ export default {
           or++;
         }
 
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
         this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
       });
       this.yData = [mooring, mooralongside, underway, or];
@@ -851,7 +857,6 @@ export default {
   height: 22px;
   width: 22px;
 }
-
 
 div::-webkit-scrollbar {
   width: 10px;
