@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="head">
-      <div class="headtitle">货运管理平台</div>
+      <div class="headtitle">コンテナ監視システム</div>
       <div class="headtext">
         <span class="headtime">
           {{ date }}
@@ -21,24 +21,24 @@
             <div class="arrows">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">货船统计</div>
+            <div class="lefttext">船舶集計</div>
           </div>
           <div class="shiplegend">
             <div>
               <div style="background-color: #cbd1d7; width: 8px; height: 8px; display: inline-block" />
-              <div style="display: inline-block; margin-left: 5px">锚泊</div>
+              <div style="display: inline-block; margin-left: 5px">錨泊</div>
             </div>
             <div style="margin-left: 30px">
               <div style="background-color: #5b8ff9; width: 8px; height: 8px; display: inline-block" />
-              <div style="display: inline-block; margin-left: 5px">靠泊</div>
+              <div style="display: inline-block; margin-left: 5px">係留</div>
             </div>
             <div style="margin-left: 30px">
               <div style="background-color: #5ad8a6; width: 8px; height: 8px; display: inline-block" />
-              <div style="display: inline-block; margin-left: 5px">在航</div>
+              <div style="display: inline-block; margin-left: 5px">移動</div>
             </div>
             <div style="margin-left: 30px">
               <div style="background-color: #d3aa22; width: 8px; height: 8px; display: inline-block" />
-              <div style="display: inline-block; margin-left: 5px">其他</div>
+              <div style="display: inline-block; margin-left: 5px">その他</div>
             </div>
           </div>
 
@@ -49,7 +49,7 @@
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">货船信息</div>
+            <div class="lefttext">船舶情報</div>
           </div>
           <div class="shipsearch">
             <div class="searchdiv">
@@ -59,11 +59,11 @@
               <!-- <div class="searchtext">请输入船名</div> -->
               <input v-model="search" type="text" placeholder="请输入船名" class="searchtext" />
             </div>
-            <div class="searchbutton" @click="shipsearch">搜索</div>
+            <div class="searchbutton" @click="shipsearch">検索</div>
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">船名</div>
+              <div class="listone listson">船舶名</div>
               <div class="listtwo listson">船籍</div>
               <div class="listfour listson">目的地</div>
               <div class="listthree listson">操作</div>
@@ -81,7 +81,7 @@
                   {{ item.dest }}
                 </div>
                 <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look"
-                  :data-v="item.name">查看</div>
+                  :data-v="item.name">確認</div>
               </div>
             </div>
           </div>
@@ -102,15 +102,15 @@
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">报警信息</div>
+            <div class="lefttext">アラート</div>
           </div>
 
           <div class="listtitle"
             style="width: 348px; height: 32px; margin-left: 18px; position: relative; line-height: 20px; display: flex; align-items: center">
-            <div class="listone listson" style="left: 10px">序号</div>
-            <div class="listtwo listson" style="left: 58px">所属货船</div>
-            <div class="listthree listson" style="left: 140px">时间</div>
-            <div class="listthree listson" style="left: 220px">报警属性</div>
+            <div class="listone listson" style="left: 10px">No</div>
+            <div class="listtwo listson" style="left: 58px">船舶名</div>
+            <div class="listthree listson" style="left: 140px">時間</div>
+            <div class="listthree listson" style="left: 220px">種類</div>
             <div class="listthree listson" style="left: 300px">操作</div>
           </div>
           <div style="height: 221px; position: absolute; overflow: auto">
@@ -130,13 +130,13 @@
               <div class="listthree listson"
                 style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">
                 <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2"
-                  style="color: red">异常</span>
+                  style="color: red">異常</span>
               </div>
 
               <div class="listthree listson"
                 style="left: 300px; top: 0; height: 100%; display: flex; align-items: center; cursor: pointer"
                 @click="sensoralarm" :data-v="item.containerNumber">
-                查看
+                確認
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">货单统计</div>
+            <div class="lefttext"></div>
           </div>
           <div class="shipsearch">
             <div class="searchdiv">
@@ -160,9 +160,9 @@
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">船名</div>
-              <div class="listtwo listson">单号</div>
-              <div class="listfour listson">箱号</div>
+              <div class="listone listson">船舶名</div>
+              <div class="listtwo listson">BL番号</div>
+              <div class="listfour listson">コンテナ番号</div>
               <div class="listthree listson">操作</div>
             </div>
 
@@ -181,7 +181,7 @@
                 </div>
                 <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look"
                   :data-v="item.vessel">
-                  查看</div>
+                  確認</div>
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ export default {
 
   data() {
     return {
-      xData: ["锚泊", "靠泊", "在航", "其他"], //横坐标
+      xData: ["錨泊", "係留", "移動", "その他"], //横坐标
       yData: [], //数据
       xData1: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"], //横坐标
       yData1: [600, 300, 200, 350, 250, 650, 750, 450, 750, 550, 750, 650], //数据
@@ -309,7 +309,7 @@ export default {
         // },
         xAxis: {
           type: "category",
-          data: ["锚泊", "靠泊", "在航", "其他"],
+          data: ["錨泊", "係留", "移動", "その他"],
 
           axisLabel: {
             //x轴文字的配置
