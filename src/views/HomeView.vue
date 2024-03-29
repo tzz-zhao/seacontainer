@@ -172,7 +172,7 @@
                   {{ item.vessel }}
                 </div>
                 <div class="messageson"
-                  style="left: 146px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;width: 30px;">
+                  style="left: 146px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;width: 40px;" :title="item.billNumber" >
                   {{ item.billNumber }}
                 </div>
                 <div class="messageson"
