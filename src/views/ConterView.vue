@@ -13,8 +13,9 @@
                     {{ time }}
                 </span>
             </div>
-            <div><img src="../assets/return.svg" style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span
-                    @click="back" style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">返回</span></div>
+            <div><img src="../assets/return.svg"
+                    style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span @click="back"
+                    style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">返回</span></div>
         </div>
         <div class="center">
             <div class="left-list">
@@ -56,7 +57,7 @@
                         <div></div>
                         <span>传感器001</span>
                     </div>
-                    <button>导出</button>
+                    <button @click="Deriver">导出</button>
                 </div>
                 <div class="echartsTable">
                     <div v-for="(item, index) in echartsData" :key="index">
@@ -74,6 +75,7 @@
 <script>
 import * as echarts from 'echarts';
 import sensor from "../static/传感器.json";
+import sensorTimeDate from "../static/传感器日均.json"
 /*sensorarr-传感器列表数据 
 echartsData-面积图数据 
 （data, time ,week）-时间 
@@ -86,10 +88,10 @@ export default {
         return {
             sensorarr: [],
             echartsData: [
-                { title: "温度", type: "temperature", data: [-8, -33, -24, -30, -10, -12, -10, -8, 10, 5], y: { min: -50, max: 30, interval: 20 } },
-                { title: "湿度", type: "humidity", data: [500, 150, 230, 200, 560, 580, 380, 600], y: { min: 0, max: 800, interval: 200 } },
-                { title: "开关", type: "open", data: [50, 17, 23, 20, 56, 58, 38, 60], y: { min: 0, max: 80, interval: 20 } },
-                { title: "震动", type: "vibration", data: [50, 17, 23, 20, 36, 38, 38, 40], y: { min: 0, max: 40, interval: 10 } },
+                { title: "温度", type: "temperature", data: [], xAxisData: [] ,yname:"°C"},
+                { title: "湿度", type: "humidity", data: [], xAxisData: [],yname:"%rh" },
+                { title: "开关", type: "open", data: [], xAxisData: [] },
+                { title: "震动", type: "vibration", data: [], xAxisData: [],yname:"" },
             ],
             date: '',
             time: '',
@@ -102,6 +104,7 @@ export default {
         }
     },
     mounted() {
+        this.transmission()
         this.name = this.$route.query.name
         this.last = this.$route.query.last
         this.echartsData.forEach(item => {
@@ -112,12 +115,14 @@ export default {
         setInterval(() => {
             this.currentTime()
         }, 500)
+       
     },
     beforeCreate() {
         console.log(this.$route.query.name);
         console.log(this.$route.query.last);
     },
     methods: {
+        //时间处理事件
         currentTime() {
             var date = new Date();
             var year = date.getFullYear(); //月份从0~11，所以加一
@@ -163,6 +168,7 @@ export default {
             this.time = strtime
             this.date = strDate
         },
+        //获取列表数据
         datadispose() {
             this.sensordata.forEach((item) => {
                 if (this.name == item.containerNumber) {
@@ -186,13 +192,14 @@ export default {
         },
         back() {
 
-           if(typeof(this.last)=="undefined"){
-            this.$router.push("/");
-            
-           }else{
-            this.$router.push({ path: "/about", query: { name: this.last } });
-           }
+            if (typeof (this.last) == "undefined") {
+                this.$router.push("/");
+
+            } else {
+                this.$router.push({ path: "/about", query: { name: this.last } });
+            }
         },
+        //列表搜索
         sensorsearch() {
             console.log(this.search);
             let arr = []
@@ -214,6 +221,7 @@ export default {
                 return 'success-row';
             }
         },
+        //面积图函数
         tempType(item) {
             var chartDom = document.getElementById(`${item.type}`);
             var myChart = echarts.init(chartDom);
@@ -221,7 +229,7 @@ export default {
             option = {
                 xAxis: {
                     type: 'category',
-                    data: ['01', '02', '03', '04', '05', '06', '07', '08'],
+                    data: item.xAxisData,
                     // boundaryGap: false,
                     axisLabel: {
                         //x轴文字的配置
@@ -236,9 +244,10 @@ export default {
                 },
                 yAxis: {
                     type: 'value',
-                    min: item.y.min,
-                    max: item.y.max,
-                    interval: item.y.interval,
+                    name:item.yname,
+                    nameTextStyle:{
+                        color:"white"
+                    },
                     axisLabel: {
                         //x轴文字的配置
                         show: true,
@@ -273,7 +282,7 @@ export default {
                     }
                 ],
                 grid: { // 让图表占满容器
-                    top: "20px",
+                    top: "40px",
                     left: "30px",
                     right: "30px",
                     bottom: "20px",
@@ -283,6 +292,30 @@ export default {
         },
         handleClick(row) {
             console.log(row.id);
+        },
+        //传导图表数据
+        transmission() {
+            sensorTimeDate.forEach(item => {
+                this.echartsData.forEach(item1 => {
+                    if (item.equipmentType === item1.type) {
+                        item1.data.push(item.value)
+                        item1.xAxisData.push(item.updateTime.slice(-5))
+                    }
+                })
+            })
+        },
+        //导出按钮
+        Deriver(){
+            // let data = new Blob([res],{
+            //     type:"application/vnd.ms-excel;charect=utf-8"
+            // })
+            // let url = URL.createObjectURL(data)
+            let link = document.createElement('a')
+            // link.href = 
+            link.href = "../statics/传感器数据.json"
+            link.download = '传感器数据.xlsx'  
+            link.click();
+            // window.URL.revokeObjectURL(url)
         }
     }
 }
