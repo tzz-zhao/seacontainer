@@ -1,0 +1,245 @@
+[
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-18",
+        "value": -1.2,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-19",
+        "value": -1.5,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-20",
+        "value": -1.3,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-21",
+        "value": -2.2,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-22",
+        "value": 1.2,
+        "status": 1
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-23",
+        "value": 1.1,
+        "status": 2
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-24",
+        "value": -3,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-25",
+        "value": -1.5,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-26",
+        "value": -1.3,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-27",
+        "value": -3.2,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-28",
+        "value": -3,
+        "status": 0
+    },
+    {
+        "equipmentId": 1,
+        "equipmentName": "温度传感器1",
+        "equipmentType": "temperature",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-29",
+        "value": -2.3,
+        "status": 0
+    },
+    {
+        "equipmentId": 2,
+        "equipmentName": "湿度传感器1",
+        "equipmentType": "humidity",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-18",
+        "value": 0.66,
+        "status": 0
+    },
+    {
+        "equipmentId": 2,
+        "equipmentName": "湿度传感器1",
+        "equipmentType": "humidity",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-19",
+        "value": 0.68,
+        "status": 0
+    },
+    {
+        "equipmentId": 2,
+        "equipmentName": "湿度传感器1",
+        "equipmentType": "humidity",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-20",
+        "value": 0.63,
+        "status": 0
+    },
+    {
+        "equipmentId": 2,
+        "equipmentName": "湿度传感器1",
+        "equipmentType": "humidity",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-21",
+        "value": 0.66,
+        "status": 0
+    },
+    {
+        "equipmentId": 2,
+        "equipmentName": "湿度传感器1",
+        "equipmentType": "humidity",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-22",
+        "value": 0.46,
+        "status": 2
+    },
+    {
+        "equipmentId": 3,
+        "equipmentName": "开关传感器1",
+        "equipmentType": "open",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-20",
+        "value": false,
+        "status": 0
+    },
+    {
+        "equipmentId": 3,
+        "equipmentName": "开关传感器1",
+        "equipmentType": "open",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-21",
+        "value": false,
+        "status": 0
+    },
+    {
+        "equipmentId": 3,
+        "equipmentName": "开关传感器1",
+        "equipmentType": "open",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-22",
+        "value": false,
+        "status": 0
+    },
+    {
+        "equipmentId": 3,
+        "equipmentName": "开关传感器1",
+        "equipmentType": "open",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-23",
+        "value": false,
+        "status": 0
+    },
+    {
+        "equipmentId": 3,
+        "equipmentName": "开关传感器1",
+        "equipmentType": "open",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-24",
+        "value": false,
+        "status": 0
+    },
+    {
+        "equipmentId": 4,
+        "equipmentName": "震动传感器1",
+        "equipmentType": "vibration",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-21",
+        "value": 0.5,
+        "status": 0
+    },
+    {
+        "equipmentId": 4,
+        "equipmentName": "震动传感器1",
+        "equipmentType": "vibration",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-22",
+        "value": 0.8,
+        "status": 0
+    },
+    {
+        "equipmentId": 4,
+        "equipmentName": "震动传感器1",
+        "equipmentType": "vibration",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-23",
+        "value": 1.5,
+        "status": 0
+    },
+    {
+        "equipmentId": 4,
+        "equipmentName": "震动传感器1",
+        "equipmentType": "vibration",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-24",
+        "value": 0.5,
+        "status": 0
+    },
+    {
+        "equipmentId": 4,
+        "equipmentName": "震动传感器1",
+        "equipmentType": "vibration",
+        "containerNumber": "WHSU6844788",
+        "updateTime": "2024-03-25",
+        "value": 2.5,
+        "status": 1
+    }
+]
