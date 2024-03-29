@@ -293,7 +293,7 @@ export default {
           or++;
         }
 
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest });
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest ,status:item.navStatus});
       });
       this.yData = [mooring, mooralongside, underway, or];
       console.log(this.yData);
@@ -435,12 +435,14 @@ export default {
             center: [50, 40], // 初始化地图中心点位置
           });
           for (let i = 0; i < this.shipnamearr.length; i++) {
+            let backgroundColor = this.shipnamearr[i].status == 0 ? '#5AD8A6' : (this.shipnamearr[i].status==1?'#CBD1D7':'#5B8FF9');
             var marker = new AMap.Marker({
               position: this.shipnamearr[i].location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
               content: `
-                  <div class="my_marker" style>
-                        <div class="marker" style="color:#fff;background:#0060B5 ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
+                  <div class="my_marker" >
+                        <div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage'
+                         data-id="${this.shipnamearr[i].name}" >
                            ${this.shipnamearr[i].num}
                         </div>
 
@@ -571,7 +573,7 @@ export default {
 
 .main {
   position: absolute;
-  top: 60px;
+  top: 114px;
   /* padding:0 24px; */
 }
 
@@ -581,7 +583,7 @@ export default {
 
 .leftbox {
   width: 380px;
-  height: 329px;
+  height: 385px;
   flex-shrink: 0;
 
   border: 1px solid #98e7fc;
@@ -594,7 +596,7 @@ export default {
 .maincenter {
   /* background-image: url(../assets/ditu.png); */
   width: 1062px;
-  height: 674px;
+  height: 774px;
   flex-shrink: 0;
   margin-bottom: 24px;
   position: relative;
@@ -861,8 +863,6 @@ export default {
   width: 22px;
 }
 
-.my_marker {
-}
 
 div::-webkit-scrollbar {
   width: 10px;

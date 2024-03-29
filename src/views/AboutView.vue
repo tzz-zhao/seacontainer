@@ -46,7 +46,7 @@
             <div class="listthree listson">操作</div>
           </div>
 
-          <div style="overflow-x: hidden; position: absolute; width: 332px; height: 552px">
+          <div style="overflow-x: hidden; position: absolute; width: 332px; height: 602px">
             <div v-for="(item, index) in containerarr" :key="index" class="shipmessage" style="top: 0px">
               <div class="messageson" style="left: 33px">
                 {{ item.number }}
@@ -96,7 +96,7 @@
         <div class="listArticle">
           <div>
             <img src="../assets/Check-one.svg" alt="" />
-            <span>接货地：SHANGHAI</span>
+            <span>接货地：{{ Trajectorydata.receipt.name }}</span>
           </div>
           <div></div>
           <div>
@@ -137,7 +137,7 @@
           </div>
           <div>
             <img src="../assets/Check.svg" alt="" />
-            <span>起运港：SHANGHAI</span>
+            <span>起运港：{{ Trajectorydata.delivery.name }}</span>
           </div>
           <div>
             <div>
@@ -192,24 +192,50 @@ export default {
       receive: '',
       containerarr: [],
       trackPoints: [
-        [159.457591, 24.336610], // 示例坐标点1
-        [162, 55.90809],  // 示例坐标点2
+        // [159.457591, 24.336610], // 示例坐标点1
+        // [162, 55.90809],  // 示例坐标点2
         // [116.40529, 39.90038],  // 示例坐标点3
         // 添加更多坐标点...
       ],
       polyline: null,
-      Trajectoryinformation:{}
+      Trajectoryinformation:{},
+      Trajectorydata:{}
     };
   },
   methods: {
     datatreating() {
       console.log(this.receive);
+      this.ship.forEach((item) => {
+        if(this.receive==item.nameEn){
+          let num = 0;
+        for (let i = 0; i < this.freighttrack.length; i++) {
+          if (this.freighttrack[i].vessel == item.nameEn) {
+            num++;
+          }
+        }
+        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
+        }
+        //  this.shipnamearr.push(item.nameEn)
+        // console.log(item);
+      
+        // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
+      });
+
+      console.log(this.shipnamearr);
       this.ship.forEach((item)=>{
         if(item.nameEn==this.receive){
           this.Trajectoryinformation=item
         }
       })
       console.log(this.Trajectoryinformation,"右侧信息");
+      
+      this.shiptracking.forEach((item)=>{
+        if(item.nameEn==this.receive){
+          this.Trajectorydata=item
+        }
+      })
+      console.log(this.Trajectorydata,"获得的右侧数据");
+      this.trackPoints=[[this.Trajectorydata.receipt.lon,this.Trajectorydata.receipt.lat],[this.Trajectorydata.delivery.lon,this.Trajectorydata.delivery.lat]]
       this.freighttrack.forEach((item) => {
         if (item.vessel == this.receive) {
           const currentcontainerList = this.containerdata.filter((p) => p.containerNumber == item.containerNumber) || [];
@@ -252,17 +278,17 @@ export default {
     },
 
     datasearch() {
-      this.ship.forEach((item) => {
-        //  this.shipnamearr.push(item.nameEn)
-        // console.log(item);
-        let num = 0;
-        for (let i = 0; i < this.freighttrack.length; i++) {
-          if (this.freighttrack[i].vessel == item.nameEn) {
-            num++;
-          }
-        }
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
-      });
+      // this.ship.forEach((item) => {
+      //   //  this.shipnamearr.push(item.nameEn)
+      //   // console.log(item);
+      //   let num = 0;
+      //   for (let i = 0; i < this.freighttrack.length; i++) {
+      //     if (this.freighttrack[i].vessel == item.nameEn) {
+      //       num++;
+      //     }
+      //   }
+      //   this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
+      // });
 
       console.log(this.shipnamearr);
     },
@@ -430,7 +456,7 @@ export default {
 
 .main {
   position: absolute;
-  top: 60px;
+  top: 114px;
   /* padding:0 24px; */
 }
 
@@ -454,7 +480,7 @@ export default {
   align-self: flex-end;
   /* background-image: url(../assets/ditu.png); */
   width: 1062px;
-  height: 674px;
+  height: 774px;
   flex-shrink: 0;
   position: relative;
   top: 0;
@@ -715,8 +741,7 @@ export default {
   width: 22px;
 }
 
-.my_marker {
-}
+
 
 div::-webkit-scrollbar {
   width: 10px;
@@ -753,7 +778,7 @@ div::-webkit-scrollbar-corner {
 .container-box {
   flex-shrink: 0;
   width: 378px;
-  height: 714px;
+  height: 774px;
   background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
   border: 1px solid #98e7fc;
   box-sizing: border-box;
@@ -776,6 +801,7 @@ div::-webkit-scrollbar-corner {
 .titleSec {
   width: 348px;
   margin: 20px 16px;
+  font-size: 14px;
   height: 32px;
   flex-shrink: 0;
   display: flex;
@@ -800,7 +826,7 @@ div::-webkit-scrollbar-corner {
   box-sizing: border-box;
   margin: 20px 16px;
   padding: 0 15px;
-  height: 514px;
+  height: 544px;
   overflow: auto;
 }
 
