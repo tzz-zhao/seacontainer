@@ -82,21 +82,21 @@
         </div>
         <div class="titleSec">
           <div>
-            <span>{{Trajectoryinformation.polName}}</span>
-            <span>ETD:{{Trajectoryinformation.atd}}</span>
+            <span>{{ Trajectoryinformation.polName }}</span>
+            <span>ETD:{{ Trajectoryinformation.atd }}</span>
           </div>
           <div>
             <img src="../assets/Group 39.svg" />
           </div>
           <div>
-            <span>{{Trajectoryinformation.podName}}</span>
-            <span>ETA: {{Trajectoryinformation.ata}}</span>
+            <span>{{ Trajectoryinformation.podName }}</span>
+            <span>ETA: {{ Trajectoryinformation.ata }}</span>
           </div>
         </div>
         <div class="listArticle">
           <div>
             <img src="../assets/Check-one.svg" alt="" />
-            <span>接货地：{{ Trajectorydata.receipt.name }}</span>
+            <span>接货地：{{ Trajectorydata.receipt?.name }}</span>
           </div>
           <div></div>
           <div>
@@ -137,7 +137,7 @@
           </div>
           <div>
             <img src="../assets/Check.svg" alt="" />
-            <span>起运港：{{ Trajectorydata.delivery.name }}</span>
+            <span>起运港：{{ Trajectorydata.delivery?.name }}</span>
           </div>
           <div>
             <div>
@@ -186,10 +186,10 @@ export default {
       shipnamearr: [],
       search: "",
       thisshop: "",
-      date: '',
-      time: '',
-      week: '',
-      receive: '',
+      date: "",
+      time: "",
+      week: "",
+      receive: "",
       containerarr: [],
       trackPoints: [
         // [159.457591, 24.336610], // 示例坐标点1
@@ -198,52 +198,65 @@ export default {
         // 添加更多坐标点...
       ],
       polyline: null,
-      Trajectoryinformation:{},
-      Trajectorydata:{}
+      Trajectoryinformation: {},
+      Trajectorydata: {},
     };
   },
   methods: {
     datatreating() {
       console.log(this.receive);
       this.ship.forEach((item) => {
-        if(this.receive==item.nameEn){
+        if (this.receive == item.nameEn) {
           let num = 0;
-        for (let i = 0; i < this.freighttrack.length; i++) {
-          if (this.freighttrack[i].vessel == item.nameEn) {
-            num++;
+          for (let i = 0; i < this.freighttrack.length; i++) {
+            if (this.freighttrack[i].vessel == item.nameEn) {
+              num++;
+            }
           }
-        }
-        this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
+          this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
         }
         //  this.shipnamearr.push(item.nameEn)
         // console.log(item);
-      
+
         // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
       });
 
       console.log(this.shipnamearr);
-      this.ship.forEach((item)=>{
-        if(item.nameEn==this.receive){
-          this.Trajectoryinformation=item
+      this.ship.forEach((item) => {
+        if (item.nameEn == this.receive) {
+          this.Trajectoryinformation = item;
         }
-      })
-      console.log(this.Trajectoryinformation,"右侧信息");
-      
-      this.shiptracking.forEach((item)=>{
-        if(item.nameEn==this.receive){
-          this.Trajectorydata=item
+      });
+      console.log(this.Trajectoryinformation, "右侧信息");
+
+      this.shiptracking.forEach((item) => {
+        if (item.nameEn == this.receive) {
+          this.Trajectorydata = item;
         }
-      })
-      console.log(this.Trajectorydata,"获得的右侧数据");
-      this.trackPoints=[[this.Trajectorydata.receipt.lon,this.Trajectorydata.receipt.lat],[this.Trajectorydata.delivery.lon,this.Trajectorydata.delivery.lat]]
+      });
+      console.log(this.Trajectorydata, "获得的右侧数据");
+      this.trackPoints = [];
+
+      const x1 = this.Trajectorydata.receipt?.lon;
+      const y1 = this.Trajectorydata.receipt?.lat;
+      const x2 = this.Trajectorydata.delivery?.lon;
+      const y2 = this.Trajectorydata.delivery?.lat;
+      if (x1 && y1) {
+        this.trackPoints.push([x1, y1]);
+      }
+      if (x2 && y2) {
+        this.trackPoints.push([x2, y2]);
+      }
       this.freighttrack.forEach((item) => {
         if (item.vessel == this.receive) {
           const currentcontainerList = this.containerdata.filter((p) => p.containerNumber == item.containerNumber) || [];
           console.log("当前绑定", currentcontainerList);
-          this.containerarr.push({ number: item.containerNumber, status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length -1]?.status || 0 : 0 });
+          this.containerarr.push({
+            number: item.containerNumber,
+            status: currentcontainerList.length !== 0 ? currentcontainerList[currentcontainerList?.length - 1]?.status || 0 : 0,
+          });
         }
       });
-     
 
       console.log(this.containerarr, "船只关联货物");
     },
@@ -306,21 +319,24 @@ export default {
             zoom: 2, // 初始化地图级别
             center: [116.397428, 39.90923], // 初始化地图中心点位置
           });
-          this.polyline = new AMap.Polyline({
-        path: this.trackPoints, // 设置轨迹线的坐标点数组
-        strokeColor: '#3366FF', // 线颜色
-        strokeWeight: 4, // 线宽度
-        strokeOpacity: 1, // 线透明度
-        strokeStyle: 'solid', // 线样式
-        showDir: true // 显示方向箭头
-      });
-      this.polyline.setMap(this.map);
+          console.log("123==>", this.trackPoints);
+          // if (this.trackPoints.length > 0) {
+          //   this.polyline = new AMap.Polyline({
+          //     path: this.trackPoints, // 设置轨迹线的坐标点数组
+          //     strokeColor: "#3366FF", // 线颜色
+          //     strokeWeight: 4, // 线宽度
+          //     strokeOpacity: 1, // 线透明度
+          //     strokeStyle: "solid", // 线样式
+          //     showDir: true, // 显示方向箭头
+          //   });
+          //   this.polyline.setMap(this.map);
+          // }
 
-// 自动调整地图视野，使整条轨迹可见
-// this.map.setFitView(this.polyline);
+          // 自动调整地图视野，使整条轨迹可见
+          // this.map.setFitView(this.polyline);
           for (let i = 0; i < this.shipnamearr.length; i++) {
             var marker = new AMap.Marker({
-              position: this.shipnamearr[i].location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+              position: this.shipnamearr[i]?.location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
               content: `
                   <div class="my_marker" style>
@@ -332,22 +348,30 @@ export default {
                   </div>`,
               offset: new AMap.Pixel(-15, -20),
             });
-            marker.on("click", (mapEvent) => {
-              console.log(mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id"));
-              this.$router.push({ name: "about", params: { name: mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") } });
-            });
+            // marker.on("click", (mapEvent) => {
+            //   console.log(mapEvent.target.dom.getElementsByClassName("marker").length > 0 ? mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") : null);
+            //   this.$router.push({
+            //     name: "about",
+            //     params: {
+            //       name: mapEvent.target.dom.getElementsByClassName("marker").length > 0 ? mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") : "",
+            //     },
+            //   });
+            // });
             marker.on("mouseover", (mapEvent) => {
               if (this.infoWindow) {
                 this.infoWindow.close();
               }
               var info = [];
-              info.push(`<div style="color:#000;font-size:10px">${mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id")}</div>`);
+              info.push(
+                `<div style="color:#000;font-size:10px">${
+                  mapEvent.target.dom.getElementsByClassName("marker").length > 0 ? mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id") : ""
+                }</div>`
+              );
               this.infoWindow = new AMap.InfoWindow({
                 offset: new AMap.Pixel(-3, -16),
                 content: info.join(""), //使用默认信息窗体框样式，显示信息内容
               });
               this.infoWindow.open(this.map, mapEvent.target.getPosition());
-              console.log(mapEvent.target.dom.getElementsByClassName("marker")[0].getAttribute("data-id"));
             });
             // marker.on('mouseout', () => {
 
@@ -740,8 +764,6 @@ export default {
   height: 22px;
   width: 22px;
 }
-
-
 
 div::-webkit-scrollbar {
   width: 10px;
