@@ -74,21 +74,21 @@
 <script>
 import * as echarts from 'echarts';
 import sensor from "../static/传感器.json";
+/*sensorarr-传感器列表数据 
+echartsData-面积图数据 
+（data, time ,week）-时间 
+search - 搜索框数据
+sensor - 传感器数据
+（name，last） - 跳转传参数据
+*/
 export default {
     data() {
         return {
-            tableData: [
-                { id: "1", equipmentName: '传感器001', status: 2 },
-                { id: "2", equipmentName: '传感器002', status: 2 },
-                { id: "3", equipmentName: '传感器003', status: 2 },
-                { id: "4", equipmentName: '传感器004', status: 1 },
-                { id: "5", equipmentName: '传感器005', status: 1 },
-            ],
+            sensorarr: [],
             echartsData: [
                 { title: "温度", type: "temperature", data: [-8, -33, -24, -30, -10, -12, -10, -8, 10, 5], y: { min: -50, max: 30, interval: 20 } },
                 { title: "湿度", type: "humidity", data: [500, 150, 230, 200, 560, 580, 380, 600], y: { min: 0, max: 800, interval: 200 } },
                 { title: "开关", type: "open", data: [50, 17, 23, 20, 56, 58, 38, 60], y: { min: 0, max: 80, interval: 20 } },
-
                 { title: "震动", type: "vibration", data: [50, 17, 23, 20, 36, 38, 38, 40], y: { min: 0, max: 40, interval: 10 } },
             ],
             date: '',
@@ -97,7 +97,6 @@ export default {
             name: '',
             last: '',
             sensordata: sensor,
-            sensorarr: [],
             search: ''
 
         }
@@ -215,17 +214,6 @@ export default {
                 return 'success-row';
             }
         },
-        // tableCell({ row, column, rowIndex, columnIndex }) {
-        //     if (row.status == 2 && columnIndex === 1) {
-        //         console.log(column, rowIndex);
-        //         return "color:red"
-        //     } else if (row.status == 1 && columnIndex === 1) {
-        //         return "color:orange"
-        //     }
-        //     else {
-        //         return "color:white"
-        //     }
-        // },
         tempType(item) {
             var chartDom = document.getElementById(`${item.type}`);
             var myChart = echarts.init(chartDom);
@@ -345,6 +333,7 @@ export default {
     position: absolute;
     top: 40%;
     left: 2%;
+    cursor: pointer;
 }
 
 .header>div:nth-child(3)>img {
@@ -487,6 +476,7 @@ export default {
     background: linear-gradient(181.25deg, rgba(40, 125, 165, 0) -23.42%, #2499BC 98.94%, #17567C 98.94%);
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 .echartsTable {
