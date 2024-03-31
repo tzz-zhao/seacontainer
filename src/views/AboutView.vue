@@ -124,7 +124,8 @@ import ship from "../static/船舶.json";
 import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
 import containerdata from "../static/集装箱.json";
-import A05 from "../static/定位563201600.json";
+import A05 from "../static/定位563201600.json"
+import W178 from "../static/定位636021814.json"
 // import proj4 from 'proj4';
 import { convertToBD09 } from "../static/经纬切换";
 import HeadersBox from "../components/Headers.vue";
@@ -162,6 +163,7 @@ export default {
       Trajectoryinformation: {},
       Trajectorydata: {},
       A05: A05,
+      W178:W178,
       path: [],
       patharr: [],
     };
@@ -175,14 +177,24 @@ export default {
   methods: {
     datatreating() {
       // console.log(A05,"船舶路线");
-      this.A05.forEach((item) => {
+      // this.A05.forEach((item) => {
+      //   const latDecimal = item.lat / 1e6;
+      //   const lonDecimal = item.lon / 1e6;
+      //   console.log(latDecimal);
+
+
+      //   const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
+      //   this.path.push({ coures: item.course, location: location, posTime: item.posTime });
+
+      // })
+      this.W178.forEach((item)=>{
         const latDecimal = item.lat / 1e6;
         const lonDecimal = item.lon / 1e6;
         console.log(latDecimal);
 
         const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
         this.path.push({ coures: item.course, location: location, posTime: item.posTime });
-      });
+      })
       console.log(this.path, "船舶路线");
       this.path.forEach((item) => {
         this.patharr.push(item.location);

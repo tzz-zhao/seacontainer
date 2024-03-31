@@ -1,66 +1,67 @@
 <template>
   <div>
-    <HeadersBox></HeadersBox>
+    <HeadersBox>
+      <div><img src="../assets/return.svg"
+                    style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span @click="back"
+                    style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">戻る</span></div>
+    </HeadersBox>
     <div class="sensor">
-      <!-- <div>
-      <img src="../assets/return.svg" style="width: 17px; height: 17px; position: absolute; top: -4px; cursor: pointer" /><span
-        @click="back"
-        style="position: absolute; left: 20px; width: 40px; top: -4px; cursor: pointer"
-        >戻る</span
-      >
-    </div> -->
-      <div class="center">
-        <div class="left-list">
-          <div class="title">
-            <div></div>
-            <span>センサー情報</span>
-          </div>
-          <div class="list-search">
-            <input placeholder="センサー名を入力してください" style="color: #fff" v-model="search" />
-            <button @click="sensorsearch">検索</button>
-          </div>
-          <div class="list-table">
-            <el-table
-              :data="sensorarr"
-              style="width: 100%"
-              :header-cell-style="{ background: '#11517C', color: 'white' }"
-              :highlight-current-row="false"
-              :row-class-name="tableRowClassName">
-              <el-table-column prop="equipmentName" label="センサー名" width="180"> </el-table-column>
-              <el-table-column prop="status" label="状態" width="180">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.status == 0">正常</span>
-                  <span v-if="scope.row.status == 1" style="color: yellow">警告</span>
-                  <span v-if="scope.row.status == 2" style="color: red">異常</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button @click="handleClick(scope.row)" type="text" size="small">確認</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </div>
-        <div class="right-echarts">
-          <div class="echartTitle">
-            <div class="title">
-              <div></div>
-              <span>センサー情報</span>
+        
+          
+
+        <div class="center">
+            <div class="left-list">
+                <div class="title">
+                    <div></div>
+                    <span>センサー情報</span>
+                </div>
+                <div class="list-search">
+                    <input placeholder="センサー名を入力してください" style="color: #fff;" v-model="search" />
+                    <button @click="sensorsearch">検索</button>
+                </div>
+                <div class="list-table">
+                    <el-table :data="sensorarr" style="width: 100%"
+                        :header-cell-style="{ background: '#11517C', color: 'white' }" :highlight-current-row="false"
+                        :row-class-name="tableRowClassName">
+                        <el-table-column prop="equipmentName" label="センサー名" width="180">
+                        </el-table-column>
+                        <el-table-column prop="status" label="状態" width="180">
+                            <template slot-scope="scope">
+
+                                <span v-if="scope.row.status == 0">正常</span>
+                                <span v-if="scope.row.status == 1" style="color: yellow;">警告</span>
+                                <span v-if="scope.row.status == 2" style="color: red;">異常</span>
+                            </template>
+
+
+                        </el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button @click="handleClick(scope.row)" type="text" size="small">確認</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
             </div>
-            <button @click="exportToCSV">出力</button>
-          </div>
-          <div class="echartsTable">
-            <div v-for="(item, index) in echartsData" :key="index">
-              <div class="title">
-                <div></div>
-                <span>{{ item.title }}</span>
-              </div>
-              <div :id="item.type" class="echartImg"></div>
+            <div class="right-echarts">
+                <div class="echartTitle">
+                    <div class="title">
+                        <div></div>
+                        <span>センサー情報</span>
+                    </div>
+                    <button @click="exportToCSV">出力</button>
+                </div>
+                <div class="echartsTable">
+                    <div v-for="(item, index) in echartsData" :key="index">
+                        <div class="title">
+                            <div></div>
+                            <span>{{ item.title }}</span>
+                        </div>
+                        <div :id="item.type" class="echartImg"></div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -78,74 +79,86 @@ sensor - 传感器数据
 （name，last） - 跳转传参数据
 */
 export default {
-  data() {
-    return {
-      sensorarr: [],
-      echartsData: [
-        { title: "温度 ℃", type: "temperature", data: [], xAxisData: [], yname: "°C", pieces: { gt: 0 } },
-        { title: "湿度 %", type: "humidity", data: [], xAxisData: [], yname: "%rh", pieces: { gt: 0.8 } },
-        { title: "開閉", type: "open", data: [], xAxisData: [], pieces: { gt: 0 } },
-        { title: "振動 g", type: "vibration", data: [], xAxisData: [], yname: "", pieces: { gt: 2 } },
-      ],
-      date: "",
-      time: "",
-      week: "",
-      name: "",
-      last: "",
-      sensordata: sensor,
-      search: "",
-    };
-  },
-  components: { HeadersBox },
-  mounted() {
-    this.transmission();
-    this.name = this.$route.query.name;
-    this.last = this.$route.query.last;
-    this.echartsData.forEach((item) => {
-      this.tempType(item);
-    });
-    this.datadispose();
-    this.currentTime();
-    setInterval(() => {
-      this.currentTime();
-    }, 500);
-  },
-  beforeCreate() {
-    console.log(this.$route.query.name);
-    console.log(this.$route.query.last);
-  },
-  methods: {
-    exportToCSV() {
-      const data = sensorTimeDate;
+    data() {
+        return {
+            sensorarr: [],
+            echartsData: [
+                { title: "温度 ℃", type: "temperature", data: [], xAxisData: [], yname: "°C", pieces: { gt: 0 } },
+                { title: "湿度 %", type: "humidity", data: [], xAxisData: [], yname: "%rh", pieces: { gt: 0.8 } },
+                { title: "開閉", type: "open", data: [], xAxisData: [], pieces: { gt: 0 } },
+                { title: "振動 g", type: "vibration", data: [], xAxisData: [], yname: "", pieces: { gt: 2 } },
+            ],
+            date: '',
+            time: '',
+            week: '',
+            name: '',
+            last: '',
+            sensordata: sensor,
+            search: ''
 
-      const csv = Papa.unparse(data);
-
-      // 调用 saveCSV 方法将数据保存为CSV文件
-      this.saveCSV(csv, "data.csv");
-    },
-    saveCSV(csv, fileName) {
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", fileName);
-      link.style.visibility = "hidden";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    },
-    //时间处理事件
-    currentTime() {
-      var date = new Date();
-      var year = date.getFullYear(); //月份从0~11，所以加一
-      var dateArr = [date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
-      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
-      for (var i = 0; i < dateArr.length; i++) {
-        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
-          dateArr[i] = "0" + dateArr[i];
         }
-      }
-      var strDate = year + "-" + dateArr[0] + "-" + dateArr[1];
+    },
+    mounted() {
+        this.transmission()
+        this.name = this.$route.query.name
+        this.last = this.$route.query.last
+        this.echartsData.forEach(item => {
+            this.tempType(item)
+        })
+        this.datadispose()
+        this.currentTime()
+        setInterval(() => {
+            this.currentTime()
+        }, 500)
+
+    },
+    beforeCreate() {
+        console.log(this.$route.query.name);
+        console.log(this.$route.query.last);
+    },
+    methods: {
+        exportToCSV() {
+            const data = sensorTimeDate
+
+            const csv = Papa.unparse(data);
+
+            // 调用 saveCSV 方法将数据保存为CSV文件
+            this.saveCSV(csv, 'data.csv');
+        },
+        saveCSV(csv, fileName) {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', fileName);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
+        //时间处理事件
+        currentTime() {
+            var date = new Date();
+            var year = date.getFullYear(); //月份从0~11，所以加一
+            var dateArr = [
+                date.getMonth() + 1,
+                date.getDate(),
+                date.getHours(),
+                date.getMinutes(),
+                date.getSeconds(),
+            ];
+            //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+            for (var i = 0; i < dateArr.length; i++) {
+                if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+                    dateArr[i] = "0" + dateArr[i];
+                }
+            }
+            var strDate =
+                year +
+                "-" +
+                dateArr[0] +
+                "-" +
+                dateArr[1]
 
       //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
       //this.date = strDate;
@@ -173,163 +186,159 @@ export default {
             //第一个等同于第二个，splice方法删除第二个
             // this.sensorarr.splice(j, 1);
 
-            // this.$delete(this.sensorarr, j)
-            this.$delete(this.sensorarr, i);
-            j--;
-          }
-        }
-      }
-      console.log(this.sensorarr);
-    },
-    back() {
-      if (typeof this.last == "undefined") {
-        this.$router.push("/");
-      } else {
-        this.$router.push({ path: "/about", query: { name: this.last } });
-      }
-    },
-    //列表搜索
-    sensorsearch() {
-      console.log(this.search);
-      let arr = [];
-      for (let i = 0; i < this.sensorarr.length; i++) {
-        if (this.search === this.sensorarr[i].equipmentName) {
-          arr.push(this.sensorarr[i]);
-          console.log(this.sensorarr);
-        }
-      }
-
-      this.sensorarr = arr;
-      console.log("search", this.sensorarr);
-    },
-    tableRowClassName({ row, rowIndex }) {
-      if (rowIndex % 2 === 0 && row) {
-        return "warning-row";
-      } else {
-        return "success-row";
-      }
-    },
-    //面积图函数
-    tempType(item) {
-      var chartDom = document.getElementById(`${item.type}`);
-      var myChart = echarts.init(chartDom);
-      var option;
-      option = {
-        xAxis: {
-          type: "category",
-          data: item.xAxisData,
-          axisLabel: {
-            //x轴文字的配置
-            show: true,
-            textStyle: {
-              color: "white",
-            },
-          },
-          axisLine: {
-            show: false,
-          },
-        },
-        yAxis: {
-          type: "value",
-          name: item.yname,
-          nameTextStyle: {
-            color: "white",
-          },
-          axisLabel: {
-            //x轴文字的配置
-            show: true,
-            textStyle: {
-              color: "white",
-            },
-          },
-          axisLine: {
-            show: false,
-          },
-        },
-        visualMap: {
-          type: "piecewise",
-          show: false,
-          seriesIndex: 0,
-          pieces: [
-            {
-              gt: item.pieces.gt,
-              lte: 100,
-              color: "#ff0000",
-            },
-          ],
-        },
-        series: [
-          {
-            data: item.data,
-            type: "line",
-            areaStyle: {
-              origin: "start",
-              color: {
-                type: "linear",
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: "#94C2FD", // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "#5B8FF9", // 100% 处的颜色
-                  },
-                ],
-                global: false, // 缺省为 false
-              },
-            },
-          },
-        ],
-        grid: {
-          // 让图表占满容器
-          top: "40px",
-          left: "30px",
-          right: "30px",
-          bottom: "20px",
-        },
-      };
-      option && myChart.setOption(option);
-    },
-    handleClick(row) {
-      console.log(row.id);
-      this.$router.push({ path: "/comparison", query: { name: row.equipmentName, id: row.id } });
-    },
-    //传导图表数据
-    transmission() {
-      sensorTimeDate.forEach((item) => {
-        this.echartsData.forEach((item1) => {
-          if (item.equipmentType === item1.type) {
-            if (item.equipmentType == "open") {
-              item1.data.push(item.value ? 1 : 0);
-            } else {
-              item1.data.push(item.value);
+                        // this.$delete(this.sensorarr, j)
+                        this.$delete(this.sensorarr, i)
+                        j--;
+                    }
+                }
             }
-            item1.xAxisData.push(item.updateTime.slice(-5));
-          }
-        });
-      });
-      console.log(this.echartsData, "11111111111");
-    },
-    //导出按钮
-    Deriver() {
-      // let data = new Blob([res],{
-      //     type:"application/vnd.ms-excel;charect=utf-8"
-      // })
-      // let url = URL.createObjectURL(data)
-      let link = document.createElement("a");
-      // link.href =
-      link.href = "../statics/传感器数据.json";
-      link.download = "传感器数据.csv";
-      link.click();
-      // window.URL.revokeObjectURL(url)
-    },
-  },
-};
+            console.log(this.sensorarr);
+
+        },
+        //返回
+        back() {
+
+            if (typeof (this.last) == "undefined") {
+                this.$router.push("/");
+
+            } else {
+                this.$router.push({ path: "/about", query: { name: this.last } });
+            }
+        },
+        //列表搜索
+        sensorsearch() {
+            console.log(this.search);
+            let arr = []
+            for (let i = 0; i < this.sensorarr.length; i++) {
+                if (this.search === this.sensorarr[i].equipmentName) {
+                    arr.push(this.sensorarr[i])
+                    console.log(this.sensorarr);
+                }
+            }
+
+            this.sensorarr = arr
+            console.log('search', this.sensorarr);
+
+        },
+        tableRowClassName({ row, rowIndex }) {
+            if (rowIndex % 2 === 0 && row) {
+                return 'warning-row';
+            } else {
+                return 'success-row';
+            }
+        },
+        //面积图函数
+        tempType(item) {
+            var chartDom = document.getElementById(`${item.type}`);
+            var myChart = echarts.init(chartDom);
+            var option;
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: item.xAxisData,
+                    axisLabel: {
+                        //x轴文字的配置
+                        show: true,
+                        textStyle: {
+                            color: "white",
+                        },
+                    },
+                    axisLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: item.yname,
+                    nameTextStyle: {
+                        color: "white"
+                    },
+                    axisLabel: {
+                        //x轴文字的配置
+                        show: true,
+                        textStyle: {
+                            color: "white",
+                        }
+                    },
+                    axisLine: {
+                        show: false
+                    }
+                },
+                visualMap: {
+                    type: 'piecewise',
+                    show: false,
+                    seriesIndex: 0,
+                    pieces: [
+                        {
+                            gt: item.pieces.gt,
+                            lte: 100,
+                            color: "#ff0000"
+                        },]
+                },
+                series: [
+                    {
+                        data: item.data,
+                        type: 'line',
+                        areaStyle: {
+                            origin: 'start',
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: '#94C2FD' // 0% 处的颜色
+                                }, {
+                                    offset: 1, color: '#5B8FF9' // 100% 处的颜色
+                                }],
+                                global: false // 缺省为 false
+                            }
+                        }
+                    }
+                ],
+                grid: { // 让图表占满容器
+                    top: "40px",
+                    left: "30px",
+                    right: "30px",
+                    bottom: "20px",
+                },
+            };
+            option && myChart.setOption(option);
+        },
+        handleClick(row) {
+            console.log(row,"44444");
+            this.$router.push({ path: "/comparison", query: { name: row.equipmentName,last:this.last,now:this.name} });
+        },
+        //传导图表数据
+        transmission() {
+            sensorTimeDate.forEach(item => {
+                this.echartsData.forEach(item1 => {
+                    if (item.equipmentType === item1.type) {
+                        if (item.equipmentType == "open") {
+                            item1.data.push(item.value ? 1 : 0)
+                        } else { item1.data.push(item.value) }
+                        item1.xAxisData.push(item.updateTime.slice(-5))
+                    }
+                })
+            })
+            console.log(this.echartsData, "11111111111");
+        },
+        //导出按钮
+        Deriver() {
+            // let data = new Blob([res],{
+            //     type:"application/vnd.ms-excel;charect=utf-8"
+            // })
+            // let url = URL.createObjectURL(data)
+            let link = document.createElement('a')
+            // link.href = 
+            link.href = "../statics/传感器数据.json"
+            link.download = '传感器数据.csv'
+            link.click();
+            // window.URL.revokeObjectURL(url)
+        }
+    }
+}
 </script>
 <style scoped>
 .sensor {
