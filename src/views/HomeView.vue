@@ -281,7 +281,7 @@ export default {
             //x轴文字的配置
             show: true,
             textStyle: {
-              color: this.$store.state.theme === "black" ? "#fff" : "#36366f",
+              color: this.$store.state?.theme === "black" ? "#fff" : "#36366f",
             },
           },
         },
@@ -295,7 +295,7 @@ export default {
             //x轴文字的配置
             show: true,
             textStyle: {
-              color: this.$store.state.theme === "black" ? "#fff" : "#36366f",
+              color: this.$store.state?.theme === "black" ? "#fff" : "#36366f",
             },
           },
         },
@@ -599,6 +599,10 @@ body {
   opacity: 0.8;
 }
 
+.searchimg svg {
+  width: 18px;
+  height: 18px;
+}
 .listbox {
   width: 332px;
   position: relative;
