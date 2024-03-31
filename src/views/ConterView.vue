@@ -1,10 +1,10 @@
 <template>
   <div>
-    <HeadersBox>
+    <!-- <HeadersBox> -->
       <div><img src="../assets/return.svg"
                     style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span @click="back"
                     style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">戻る</span></div>
-    </HeadersBox>
+    <!-- </HeadersBox> -->
     <div class="sensor">
         
           
@@ -70,7 +70,7 @@ import * as echarts from "echarts";
 import sensor from "../static/传感器.json";
 import sensorTimeDate from "../static/传感器日均.json";
 import Papa from "papaparse";
-import HeadersBox from "../components/Headers.vue";
+// import HeadersBox from "../components/Headers.vue";
 /*sensorarr-传感器列表数据 
 echartsData-面积图数据 
 （data, time ,week）-时间 

@@ -157,24 +157,24 @@
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">船舶名</div>
-              <div class="listtwo listson">BL番号</div>
-              <div class="listfour listson">コンテナ番号</div>
+              <div class="listone listson">BL番号</div>
+              <div class="listtwo listson">行き先</div>
+              
               <div class="listthree listson">操作</div>
             </div>
 
             <div style="overflow-x: hidden; height: 200px; position: absolute; width: 332px">
               <div class="shipmessage" style="top: 0px" v-for="(item, index) in freightarr" :key="index">
                 <div class="messageson" style="left: 33px; font-size: 9px">
-                  {{ item.vessel }}
-                </div>
-                <div class="messageson" style="left: 146px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 40px" :title="item.billNumber">
                   {{ item.billNumber }}
                 </div>
-                <div class="messageson" style="left: 196px; font-size: 8px'text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
-                  {{ item.containerNumber }}
+                <!-- <div class="messageson" style="left: 146px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 40px" :title="item.billNumber">
+                  {{ item.billNumber }}
+                </div> -->
+                <div class="messageson" style="left: 146px; font-size: 8px'text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
+                  {{ item.pod }}
                 </div>
-                <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look" :data-v="item.vessel">確認</div>
+                <div class="messageson underline" style="left: 271px; cursor:pointer;" @click="look" :data-v="item.vessel">確認</div>
               </div>
             </div>
           </div>
@@ -232,7 +232,12 @@ export default {
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v } });
     },
     datasearch() {
-      this.freightarr = this.freighttrack;
+      // this.freightarr = this.freighttrack;
+      this.freighttrack.forEach((item)=>{
+        if(item.billNumber!=null){
+          this.freightarr.push(item)
+        }
+      })
       let underway = 0;
       let mooring = 0;
       let mooralongside = 0;
