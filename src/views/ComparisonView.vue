@@ -1,5 +1,6 @@
 <template>
     <div class="comparison">
+        
         <div class="header">
             <div class="headertitle">コンテナ監視システム</div>
             <div class="headertext">
@@ -17,12 +18,13 @@
                     style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span @click="back"
                     style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">戻る</span></div>
         </div>
-        <div id="charts"></div>
+        <div id="charts" ></div>
     </div>
 </template>
 <script>
 import * as echarts from 'echarts';
-import sensor from '../static/传感器.json'
+import sensor from '../static/传感器.json';
+
 export default ({
     data() {
         return {
@@ -37,6 +39,7 @@ export default ({
             now:''
         }
     },
+    
     mounted() {
         console.log(this.$route.query);
         this.now=this.$route.query.now

@@ -13,6 +13,8 @@
           {{ time }}
         </span>
       </div>
+      
+      
       <el-switch @change="changeHandler" style="position: absolute; right: 50px; bottom: 0" v-model="themeText" active-text="深" inactive-text="浅"> </el-switch>
     </div>
   </div>

@@ -1,6 +1,11 @@
 <template>
   <div class="home">
+   
     <HeadersBox />
+    <div style="cursor:pointer;z-index: 999;" @click="back">
+        <div style="display: inline-block;position: absolute;left: 20px;top: 30px;"><img src="../assets/return.svg" alt=""></div>
+      <div style="display: inline-block;position: absolute;left: 39px;top: 28px;">戻る</div>
+    </div>
     <div class="main">
       <div class="container-box">
         <div class="leftboxtitle">
@@ -311,7 +316,7 @@ export default {
           }
 
           // 自动调整地图视野，使整条轨迹可见
-          // this.map.setFitView(this.polyline);
+          this.map.setFitView(this.polyline);
           for (let i = 0; i < this.shipnamearr.length; i++) {
             //  let img="../assets/ship.png"
             // let backgroundColor = this.shipnamearr[i].status == 0 ? '#5ad8a6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));

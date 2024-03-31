@@ -1,5 +1,6 @@
 <template>
   <div class="box">
+   
     <HeadersBox></HeadersBox>
     <div class="main">
       <div class="mainleft">

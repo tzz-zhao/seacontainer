@@ -1,69 +1,69 @@
 <template>
-  <div>
-    <HeadersBox>
-      <div>
-        <img src="../assets/return.svg" style="width: 17px; height: 17px; position: absolute; top: -4px; cursor: pointer" /><span
-          @click="back"
-          style="position: absolute; left: 20px; width: 40px; top: -4px; cursor: pointer"
-          >戻る</span
-        >
-      </div>
-    </HeadersBox>
-    <div class="sensor">
-      <div class="center">
-        <div class="left-list">
-          <div class="title">
-            <div></div>
-            <span>センサー情報</span>
-          </div>
-          <div class="list-search">
-            <input placeholder="センサー名を入力してください" style="color: #fff" v-model="search" />
-            <button @click="sensorsearch">検索</button>
-          </div>
-          <div class="list-table">
-            <el-table
-              :data="sensorarr"
-              style="width: 100%"
-              :header-cell-style="{ background:$store.state.theme === 'black'? '#11517C':'#fff', color: $store.state.theme === 'black'? 'white':'#36366f' }"
-              :highlight-current-row="false"
-              :row-class-name="tableRowClassName">
-              <el-table-column prop="equipmentName" label="センサー名" width="180"> </el-table-column>
-              <el-table-column prop="status" label="状態" width="180">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.status == 0">正常</span>
-                  <span v-if="scope.row.status == 1" style="color: yellow">警告</span>
-                  <span v-if="scope.row.status == 2" style="color: red">異常</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button @click="handleClick(scope.row)" type="text" size="small">確認</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </div>
-        <div class="right-echarts">
-          <div class="echartTitle">
-            <div class="title">
-              <div></div>
-              <span>センサー情報</span>
+    <div>
+        <HeadersBox>
+            <div>
+                <img src="../assets/return.svg"
+                    style="width: 17px; height: 17px; position: absolute; top: -4px; cursor: pointer" /><span
+                    @click="back"
+                    style="position: absolute; left: 20px; width: 40px; top: -4px; cursor: pointer">戻る</span>
             </div>
-            <button @click="exportToCSV">出力</button>
-          </div>
-          <div class="echartsTable">
-            <div v-for="(item, index) in echartsData" :key="index">
-              <div class="title">
-                <div></div>
-                <span>{{ item.title }}</span>
-              </div>
-              <div :id="item.type" class="echartImg"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+        </HeadersBox>
+         <div style="cursor:pointer;z-index: 999;" @click="back">
+        <div style="display: inline-block;position: absolute;left: 20px;top: 30px;"><img src="../assets/return.svg" alt=""></div>
+      <div style="display: inline-block;position: absolute;left: 39px;top: 28px;color: #fff;">戻る</div>
     </div>
-  </div>
+        <div class="sensor">
+            <div class="center">
+                <div class="left-list">
+                    <div class="title">
+                        <div></div>
+                        <span>センサー情報</span>
+                    </div>
+                    <div class="list-search">
+                        <input placeholder="センサー名を入力してください" style="color: #fff" v-model="search" />
+                        <button @click="sensorsearch">検索</button>
+                    </div>
+                    <div class="list-table">
+                        <el-table :data="sensorarr" style="width: 100%"
+                            :header-cell-style="{ background: $store.state.theme === 'black' ? '#11517C' : '#fff', color: $store.state.theme === 'black' ? 'white' : '#36366f' }"
+                            :highlight-current-row="false" :row-class-name="tableRowClassName">
+                            <el-table-column prop="equipmentName" label="センサー名" width="180"> </el-table-column>
+                            <el-table-column prop="status" label="状態" width="180">
+                                <template slot-scope="scope">
+                                    <span v-if="scope.row.status == 0">正常</span>
+                                    <span v-if="scope.row.status == 1" style="color: yellow">警告</span>
+                                    <span v-if="scope.row.status == 2" style="color: red">異常</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="操作">
+                                <template slot-scope="scope">
+                                    <el-button @click="handleClick(scope.row)" type="text" size="small">確認</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+                <div class="right-echarts">
+                    <div class="echartTitle">
+                        <div class="title">
+                            <div></div>
+                            <span>センサー情報</span>
+                        </div>
+                        <button @click="exportToCSV">出力</button>
+                    </div>
+                    <div class="echartsTable">
+                        <div v-for="(item, index) in echartsData" :key="index">
+                            <div class="title">
+                                <div></div>
+                                <span>{{ item.title }}</span>
+                            </div>
+                            <div :id="item.type" class="echartImg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import * as echarts from "echarts";
@@ -71,6 +71,7 @@ import sensor from "../static/传感器.json";
 import sensorTimeDate from "../static/传感器日均.json";
 import Papa from "papaparse";
 import HeadersBox from "../components/Headers.vue";
+
 /*sensorarr-传感器列表数据 
 echartsData-面积图数据 
 （data, time ,week）-时间 
@@ -119,87 +120,87 @@ export default {
     exportToCSV() {
       const data = sensorTimeDate;
 
-      const csv = Papa.unparse(data);
+            const csv = Papa.unparse(data);
 
-      // 调用 saveCSV 方法将数据保存为CSV文件
-      this.saveCSV(csv, "data.csv");
-    },
-    saveCSV(csv, fileName) {
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", fileName);
-      link.style.visibility = "hidden";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    },
-    //时间处理事件
-    currentTime() {
-      var date = new Date();
-      var year = date.getFullYear(); //月份从0~11，所以加一
-      var dateArr = [date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
-      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
-      for (var i = 0; i < dateArr.length; i++) {
-        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
-          dateArr[i] = "0" + dateArr[i];
-        }
-      }
-      var strDate = year + "-" + dateArr[0] + "-" + dateArr[1];
+            // 调用 saveCSV 方法将数据保存为CSV文件
+            this.saveCSV(csv, "data.csv");
+        },
+        saveCSV(csv, fileName) {
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", fileName);
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
+        //时间处理事件
+        currentTime() {
+            var date = new Date();
+            var year = date.getFullYear(); //月份从0~11，所以加一
+            var dateArr = [date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
+            //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+            for (var i = 0; i < dateArr.length; i++) {
+                if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+                    dateArr[i] = "0" + dateArr[i];
+                }
+            }
+            var strDate = year + "-" + dateArr[0] + "-" + dateArr[1];
 
-      //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
-      //this.date = strDate;
-      var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
+            //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
+            //this.date = strDate;
+            var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
 
-      var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-      var strDate1 = year + "/" + dateArr[0] + "/" + dateArr[1];
-      var date1 = new Date(strDate1);
-      let w = week[date1.getDay()];
-      this.week = w;
-      this.time = strtime;
-      this.date = strDate;
-    },
-    //获取列表数据
-    datadispose() {
-      this.sensordata.forEach((item) => {
-        if (this.name == item.containerNumber) {
-          this.sensorarr.push({ equipmentName: item.equipmentName, status: item.status });
-        }
-      });
-      console.log(this.sensorarr);
-      for (var i = 0; i < this.sensorarr.length; i++) {
-        for (var j = i + 1; j < this.sensorarr.length; j++) {
-          if (this.sensorarr[i].equipmentName == this.sensorarr[j].equipmentName) {
-            //第一个等同于第二个，splice方法删除第二个
-            // this.sensorarr.splice(j, 1);
+            var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+            var strDate1 = year + "/" + dateArr[0] + "/" + dateArr[1];
+            var date1 = new Date(strDate1);
+            let w = week[date1.getDay()];
+            this.week = w;
+            this.time = strtime;
+            this.date = strDate;
+        },
+        //获取列表数据
+        datadispose() {
+            this.sensordata.forEach((item) => {
+                if (this.name == item.containerNumber) {
+                    this.sensorarr.push({ equipmentName: item.equipmentName, status: item.status });
+                }
+            });
+            console.log(this.sensorarr);
+            for (var i = 0; i < this.sensorarr.length; i++) {
+                for (var j = i + 1; j < this.sensorarr.length; j++) {
+                    if (this.sensorarr[i].equipmentName == this.sensorarr[j].equipmentName) {
+                        //第一个等同于第二个，splice方法删除第二个
+                        // this.sensorarr.splice(j, 1);
 
-            // this.$delete(this.sensorarr, j)
-            this.$delete(this.sensorarr, i);
-            j--;
-          }
-        }
-      }
-      console.log(this.sensorarr);
-    },
-    //返回
-    back() {
-      if (typeof this.last == "undefined") {
-        this.$router.push("/");
-      } else {
-        this.$router.push({ path: "/about", query: { name: this.last } });
-      }
-    },
-    //列表搜索
-    sensorsearch() {
-      console.log(this.search);
-      let arr = [];
-      for (let i = 0; i < this.sensorarr.length; i++) {
-        if (this.search === this.sensorarr[i].equipmentName) {
-          arr.push(this.sensorarr[i]);
-          console.log(this.sensorarr);
-        }
-      }
+                        // this.$delete(this.sensorarr, j)
+                        this.$delete(this.sensorarr, i);
+                        j--;
+                    }
+                }
+            }
+            console.log(this.sensorarr);
+        },
+        //返回
+        back() {
+            if (typeof this.last == "undefined") {
+                this.$router.push("/");
+            } else {
+                this.$router.push({ path: "/about", query: { name: this.last } });
+            }
+        },
+        //列表搜索
+        sensorsearch() {
+            console.log(this.search);
+            let arr = [];
+            for (let i = 0; i < this.sensorarr.length; i++) {
+                if (this.search === this.sensorarr[i].equipmentName) {
+                    arr.push(this.sensorarr[i]);
+                    console.log(this.sensorarr);
+                }
+            }
 
       this.sensorarr = arr;
       console.log("search", this.sensorarr);
@@ -330,188 +331,188 @@ export default {
 </script>
 <style scoped>
 .sensor {
-  background-color: #1e6ba3;
-  height: 100vh;
-  width: 100%;
-  position: absolute;
-  top: 114px;
-  display: flex;
+    background-color: #1e6ba3;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 114px;
+    display: flex;
 }
 
 .center {
-  padding: 0 1%;
-  box-sizing: border-box;
-  display: flex;
-  height: 100%;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
+    padding: 0 1%;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .left-list {
-  width: 27%;
-  height: 90vh;
-  border: 1px solid #98e7fc;
-  background: #07365d ;
-  opacity: 0.6px;
-  box-sizing: border-box;
-  padding: 1%;
+    width: 27%;
+    height: 90vh;
+    border: 1px solid #98e7fc;
+    background: #07365d;
+    opacity: 0.6px;
+    box-sizing: border-box;
+    padding: 1%;
 }
 
 .title {
-  background: linear-gradient(270deg, rgba(47, 186, 255, 0.0001) 0%, rgba(77, 210, 255, 0.8) 63.77%, rgba(84, 216, 255, 0.8) 86.69%, rgba(92, 222, 255, 0.0001) 100%);
-  width: 70%;
-  height: 30px;
-  color: white;
-  display: flex;
-  align-items: center;
-  padding: 0 3%;
+    background: linear-gradient(270deg, rgba(47, 186, 255, 0.0001) 0%, rgba(77, 210, 255, 0.8) 63.77%, rgba(84, 216, 255, 0.8) 86.69%, rgba(92, 222, 255, 0.0001) 100%);
+    width: 70%;
+    height: 30px;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 3%;
 }
 
-.title > div {
-  width: 0;
-  height: 0;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-left: 8px solid #2ce7e7;
-  margin-right: 4%;
+.title>div {
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 8px solid #2ce7e7;
+    margin-right: 4%;
 }
 
-.title > span {
-  font-family: Microsoft YaHei;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 18.48px;
-  letter-spacing: 2px;
-  text-align: left;
+.title>span {
+    font-family: Microsoft YaHei;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18.48px;
+    letter-spacing: 2px;
+    text-align: left;
 }
 
 .list-search {
-  width: 100%;
-  height: 30px;
-  border: 0.8px solid #ffffff5c;
-  margin-top: 18px;
+    width: 100%;
+    height: 30px;
+    border: 0.8px solid #ffffff5c;
+    margin-top: 18px;
 }
 
-.list-search > input {
-  width: 80%;
-  height: 28px;
-  border: none;
-  background-color: #234461;
-  outline: none;
-  box-sizing: border-box;
-  padding: 0 15px;
+.list-search>input {
+    width: 80%;
+    height: 28px;
+    border: none;
+    background-color: #234461;
+    outline: none;
+    box-sizing: border-box;
+    padding: 0 15px;
 }
 
-.list-search > button {
-  width: 20%;
-  height: 30px;
-  background: #15517a;
-  border: none;
-  color: white;
+.list-search>button {
+    width: 20%;
+    height: 30px;
+    background: #15517a;
+    border: none;
+    color: white;
 }
 
 .list-table {
-  margin-top: 11px;
-  width: 100%;
-  height: 90%;
-  overflow-x: hidden;
+    margin-top: 11px;
+    width: 100%;
+    height: 90%;
+    overflow-x: hidden;
 }
 
-::v-deep .el-table .el-table__body tr:hover > td {
-  background-color: inherit;
-  /* 继承父元素背景色或者指定为初始背景色 */
+::v-deep .el-table .el-table__body tr:hover>td {
+    background-color: inherit;
+    /* 继承父元素背景色或者指定为初始背景色 */
 }
 
 ::v-deep .success-row,
 .success-row:hover {
-  background-color: #234968;
-  color: white;
+    background-color: #234968;
+    color: white;
 }
 
 ::v-deep .warning-row,
 .warning-row:hover {
-  background-color: #07365d;
-  border: none;
-  color: white;
+    background-color: #07365d;
+    border: none;
+    color: white;
 }
 
 .right-echarts {
-  width: 71%;
-  height: 90%;
-  border: 1px solid #98e7fc;
-  background: #07365d !important;
-  box-sizing: border-box;
-  padding: 1%;
+    width: 71%;
+    height: 90%;
+    border: 1px solid #98e7fc;
+    background: #07365d !important;
+    box-sizing: border-box;
+    padding: 1%;
 }
 
 .echartTitle {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  height: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 5%;
 }
 
-.echartTitle > button {
-  width: 70px;
-  height: 33px;
-  background: linear-gradient(181.25deg, rgba(40, 125, 165, 0) -23.42%, #2499bc 98.94%, #17567c 98.94%);
-  color: white;
-  border: none;
-  cursor: pointer;
+.echartTitle>button {
+    width: 70px;
+    height: 33px;
+    background: linear-gradient(181.25deg, rgba(40, 125, 165, 0) -23.42%, #2499bc 98.94%, #17567c 98.94%);
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .echartsTable {
-  margin: 1%;
-  width: 100%;
-  height: 93%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+    margin: 1%;
+    width: 100%;
+    height: 93%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
-.echartsTable > div {
-  width: 48%;
-  height: 49%;
-  box-sizing: border-box;
-  border: 1px solid #2499bc;
-  padding: 1%;
+.echartsTable>div {
+    width: 48%;
+    height: 49%;
+    box-sizing: border-box;
+    border: 1px solid #2499bc;
+    padding: 1%;
 }
 
-.echartsTable > div .echartImg {
-  height: 90%;
+.echartsTable>div .echartImg {
+    height: 90%;
 }
 
 .headtime {
-  color: #fff;
-  font-family: "Microsoft YaHei";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 14px;
+    color: #fff;
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
 }
 
 div::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  /**/
+    width: 10px;
+    height: 10px;
+    /**/
 }
 
 div::-webkit-scrollbar-track {
-  background: rgb(239, 239, 239);
-  border-radius: 2px;
+    background: rgb(239, 239, 239);
+    border-radius: 2px;
 }
 
 div::-webkit-scrollbar-thumb {
-  background: #bfbfbf;
-  border-radius: 10px;
+    background: #bfbfbf;
+    border-radius: 10px;
 }
 
 div::-webkit-scrollbar-thumb:hover {
-  background: #333;
+    background: #333;
 }
 
 div::-webkit-scrollbar-corner {
-  background: #179a16;
+    background: #179a16;
 }
 </style>
