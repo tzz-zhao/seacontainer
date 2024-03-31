@@ -298,11 +298,14 @@ export default {
             sensorTimeDate.forEach(item => {
                 this.echartsData.forEach(item1 => {
                     if (item.equipmentType === item1.type) {
-                        item1.data.push(item.value)
+                        if(item.equipmentType == "open"){
+                            item1.data.push(item.value ? 1 : 0)
+                        }else{item1.data.push(item.value)}
                         item1.xAxisData.push(item.updateTime.slice(-5))
                     }
                 })
             })
+            console.log(this.echartsData,"11111111111");
         },
         //导出按钮
         Deriver(){
@@ -313,7 +316,7 @@ export default {
             let link = document.createElement('a')
             // link.href = 
             link.href = "../statics/传感器数据.json"
-            link.download = '传感器数据.xlsx'  
+            link.download = '传感器数据.csv'  
             link.click();
             // window.URL.revokeObjectURL(url)
         }
