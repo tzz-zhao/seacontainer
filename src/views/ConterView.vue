@@ -57,7 +57,7 @@
                         <div></div>
                         <span>センサー情報</span>
                     </div>
-                    <button @click="Deriver">出力</button>
+                    <button  @click="exportToCSV">出力</button>
                 </div>
                 <div class="echartsTable">
                     <div v-for="(item, index) in echartsData" :key="index">
@@ -76,6 +76,7 @@
 import * as echarts from 'echarts';
 import sensor from "../static/传感器.json";
 import sensorTimeDate from "../static/传感器日均.json"
+import Papa from 'papaparse';
 /*sensorarr-传感器列表数据 
 echartsData-面积图数据 
 （data, time ,week）-时间 
@@ -122,6 +123,25 @@ export default {
         console.log(this.$route.query.last);
     },
     methods: {
+        exportToCSV() {
+      const data = sensorTimeDate
+
+      const csv = Papa.unparse(data);
+
+      // 调用 saveCSV 方法将数据保存为CSV文件
+      this.saveCSV(csv, 'data.csv');
+    },
+    saveCSV(csv, fileName) {
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', fileName);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
         //时间处理事件
         currentTime() {
             var date = new Date();

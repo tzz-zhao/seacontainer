@@ -79,14 +79,14 @@
         <div class="titleSec">
           <div>
             <span>{{ Trajectoryinformation?.polName }}</span>
-            <span>ETD:{{ Trajectoryinformation?.atd }}</span>
+            <span>ETD:{{ Trajectorydata.receipt?.atd }}</span>
           </div>
           <div>
             <img src="../assets/Group 39.svg" />
           </div>
           <div>
             <span>{{ Trajectoryinformation.podName }}</span>
-            <span>ETA: {{ Trajectoryinformation.ata }}</span>
+            <span>ETA: {{ Trajectorydata.delivery?.ata }}</span>
           </div>
         </div>
         <div class="listArticle">
@@ -97,45 +97,22 @@
           <div></div>
           <div>
             <img src="../assets/Check-one.svg" alt="" />
-            <span>起运港：SHANGHAI</span>
+            <span>起运港：{{ Trajectorydata.receipt?.name }}</span>
           </div>
           <div>
             <div>
-              <div>
-                <div>提箱</div>
-                <div>2023-12-12 21:00(周一)</div>
+              <div v-for="(item,index) in this.Trajectorydata.status" :key="index">
+                <div>{{ item.descriptionCn }}</div>
+                <div>{{item.eventTime}}</div>
               </div>
-              <div>
-                <div>进场</div>
-                <div>2023-12-13 21:00(周二)</div>
-              </div>
-              <div>
-                <div>海放</div>
-                <div>2023-12-14 21:00(周三)</div>
-              </div>
-              <div>
-                <div>码放</div>
-                <div>2023-12-14 21:00(周三)</div>
-              </div>
-              <div>
-                <div>配载</div>
-                <div>2023-12-14 21:00(周三)</div>
-              </div>
-              <div>
-                <div>装货</div>
-                <div>2023-12-14 21:00(周三)</div>
-              </div>
-              <div>
-                <div>离开</div>
-                <div>2023-12-14 21:00(周三)</div>
-              </div>
+            
             </div>
           </div>
           <div>
             <img src="../assets/Check.svg" alt="" />
-            <span>起运港：{{ Trajectorydata.delivery?.name }}</span>
+            <span>到达港：{{ Trajectorydata.delivery?.name }}</span>
           </div>
-          <div>
+          <!-- <div>
             <div>
               <div>
                 <div>到达</div>
@@ -150,7 +127,7 @@
                 <div>2023-12-14 21:00(周三)</div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -165,6 +142,8 @@ import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
 import containerdata from "../static/集装箱.json";
 import A05 from "../static/定位563201600.json"
+// import proj4 from 'proj4';
+import {convertToBD09} from "../static/经纬切换"
 export default {
   watch: {},
   name: "map-view",
@@ -203,12 +182,18 @@ export default {
     };
   },
   methods: {
+  
     datatreating() {
       // console.log(A05,"船舶路线");
       this.A05.forEach((item)=>{
         const latDecimal = item.lat / 1e6;
         const lonDecimal = item.lon / 1e6;
-        this.path.push({coures:item.course,location:[lonDecimal.toFixed(6),latDecimal.toFixed(6)],posTime:item.posTime})
+        console.log(latDecimal);
+       
+        
+            const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
+            this.path.push({ coures: item.course, location: location, posTime: item.posTime });
+       
       })
       console.log(this.path,"船舶路线");
       this.path.forEach((item)=>{

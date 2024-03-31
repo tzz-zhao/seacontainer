@@ -481,6 +481,9 @@ export default {
 };
 </script>
 <style scoped>
+body{
+  overflow-x: auto;
+}
 .home {
   position: relative;
   overflow: hidden;
@@ -488,6 +491,9 @@ export default {
   color: #ffffff;
   width: 1920px;
   height: 945px;
+  white-space: nowrap; /* 使文本不换行 */
+  
+ 
 }
 
 .head {
