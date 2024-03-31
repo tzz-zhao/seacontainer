@@ -91,7 +91,9 @@ export default {
       this.currentTime();
     }, 500);
     this.$nextTick(() => {
-      this.loadTheme("black");
+      console.log(this.themeNow);
+      this.themeText = this.themeNow === "black" ? true : false;
+      this.loadTheme(this.themeNow);
     });
   },
   watch: {
