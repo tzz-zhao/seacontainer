@@ -50,7 +50,7 @@
                 </svg>
               </div>
               <!-- <div class="searchtext">请输入船名</div> -->
-              <input v-model="search" type="text" placeholder="请输入船名" class="searchtext" />
+              <input v-model="search" type="text" placeholder="船舶名を入力してください" class="searchtext" />
             </div>
             <div class="searchbutton" @click="shipsearch">検索</div>
           </div>
@@ -140,7 +140,7 @@
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext">XXX</div>
+            <div class="lefttext">BL情報</div>
           </div>
           <div class="shipsearch">
             <div class="searchdiv">
@@ -152,7 +152,7 @@
                 </svg>
               </div>
               <!-- <div class="searchtext">请输入船名</div> -->
-              <input v-model="freightnumber" type="text" placeholder="请输入货单号" class="searchtext" />
+              <input v-model="freightnumber" type="text" placeholder="BL番号を入力してください" class="searchtext" />
             </div>
             <div class="searchbutton" @click="freightsearch">搜索</div>
           </div>

@@ -24,7 +24,7 @@
               </svg>
             </div>
             <!-- <div class="searchtext">请输入船名</div> -->
-            <input v-model="search" type="text" placeholder="请输入集装箱编号" class="searchtext" />
+            <input v-model="search" type="text" placeholder="コンテナ番号を入力してください" class="searchtext" />
           </div>
           <div class="searchbutton" @click="shipsearch">検索</div>
         </div>
