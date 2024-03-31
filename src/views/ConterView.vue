@@ -70,7 +70,7 @@ import * as echarts from "echarts";
 import sensor from "../static/传感器.json";
 import sensorTimeDate from "../static/传感器日均.json";
 import Papa from "papaparse";
-// import HeadersBox from "../components/Headers.vue";
+import HeadersBox from "../components/Headers.vue";
 /*sensorarr-传感器列表数据 
 echartsData-面积图数据 
 （data, time ,week）-时间 
@@ -83,10 +83,10 @@ export default {
     return {
       sensorarr: [],
       echartsData: [
-        { title: "温度 ℃", type: "temperature", data: [], xAxisData: [], yname: "°C", pieces: { gt: 0 } },
-        { title: "湿度 %", type: "humidity", data: [], xAxisData: [], yname: "%rh", pieces: { gt: 0.8 } },
-        { title: "開閉", type: "open", data: [], xAxisData: [], pieces: { gt: 0 } },
-        { title: "振動 g", type: "vibration", data: [], xAxisData: [], yname: "", pieces: { gt: 2 } },
+        { title: "温度 ℃", type: "temperature", data: [], xAxisData: [], yname: "°C", pieces: { gt: 0 },lineStyle:{} },
+        { title: "湿度 %", type: "humidity", data: [], xAxisData: [], yname: "%rh", pieces: { gt: 0.8 },lineStyle:{} },
+        { title: "開閉", type: "open", data: [], xAxisData: [], pieces: { gt: 0 } ,lineStyle:{}},
+        { title: "振動 g", type: "vibration", data: [], xAxisData: [], yname: "", pieces: { gt: 2 },lineStyle:{} },
       ],
       date: "",
       time: "",
@@ -228,7 +228,8 @@ export default {
             },
           },
           axisLine: {
-            show: false,
+            show: true,
+            lineStyle:item.lineStyle
           },
         },
         yAxis: {
@@ -245,8 +246,8 @@ export default {
             },
           },
           axisLine: {
-            show: false,
-          },
+            show: true,
+        }
         },
         visualMap: {
           type: "piecewise",
@@ -256,8 +257,13 @@ export default {
             {
               gt: item.pieces.gt,
               lte: 100,
-              color: "#ff0000",
+              color: "rgba(250,0,0,0.5)",
             },
+            {
+                lt:item.pieces.gt,
+                glt:-100,
+                color:'hwb(211 22% 43% / 0.5)'
+            }
           ],
         },
         series: [
@@ -266,24 +272,6 @@ export default {
             type: "line",
             areaStyle: {
               origin: "start",
-              color: {
-                type: "linear",
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: "#94C2FD", // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "#5B8FF9", // 100% 处的颜色
-                  },
-                ],
-                global: false, // 缺省为 false
-              },
             },
           },
         ],
@@ -306,12 +294,19 @@ export default {
       sensorTimeDate.forEach((item) => {
         this.echartsData.forEach((item1) => {
           if (item.equipmentType === item1.type) {
+            if(item.value< 0){
+                item1.lineStyle.color = 'red'
+                console.log(item.equipmentName);
+            }else{
+                item1.lineStyle.color = 'white'
+            }
             if (item.equipmentType == "open") {
               item1.data.push(item.value ? 1 : 0);
             } else {
               item1.data.push(item.value);
             }
             item1.xAxisData.push(item.updateTime.slice(-5));
+           
           }
         });
       });
