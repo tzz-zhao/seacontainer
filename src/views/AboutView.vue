@@ -1,24 +1,6 @@
 <template>
   <div class="home">
-    <div class="head">
-      <div class="headtitle">コンテナ監視システム</div>
-      <div class="headtext">
-        <span class="headtime">
-          {{ date }}
-        </span>
-        <span class="headtime" style="margin-left: 25px">
-          {{ week }}
-        </span>
-        <span class="headtime">
-          {{ time }}
-        </span>
-        <div class="back">
-          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px;cursor:pointer" /><span
-            @click="back"
-            style="font-size: 14px; position: absolute; top: 2px; width: 50px; left: 11px;cursor:pointer">戻る</span>
-        </div>
-      </div>
-    </div>
+    <HeadersBox />
     <div class="main">
       <div class="container-box">
         <div class="leftboxtitle">
@@ -30,7 +12,11 @@
         <div class="shipsearch">
           <div class="searchdiv">
             <div class="searchimg">
-              <img src="../assets/search.svg" alt="" />
+              <svg t="1711877375552" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2412" width="200" height="200">
+                <path
+                  d="M443.733333 776.533333c-179.2-25.6-307.2-192-281.6-375.466666 25.6-179.2 192-307.2 375.466667-281.6 179.2 25.6 307.2 192 281.6 375.466666-25.6 179.2-196.266667 307.2-375.466667 281.6M981.333333 938.666667l-213.333333-213.333334c59.733333-59.733333 98.133333-132.266667 110.933333-221.866666 29.866667-217.6-119.466667-413.866667-332.8-448-213.333333-29.866667-413.866667 119.466667-448 337.066666-29.866667 217.6 119.466667 413.866667 332.8 448 106.666667 17.066667 209.066667-12.8 285.866667-72.533333v4.266667l213.333333 213.333333c12.8 12.8 34.133333 12.8 46.933334 0s17.066667-34.133333 4.266666-46.933333"
+                  p-id="2413"></path>
+              </svg>
             </div>
             <!-- <div class="searchtext">请输入船名</div> -->
             <input v-model="search" type="text" placeholder="请输入集装箱编号" class="searchtext" />
@@ -49,11 +35,8 @@
               <div class="messageson" style="left: 33px">
                 {{ item.number }}
               </div>
-              <div class="messageson" style="left: 196px"
-                :style="{ color: item.status === 0 ? '#fff' : item.status === 1 ? 'yellow' : 'red' }"
-                v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
-              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number"
-                @click="gosensor">確認</div>
+              <div class="messageson" style="left: 196px" :style="getColor(item)" v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
+              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number" @click="gosensor">確認</div>
             </div>
           </div>
         </div>
@@ -71,7 +54,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" viewBox="0 0 32 18" fill="none">
               <path
                 d="M1.51864 12.78C1.01243 14.535 0.506215 16.245 0 18H28.6011C29.1435 15.345 30.3367 12.735 32 10.215C21.948 12.51 11.7514 13.05 1.51864 12.78ZM17.1028 13.86C17.2836 13.86 17.3921 14.04 17.3921 14.22C17.3921 14.445 17.2475 14.58 17.1028 14.58C16.922 14.58 16.8136 14.4 16.8136 14.22C16.8136 14.04 16.922 13.86 17.1028 13.86ZM21.2249 8.235H22.7797C22.9243 8.235 23.0328 8.37 23.0328 8.55V10.215C23.0328 10.395 22.9243 10.53 22.7797 10.53H21.2249C21.0802 10.53 20.9718 10.395 20.9718 10.215V8.55C20.9718 8.37 21.0802 8.235 21.2249 8.235ZM4.80904 8.325H6.36384C6.47232 8.325 6.54463 8.415 6.54463 8.55V9.855C6.54463 9.99 6.47232 10.08 6.36384 10.08H4.80904C4.70056 10.08 4.62825 9.99 4.62825 9.855V8.55C4.62825 8.46 4.70056 8.325 4.80904 8.325ZM7.12316 8.325H8.67797C8.78644 8.325 8.85876 8.415 8.85876 8.55V9.855C8.85876 9.99 8.78644 10.08 8.67797 10.08H7.12316C7.01469 10.08 6.94237 9.99 6.94237 9.855V8.55C6.94237 8.46 7.05085 8.325 7.12316 8.325ZM9.54576 8.325H11.1006C11.209 8.325 11.2814 8.415 11.2814 8.55V9.855C11.2814 9.99 11.209 10.08 11.1006 10.08H9.54576C9.43729 10.08 9.36497 9.99 9.36497 9.855V8.55C9.32881 8.46 9.43729 8.325 9.54576 8.325ZM14.2102 8.505C14.2463 8.505 14.3186 8.55 14.3548 8.55C14.391 8.595 14.391 8.64 14.391 8.73V11.745C14.391 11.79 14.3548 11.88 14.3548 11.88C14.2825 11.97 14.2463 11.97 14.2102 11.97H13.0893C13.0531 11.97 12.9808 11.925 12.9446 11.925C12.9085 11.88 12.9085 11.835 12.9085 11.79V8.775C12.9085 8.73 12.9446 8.64 12.9446 8.595C12.9808 8.55 13.0169 8.55 13.0893 8.55H14.2102V8.505ZM16.4158 8.235H17.9706C18.1153 8.235 18.2237 8.37 18.2237 8.55V10.215C18.2237 10.395 18.1153 10.53 17.9706 10.53H16.4158C16.2712 10.53 16.1627 10.395 16.1627 10.215V8.55C16.1627 8.37 16.2712 8.235 16.4158 8.235ZM18.8384 8.235H20.4294C20.574 8.235 20.6825 8.37 20.6825 8.55V10.215C20.6825 10.395 20.574 10.53 20.4294 10.53H18.8746C18.7299 10.53 18.6215 10.395 18.6215 10.215V8.55C18.5853 8.37 18.6938 8.235 18.8384 8.235ZM20.0678 13.86C20.2486 13.86 20.3571 14.04 20.3571 14.22C20.3571 14.445 20.2124 14.58 20.0678 14.58C19.887 14.58 19.7785 14.4 19.7785 14.22C19.7785 14.04 19.887 13.86 20.0678 13.86ZM18.6215 13.86C18.8023 13.86 18.9107 14.04 18.9107 14.22C18.9107 14.445 18.7661 14.58 18.6215 14.58C18.4407 14.58 18.3322 14.4 18.3322 14.22C18.3322 14.04 18.4768 13.86 18.6215 13.86ZM2.78418 6.615H11.2452V4.365H11.0644V3.465L10.3051 0H11.896L13.1616 3.105H19.7785V4.365H19.0554L18.5853 6.615H26.5401V8.235H26.4678L26.7209 9.09C27.5164 9 28.3119 8.865 29.1073 8.685C29.9028 8.505 30.6983 8.325 31.4938 8.1L31.6384 8.055V9.855L31.4215 9.9V8.37C31.096 8.46 30.7706 8.55 30.4814 8.64V10.08L30.2644 10.125V8.685C29.939 8.775 29.6497 8.82 29.3243 8.91V10.305L29.1073 10.35V8.955C28.7819 9 28.4927 9.09 28.1672 9.135V10.53L27.9503 10.575V9.18C27.5887 9.225 27.2271 9.315 26.8294 9.36L27.2271 10.71C27.0102 10.755 26.8294 10.8 26.6124 10.8L26.3232 9.81L26.1785 10.89L25.9616 10.935L26.2147 9.315L25.9254 8.28H23.9006V11.295C20.8271 11.745 17.7537 12.015 14.6441 12.195C14.7164 12.105 14.7525 11.97 14.7525 11.79V8.775C14.7525 8.595 14.7164 8.46 14.6079 8.37C14.5356 8.28 14.391 8.19 14.2825 8.19H13.1616C13.0169 8.19 12.9085 8.235 12.8362 8.37C12.7638 8.46 12.6915 8.64 12.6915 8.775V11.79C12.6915 11.97 12.7277 12.105 12.8362 12.195L12.9085 12.285C10.0158 12.42 7.12316 12.465 4.19435 12.42H3.65198C3.25424 12.42 2.8565 12.42 2.45876 12.375L3.32655 8.28H2.92881V6.615H2.78418ZM12.113 6.615H13.7401V4.365H12.113V6.615ZM14.391 6.615H16.1627V4.365H14.391V6.615ZM16.8136 6.615H17.9706L18.4407 4.365H16.8136V6.615Z"
-                fill="white" />
+                :fill="theme === 'black'?'#fff':'#36366f'" />
             </svg>
             <span>船舶名：{{ this.receive }}</span>
           </div>
@@ -106,7 +89,6 @@
                 <div>{{ item.descriptionCn }}</div>
                 <div>{{ item.eventTime }}</div>
               </div>
-
             </div>
           </div>
           <div>
@@ -142,9 +124,11 @@ import ship from "../static/船舶.json";
 import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
 import containerdata from "../static/集装箱.json";
-import A05 from "../static/定位563201600.json"
+import A05 from "../static/定位563201600.json";
 // import proj4 from 'proj4';
-import { convertToBD09 } from "../static/经纬切换"
+import { convertToBD09 } from "../static/经纬切换";
+import HeadersBox from "../components/Headers.vue";
+import { mapState } from "vuex";
 export default {
   watch: {},
   name: "map-view",
@@ -179,11 +163,16 @@ export default {
       Trajectorydata: {},
       A05: A05,
       path: [],
-      patharr: []
+      patharr: [],
     };
   },
+  components: {
+    HeadersBox,
+  },
+  computed: {
+    ...mapState(["theme"]),
+  },
   methods: {
-
     datatreating() {
       // console.log(A05,"船舶路线");
       this.A05.forEach((item) => {
@@ -191,15 +180,13 @@ export default {
         const lonDecimal = item.lon / 1e6;
         console.log(latDecimal);
 
-
         const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
         this.path.push({ coures: item.course, location: location, posTime: item.posTime });
-
-      })
+      });
       console.log(this.path, "船舶路线");
       this.path.forEach((item) => {
-        this.patharr.push(item.location)
-      })
+        this.patharr.push(item.location);
+      });
       console.log(this.receive, "接收的船名");
 
       this.ship.forEach((item) => {
@@ -208,7 +195,6 @@ export default {
           for (let i = 0; i < this.freighttrack.length; i++) {
             if (this.freighttrack[i].vessel == item.nameEn) {
               num++;
-
             }
           }
           // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
@@ -219,14 +205,14 @@ export default {
       console.log(this.shipnamearr, "船只数据");
       this.ship.forEach((item) => {
         if (item.nameEn == this.receive) {
-          this.Trajectoryinformation = item
+          this.Trajectoryinformation = item;
         }
-      })
+      });
       console.log(this.Trajectoryinformation, "右侧信息");
 
       this.shiptracking.forEach((item) => {
         if (item.nameEn == this.receive) {
-          this.Trajectorydata = item
+          this.Trajectorydata = item;
         }
       });
       console.log(this.Trajectorydata, "获得的右侧数据");
@@ -285,9 +271,7 @@ export default {
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v, last: this.receive } });
     },
 
-
     initAMap() {
-
       // let arr = [[174.10, 24.52], [-123.6, 49.18], [113.474725, 30.692175]];
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -296,7 +280,7 @@ export default {
       })
         .then((AMap) => {
           this.map = new AMap.Map("container", {
-            lang: 'en',
+            lang: "en",
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
             zoom: 2, // 初始化地图级别
@@ -318,17 +302,17 @@ export default {
           // 自动调整地图视野，使整条轨迹可见
           // this.map.setFitView(this.polyline);
           for (let i = 0; i < this.shipnamearr.length; i++) {
-          //  let img="../assets/ship.png"
+            //  let img="../assets/ship.png"
             // let backgroundColor = this.shipnamearr[i].status == 0 ? '#5ad8a6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
             var marker = new AMap.Marker({
               position: this.shipnamearr[i]?.location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
-            /*
+              /*
             <div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;color='#fff';" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
-                
-                ${this.shipnamearr[i].num} </div> 
-            */  
-              content: `<img src=${require('../assets/ship.png')} />`,
+
+                ${this.shipnamearr[i].num} </div>
+            */
+              content: `<img src=${require("../assets/ship.png")} />`,
               offset: new AMap.Pixel(0, -40),
             });
 
@@ -336,7 +320,7 @@ export default {
               // if (this.infoWindow) {
               //   this.infoWindow.close();
               // }
-              if (mapEvent.originEvent.target.className !== 'marker') return
+              if (mapEvent.originEvent.target.className !== "marker") return;
               if (this.infoWindow && mapEvent.originEvent.target.dataset.id) {
                 this.infoWindow.close();
               }
@@ -348,7 +332,6 @@ export default {
               });
               if (mapEvent.originEvent.target.dataset.id) {
                 this.infoWindow.open(this.map, mapEvent.target.getPosition());
-
               }
             });
             // marker.on('mouseout', () => {
@@ -381,6 +364,11 @@ export default {
     back() {
       this.$router.push("/");
     },
+    getColor(item) {
+      return {
+        color: item.status === 0 ? (this.theme === "black" ? "#fff" : "#36366f") : item.status === 1 ? "yellow" : "red",
+      };
+    },
   },
   mounted() {
     this.receive = this.$route.query.name;
@@ -388,7 +376,6 @@ export default {
     setInterval(() => {
       this.currentTime();
     }, 500);
-
 
     this.datatreating();
     // this.datasearch();
@@ -410,7 +397,6 @@ export default {
   },
   beforeCreate() {
     console.log(this.$route.query.name, "接受信息");
-
   },
 };
 </script>
@@ -464,7 +450,7 @@ export default {
   /* padding:0 24px; */
 }
 
-.main>div {
+.main > div {
   display: inline-block;
 }
 
@@ -477,7 +463,7 @@ export default {
   background-color: #031027;
 
   line-height: 1;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
+  background: rgba(0, 0, 0, 0.2) none repeat scroll;
 }
 
 .maincenter {
@@ -496,7 +482,7 @@ export default {
   height: 361px;
   flex-shrink: 0;
   border: 1px solid #98e7fc;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
+  background: rgba(0, 0, 0, 0.2) none repeat scroll;
   margin: 24px 0;
 }
 
@@ -549,7 +535,7 @@ export default {
   /* 85.714% */
 }
 
-.shiplegend>div {
+.shiplegend > div {
   display: inline-block;
 }
 
@@ -682,7 +668,7 @@ export default {
   bottom: 24px;
   width: 924px;
   height: 260px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
+  background: rgba(0, 0, 0, 0.2) none repeat scroll;
   background: #031027;
   margin-bottom: 24px;
   border: 1px solid #98e7fc;
@@ -694,7 +680,7 @@ export default {
   bottom: 24px;
   width: 924px;
   height: 260px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
+  background: rgba(0, 0, 0, 0.2) none repeat scroll;
   background: #031027;
   margin-bottom: 24px;
   border: 1px solid #98e7fc;
@@ -781,7 +767,7 @@ div::-webkit-scrollbar-corner {
   flex-shrink: 0;
   width: 378px;
   height: 774px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
+  background: rgba(0, 0, 0, 0.2) none repeat scroll;
   border: 1px solid #98e7fc;
   box-sizing: border-box;
 }
@@ -796,7 +782,7 @@ div::-webkit-scrollbar-corner {
   justify-content: space-between;
 }
 
-.title>div>span {
+.title > div > span {
   margin: 0 15px;
 }
 
@@ -813,12 +799,12 @@ div::-webkit-scrollbar-corner {
   border-bottom: 1px solid #ebebeb;
 }
 
-.titleSec>div {
+.titleSec > div {
   display: flex;
   flex-direction: column;
 }
 
-.titleSec>div>img {
+.titleSec > div > img {
   width: 60px;
   height: 8.8px;
   margin: 0 10px;
@@ -832,75 +818,74 @@ div::-webkit-scrollbar-corner {
   overflow: auto;
 }
 
-.listArticle>div:nth-child(1) {
+.listArticle > div:nth-child(1) {
   display: flex;
   align-items: center;
 }
 
-.listArticle>div:nth-child(1)>img {
+.listArticle > div:nth-child(1) > img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle>div:nth-child(2) {
+.listArticle > div:nth-child(2) {
   height: 26px;
   border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle>div:nth-child(3) {
+.listArticle > div:nth-child(3) {
   display: flex;
   align-items: center;
 }
 
-.listArticle>div:nth-child(3)>img {
+.listArticle > div:nth-child(3) > img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle>div:nth-child(4) {
+.listArticle > div:nth-child(4) {
   border-left: 1px solid #2ce7e7;
   margin-left: 10px;
 }
 
-.listArticle>div:nth-child(4)>div {
+.listArticle > div:nth-child(4) > div {
   margin: 20px 29px;
 }
 
-.listArticle>div:nth-child(4)>div>div {
+.listArticle > div:nth-child(4) > div > div {
   height: 18px;
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
 
-.listArticle>div:nth-child(5) {
+.listArticle > div:nth-child(5) {
   display: flex;
   align-items: center;
 }
 
-.listArticle>div:nth-child(5)>img {
+.listArticle > div:nth-child(5) > img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-right: 15px;
 }
 
-.listArticle>div:nth-child(6) {
+.listArticle > div:nth-child(6) {
   border-left: 1px solid #d0d0d0;
   margin-left: 10px;
 }
 
-.listArticle>div:nth-child(6)>div {
+.listArticle > div:nth-child(6) > div {
   margin: 20px 29px;
-
 }
 
-.listArticle>div:nth-child(6)>div>div {
+.listArticle > div:nth-child(6) > div > div {
   height: 18px;
   padding: 10px 0;
   display: flex;
@@ -923,4 +908,5 @@ div::-webkit-scrollbar-corner {
 //     /deep/ .amap-marker-content {
 //     width: 100px;
 //     height: 100px;
-// }</style>
+// }
+</style>
