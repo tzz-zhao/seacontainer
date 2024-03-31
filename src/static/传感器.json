@@ -13,7 +13,7 @@
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 11:30:00",
+        "updateTime": "2024-03-28 11:00:00",
         "value": -1.5,
         "status": 0
     },
@@ -31,7 +31,7 @@
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 12:30:00",
+        "updateTime": "2024-03-28 12:00:00",
         "value": -2.2,
         "status": 0
     },
@@ -49,7 +49,7 @@
         "equipmentName": "温度传感器1",
         "equipmentType": "temperature",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 13:30:00",
+        "updateTime": "2024-03-28 13:00:00",
         "value": 1.1,
         "status": 2
     },
@@ -67,7 +67,7 @@
         "equipmentName": "湿度传感器1",
         "equipmentType": "humidity",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 11:30:00",
+        "updateTime": "2024-03-28 11:00:00",
         "value": 0.68,
         "status": 0
     },
@@ -85,7 +85,7 @@
         "equipmentName": "湿度传感器1",
         "equipmentType": "humidity",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 12:30:00",
+        "updateTime": "2024-03-28 12:00:00",
         "value": 0.66,
         "status": 0
     },
@@ -112,7 +112,7 @@
         "equipmentName": "开关传感器1",
         "equipmentType": "open",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 11:30:00",
+        "updateTime": "2024-03-28 11:00:00",
         "value": false,
         "status": 0
     },
@@ -130,7 +130,7 @@
         "equipmentName": "开关传感器1",
         "equipmentType": "open",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 12:30:00",
+        "updateTime": "2024-03-28 12:00:00",
         "value": false,
         "status": 0
     },
@@ -157,7 +157,7 @@
         "equipmentName": "震动传感器1",
         "equipmentType": "vibration",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 11:30:00",
+        "updateTime": "2024-03-28 11:00:00",
         "value": 0.8,
         "status": 0
     },
@@ -175,7 +175,7 @@
         "equipmentName": "震动传感器1",
         "equipmentType": "vibration",
         "containerNumber": "WHSU6844788",
-        "updateTime": "2024-03-27 12:30:00",
+        "updateTime": "2024-03-28 12:00:00",
         "value": 0.5,
         "status": 0
     },

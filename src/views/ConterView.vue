@@ -1,7 +1,7 @@
 <template>
     <div class="sensor">
         <div class="header">
-            <div class="headertitle">货运管理平台</div>
+            <div class="headertitle">コンテナ監視システム</div>
             <div class="headertext">
                 <span class="headtime">
                     {{ date }}
@@ -15,37 +15,37 @@
             </div>
             <div><img src="../assets/return.svg"
                     style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span @click="back"
-                    style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">返回</span></div>
+                    style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">戻る</span></div>
         </div>
         <div class="center">
             <div class="left-list">
                 <div class="title">
                     <div></div>
-                    <span>传感器信息</span>
+                    <span>センサー情報</span>
                 </div>
                 <div class="list-search">
-                    <input placeholder="请输入传感器名称" style="color: #fff;" v-model="search" />
-                    <button @click="sensorsearch">搜索</button>
+                    <input placeholder="センサー名を入力してください" style="color: #fff;" v-model="search" />
+                    <button @click="sensorsearch">検索</button>
                 </div>
                 <div class="list-table">
                     <el-table :data="sensorarr" style="width: 100%"
                         :header-cell-style="{ background: '#11517C', color: 'white' }" :highlight-current-row="false"
                         :row-class-name="tableRowClassName">
-                        <el-table-column prop="equipmentName" label="传感器名称" width="180">
+                        <el-table-column prop="equipmentName" label="センサー名" width="180">
                         </el-table-column>
-                        <el-table-column prop="status" label="状态" width="180">
+                        <el-table-column prop="status" label="状態" width="180">
                             <template slot-scope="scope">
 
                                 <span v-if="scope.row.status == 0">正常</span>
                                 <span v-if="scope.row.status == 1" style="color: yellow;">警告</span>
-                                <span v-if="scope.row.status == 2" style="color: red;">异常</span>
+                                <span v-if="scope.row.status == 2" style="color: red;">異常</span>
                             </template>
 
 
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                                <el-button @click="handleClick(scope.row)" type="text" size="small">確認</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -55,9 +55,9 @@
                 <div class="echartTitle">
                     <div class="title">
                         <div></div>
-                        <span>传感器001</span>
+                        <span>センサー情報</span>
                     </div>
-                    <button @click="Deriver">导出</button>
+                    <button @click="Deriver">出力</button>
                 </div>
                 <div class="echartsTable">
                     <div v-for="(item, index) in echartsData" :key="index">
@@ -88,10 +88,10 @@ export default {
         return {
             sensorarr: [],
             echartsData: [
-                { title: "温度", type: "temperature", data: [], xAxisData: [] ,yname:"°C"},
-                { title: "湿度", type: "humidity", data: [], xAxisData: [],yname:"%rh" },
-                { title: "开关", type: "open", data: [], xAxisData: [] },
-                { title: "震动", type: "vibration", data: [], xAxisData: [],yname:"" },
+                { title: "温度 ℃", type: "temperature", data: [], xAxisData: [] ,yname:"°C"},
+                { title: "湿度 %", type: "humidity", data: [], xAxisData: [],yname:"%rh" },
+                { title: "開閉", type: "open", data: [], xAxisData: [] },
+                { title: "振動 g", type: "vibration", data: [], xAxisData: [],yname:"" },
             ],
             date: '',
             time: '',
