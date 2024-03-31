@@ -1,6 +1,6 @@
 <template>
-  <div class="home" :class="theme">
-    <div class="head" :class="theme">
+  <div class="home" :class="themeNow">
+    <div class="head" :class="themeNow">
       <div class="headtitle">コンテナ監視システム</div>
       <div class="headtext">
         <span class="headtime">
@@ -13,12 +13,13 @@
           {{ time }}
         </span>
       </div>
+      <el-switch @change="changeHandler" style="position: absolute; right: 50px; bottom: 0" v-model="themeText" active-text="深" inactive-text="浅"> </el-switch>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "HeadersBox",
   data() {
@@ -26,6 +27,7 @@ export default {
       date: "",
       time: "",
       week: "",
+      themeText: true,
     };
   },
   methods: {
@@ -55,41 +57,53 @@ export default {
       this.time = strtime;
       this.date = strDate;
     },
+    changeHandler(val) {
+      if (val) {
+        this.$store.commit("updateTheme", "black");
+      } else {
+        this.$store.commit("updateTheme", "light");
+      }
+    },
+
+    loadTheme(theme) {
+      const themeFileName = theme === "black" ? "blackTheme.css" : "lightTheme.css";
+      const themeLink = document.querySelector("link#theme-style");
+
+      if (themeLink) {
+        // 如果已经存在主题样式表，则替换
+        themeLink.href = `../assets/style/${themeFileName}`;
+      } else {
+        // 如果不存在主题样式表，则创建
+        const newThemeLink = document.createElement("link");
+        newThemeLink.rel = "stylesheet";
+        newThemeLink.id = "theme-style";
+        newThemeLink.href = `../assets/style/${themeFileName}`;
+        document.head.appendChild(newThemeLink);
+      }
+    },
   },
   computed: {
-    ...mapState(["theme"]),
+    ...mapGetters(["themeNow"]),
   },
   mounted() {
     this.currentTime();
     setInterval(() => {
       this.currentTime();
     }, 500);
+    this.$nextTick(() => {
+      console.log(this.themeNow);
+      this.themeText = this.themeNow === "black" ? true : false;
+      this.loadTheme(this.themeNow);
+    });
   },
   watch: {
-    theme: {
+    themeNow: {
       handler(val) {
-        console.log("触发一次CSS动态赋值");
-        if(val === 'black'){
-          import('../assets/style/blackTheme.css')
-        }else{
-          import('../assets/style/lightTheme.css')
-        }
-        // document.body.style =
-        // var style = document.createElement("style");
-
-        // 设置type属性
-        // style.type = "text/css";
-
-        // console.log(val);
-        // 添加CSS规则
-        // var cssContent = document.createTextNode(val === "black" ? require('../assets/style/blackTheme.css') :require('../assets/style/light.css') );
-        // style.appendChild(cssContent);
-
-        // 将style元素添加到head中
-        // document.head.appendChild(style);
+        console.log(val);
+        this.loadTheme(val);
       },
       deep: true,
-      immediate: true,
+      // immediate: true,
     },
   },
 };
@@ -112,7 +126,7 @@ export default {
   color: #36366f;
 }
 .home.black {
-  background-color: #0E457B;
+  background-color: #0e457b;
   color: #fff;
 }
 
