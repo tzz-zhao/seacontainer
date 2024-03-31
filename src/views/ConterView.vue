@@ -323,7 +323,7 @@ export default {
         },
         handleClick(row) {
             console.log(row,"44444");
-            this.$router.push({ path: "/comparison", query: { name: row.equipmentName} });
+            this.$router.push({ path: "/comparison", query: { name: row.equipmentName,last:this.last,now:this.name} });
         },
         //传导图表数据
         transmission() {

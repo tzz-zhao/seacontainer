@@ -33,10 +33,15 @@ export default ({
             date: '',
             time: '',
             week: '',
+            last:'',
+            now:''
         }
     },
     mounted() {
+        console.log(this.$route.query);
+        this.now=this.$route.query.now
         this.name = this.$route.query.name
+        this.last = this.$route.query.last
         this.tttt()
         this.currentTime()
         this.tempType(this.echartsData)
@@ -51,7 +56,7 @@ export default ({
                 this.$router.push("/");
 
             } else {
-                this.$router.push({ path: "/about", query: { name: this.name } });
+                this.$router.push({ path: "/conter", query: { name: this.now,last:this.last } });
             }
         },
         tempType(item) {
@@ -108,7 +113,7 @@ export default ({
                         stack: 'Total',
                         data: item.value1,
                         lineStyle:{
-                            color:"red"
+                            color:"blue"
                         }
                     },
                     {
