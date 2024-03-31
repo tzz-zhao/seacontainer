@@ -1,0 +1,105 @@
+.leftbox {
+  background-color: #fff;
+  border: 1px solid transparent !important;
+  color: #36366f;
+  border-radius: 16px;
+}
+
+.leftbotbox {
+  background-color: #fff;
+  color: #36366f;
+  border: 1px solid transparent !important;
+  border-radius: 16px;
+}
+
+.leftboxtitle {
+  color: #36366f !important;
+  background: #fff !important;
+}
+
+.lefttext {
+  color: #36366f !important;
+
+}
+
+.listtitle {
+  color: #36366f !important;
+  background: rgb(238 242 251) !important;
+}
+
+.listson {
+  font-weight: bold;
+  color: #36366f !important;
+}
+
+.shipsearch {
+  border: 1px solid #333 !important;
+}
+
+.shipsearch svg {
+  width: 18px;
+  height: 18px;
+}
+
+.shipsearch input {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.searchbutton {
+  background-color: #4F4BFF !important;
+}
+
+.shiplegend {
+  color: #36366f !important;
+}
+
+.container-box {
+  background: #fff !important;
+  border-radius: 16px;
+  border: 1px solid transparent !important;
+}
+
+.shipmessage {
+  color: #36366f !important;
+}
+
+.title {
+  background: #fff !important;
+  color: #36366f !important;
+
+}
+
+.listArticle,
+.titleSec {
+  color: #36366f !important;
+}
+
+/* .title svg {
+  color:  !important;
+} */
+
+.center .left-list,
+.center .right-echarts {
+  background: #fff !important;
+  color: #36366f !important;
+  border: 1px solid transparent;
+  border-radius: 16px;
+}
+.echartsTable div{
+  border: 0 !important;
+}
+
+.list-search{
+  border: 1px solid #333 !important;
+  background-color: #fff;
+}
+
+.list-search input{
+  background: #fff !important;
+}
+
+
+.sensor{
+  background-color: #eef1fb !important;
+}

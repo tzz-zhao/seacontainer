@@ -1,22 +1,9 @@
 <template>
-  <div class="home">
-    <div class="head">
-      <div class="headtitle">コンテナ監視システム</div>
-      <div class="headtext">
-        <span class="headtime">
-          {{ date }}
-        </span>
-        <span class="headtime" style="margin-left: 25px">
-          {{ week }}
-        </span>
-        <span class="headtime">
-          {{ time }}
-        </span>
-      </div>
-    </div>
+  <div class="box">
+    <HeadersBox></HeadersBox>
     <div class="main">
       <div class="mainleft">
-        <div class="leftbox" style="background: #031027; position: relative">
+        <div class="leftbox" style="position: relative">
           <div class="leftboxtitle">
             <div class="arrows">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -44,7 +31,7 @@
 
           <div id="shipbar" :style="myChartStyle" style="margin-left: 15px"></div>
         </div>
-        <div class="leftbotbox" style="background: #031027; position: relative">
+        <div class="leftbotbox" style="position: relative">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -54,7 +41,12 @@
           <div class="shipsearch">
             <div class="searchdiv">
               <div class="searchimg">
-                <img src="../assets/search.svg" alt="" />
+                <!-- <img src="../assets/search.svg" alt="" /> -->
+                <svg t="1711877375552" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2412" width="200" height="200">
+                  <path
+                    d="M443.733333 776.533333c-179.2-25.6-307.2-192-281.6-375.466666 25.6-179.2 192-307.2 375.466667-281.6 179.2 25.6 307.2 192 281.6 375.466666-25.6 179.2-196.266667 307.2-375.466667 281.6M981.333333 938.666667l-213.333333-213.333334c59.733333-59.733333 98.133333-132.266667 110.933333-221.866666 29.866667-217.6-119.466667-413.866667-332.8-448-213.333333-29.866667-413.866667 119.466667-448 337.066666-29.866667 217.6 119.466667 413.866667 332.8 448 106.666667 17.066667 209.066667-12.8 285.866667-72.533333v4.266667l213.333333 213.333333c12.8 12.8 34.133333 12.8 46.933334 0s17.066667-34.133333 4.266666-46.933333"
+                    p-id="2413"></path>
+                </svg>
               </div>
               <!-- <div class="searchtext">请输入船名</div> -->
               <input v-model="search" type="text" placeholder="请输入船名" class="searchtext" />
@@ -80,8 +72,7 @@
                 <div class="messageson" style="left: 196px; font-size: 8px">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look"
-                  :data-v="item.name">確認</div>
+                <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look" :data-v="item.name">確認</div>
               </div>
             </div>
           </div>
@@ -97,7 +88,7 @@
         </div> -->
       </div>
       <div class="mainleft">
-        <div class="leftbox" style="background: #031027">
+        <div class="leftbox">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -105,8 +96,7 @@
             <div class="lefttext">アラート</div>
           </div>
 
-          <div class="listtitle"
-            style="width: 348px; height: 32px; margin-left: 18px; position: relative; line-height: 20px; display: flex; align-items: center">
+          <div class="listtitle" style="width: 348px; height: 32px; margin-left: 18px; position: relative; line-height: 20px; display: flex; align-items: center">
             <div class="listone listson" style="left: 10px">No</div>
             <div class="listtwo listson" style="left: 58px">船舶名</div>
             <div class="listthree listson" style="left: 140px">時間</div>
@@ -114,28 +104,31 @@
             <div class="listthree listson" style="left: 300px">操作</div>
           </div>
           <div style="height: 221px; position: absolute; overflow: auto">
-            <div v-for="(item, index) in containerList.filter((p) => p.status !== 0)" :key="index"
+            <div
+              v-for="(item, index) in containerList.filter((p) => p.status !== 0)"
+              :key="index"
               style="width: 348px; height: 32px; margin-left: 18px; position: relative; display: flex; align-items: center">
               <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
-                {{ index + 1 }}</div>
-              <div class="listtwo listson"
+                {{ index + 1 }}
+              </div>
+              <div
+                class="listtwo listson"
                 :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel"
-                style="width: 80px; left: 58px; top: 0; height: 100%;line-height: 32px; font-size: 10px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
+                style="width: 80px; left: 58px; top: 0; height: 100%; line-height: 32px; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
-              <div class="listthree listson"
-                style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">
+              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">
                 {{ item.date.split(":")[0] + ":" + item.date.split(":")[1] }}
               </div>
-              <div class="listthree listson"
-                style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">
-                <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2"
-                  style="color: red">異常</span>
+              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">
+                <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2" style="color: red">異常</span>
               </div>
 
-              <div class="listthree listson"
+              <div
+                class="listthree listson"
                 style="left: 300px; top: 0; height: 100%; display: flex; align-items: center; cursor: pointer"
-                @click="sensoralarm" :data-v="item.containerNumber">
+                @click="sensoralarm"
+                :data-v="item.containerNumber">
                 確認
               </div>
             </div>
@@ -146,12 +139,16 @@
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
-            <div class="lefttext"></div>
+            <div class="lefttext">XXX</div>
           </div>
           <div class="shipsearch">
             <div class="searchdiv">
               <div class="searchimg">
-                <img src="../assets/search.svg" alt="" />
+                <svg t="1711877375552" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2412" width="200" height="200">
+                  <path
+                    d="M443.733333 776.533333c-179.2-25.6-307.2-192-281.6-375.466666 25.6-179.2 192-307.2 375.466667-281.6 179.2 25.6 307.2 192 281.6 375.466666-25.6 179.2-196.266667 307.2-375.466667 281.6M981.333333 938.666667l-213.333333-213.333334c59.733333-59.733333 98.133333-132.266667 110.933333-221.866666 29.866667-217.6-119.466667-413.866667-332.8-448-213.333333-29.866667-413.866667 119.466667-448 337.066666-29.866667 217.6 119.466667 413.866667 332.8 448 106.666667 17.066667 209.066667-12.8 285.866667-72.533333v4.266667l213.333333 213.333333c12.8 12.8 34.133333 12.8 46.933334 0s17.066667-34.133333 4.266666-46.933333"
+                    p-id="2413"></path>
+                </svg>
               </div>
               <!-- <div class="searchtext">请输入船名</div> -->
               <input v-model="freightnumber" type="text" placeholder="请输入货单号" class="searchtext" />
@@ -171,25 +168,18 @@
                 <div class="messageson" style="left: 33px; font-size: 9px">
                   {{ item.vessel }}
                 </div>
-                <div class="messageson"
-                  style="left: 146px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;width: 40px;" :title="item.billNumber" >
+                <div class="messageson" style="left: 146px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 40px" :title="item.billNumber">
                   {{ item.billNumber }}
                 </div>
-                <div class="messageson"
-                  style="left: 196px; font-size: 8px'text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
+                <div class="messageson" style="left: 196px; font-size: 8px'text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
                   {{ item.containerNumber }}
                 </div>
-                <div class="messageson underline" style="left: 271px;cursor:pointer" @click="look"
-                  :data-v="item.vessel">
-                  確認</div>
+                <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look" :data-v="item.vessel">確認</div>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -202,6 +192,7 @@ import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
 import sensor from "../static/传感器.json";
 import containerList from "../static/集装箱.json";
+import HeadersBox from "@/components/Headers.vue";
 export default {
   watch: {},
   name: "map-view",
@@ -222,43 +213,18 @@ export default {
       shipnamearr: [],
       search: "",
       thisshop: "",
-      date: "",
-      time: "",
-      week: "",
-      freightnumber: '',
-      freightarr: []
+
+      freightnumber: "",
+      freightarr: [],
     };
   },
+  components: { HeadersBox },
+
   methods: {
     freightsearch() {
       console.log(this.freightnumber);
     },
-    currentTime() {
-      var date = new Date();
 
-      var year = date.getFullYear(); //月份从0~11，所以加一
-
-      var dateArr = [date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
-      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
-      for (var i = 0; i < dateArr.length; i++) {
-        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
-          dateArr[i] = "0" + dateArr[i];
-        }
-      }
-      var strDate = year + "-" + dateArr[0] + "-" + dateArr[1];
-
-      //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
-      //this.date = strDate;
-      var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
-
-      var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-      var strDate1 = year + "/" + dateArr[0] + "/" + dateArr[1];
-      var date1 = new Date(strDate1);
-      let w = week[date1.getDay()];
-      this.week = w;
-      this.time = strtime;
-      this.date = strDate;
-    },
     //右侧报警信息跳转
 
     sensoralarm(e) {
@@ -266,7 +232,7 @@ export default {
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v } });
     },
     datasearch() {
-      this.freightarr = this.freighttrack
+      this.freightarr = this.freighttrack;
       let underway = 0;
       let mooring = 0;
       let mooralongside = 0;
@@ -315,7 +281,7 @@ export default {
             //x轴文字的配置
             show: true,
             textStyle: {
-              color: "#fff",
+              color: this.$store.state.theme === "black" ? "#fff" : "#36366f",
             },
           },
         },
@@ -329,7 +295,7 @@ export default {
             //x轴文字的配置
             show: true,
             textStyle: {
-              color: "#fff",
+              color: this.$store.state.theme === "black" ? "#fff" : "#36366f",
             },
           },
         },
@@ -367,9 +333,7 @@ export default {
         myChart.resize();
       });
     },
-  
-   
-   
+
     initAMap() {
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -378,18 +342,19 @@ export default {
       })
         .then((AMap) => {
           this.map = new AMap.Map("container", {
-            lang: 'en',
+            lang: "en",
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
             zoom: 2, // 初始化地图级别
             center: [180, 40], // 初始化地图中心点位置
           });
           for (let i = 0; i < this.shipnamearr.length; i++) {
-            let backgroundColor = this.shipnamearr[i].status == 0 ? '#5AD8A6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
+            let backgroundColor =
+              this.shipnamearr[i].status == 0 ? "#5AD8A6" : this.shipnamearr[i].status == 1 ? "#CBD1D7" : this.shipnamearr[i].status == 5 ? "#5B8FF9" : "#D3AA22";
             var marker = new AMap.Marker({
               position: this.shipnamearr[i].location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
-              lang: 'ja_JP',
+              lang: "ja_JP",
               content: `<div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;" @click='shipmessage'
                          data-id="${this.shipnamearr[i].name}" >
                            ${this.shipnamearr[i].num}
@@ -401,10 +366,10 @@ export default {
               console.log(mapEvent.originEvent.target.dataset.id);
               // console.log(mapEvent.target.dom?.getElementsByClassName("marker")[0].getAttribute("data-id"));
               // this.$router.push({ path: "/about", query: { name: mapEvent.target.dom?.getElementsByClassName("marker")[0].getAttribute("data-id") } });
-              this.$router.push({ path: '/about', query: { name: mapEvent.originEvent.target.dataset.id } })
+              this.$router.push({ path: "/about", query: { name: mapEvent.originEvent.target.dataset.id } });
             });
             marker.on("mouseover", (mapEvent) => {
-              if (mapEvent.originEvent.target.className !== 'marker') return
+              if (mapEvent.originEvent.target.className !== "marker") return;
               if (this.infoWindow && mapEvent.originEvent.target.dataset.id) {
                 this.infoWindow.close();
               }
@@ -416,10 +381,8 @@ export default {
               });
               if (mapEvent.originEvent.target.dataset.id) {
                 this.infoWindow.open(this.map, mapEvent.target.getPosition());
-
               }
               // console.log(mapEvent.target.dom?.getElementsByClassName("marker")[0].getAttribute("data-id"));
-
             });
             // marker.on('mouseout', () => {
 
@@ -462,10 +425,7 @@ export default {
     // console.log("船舶跟踪", this.shiptracking);
     // console.log("货物跟踪", this.freighttrack);
     this.datasearch();
-    this.currentTime();
-    setInterval(() => {
-      this.currentTime();
-    }, 500);
+
     // })
   },
 
@@ -481,62 +441,17 @@ export default {
 };
 </script>
 <style scoped>
-body{
+body {
   overflow-x: auto;
 }
-.home {
-  position: relative;
-  overflow: hidden;
-  background-color: #1e6ba3;
-  color: #ffffff;
-  width: 1920px;
-  height: 945px;
-  white-space: nowrap; /* 使文本不换行 */
-  
- 
-}
-
-.head {
-  background-image: url(../assets/编组\ 3.png);
-  width: 1920px;
-  height: 80px;
-  position: absolute;
-  top: 0;
-}
-
-.headtitle {
-  color: #fff;
-  text-align: center;
-  font-family: "Microsoft YaHei";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 9px;
-  padding-top: 10px;
-}
-
-.headtext {
-  padding-top: 5px;
-  text-align: center;
-}
-
-.headtime {
-  color: #fff;
-  font-family: "Microsoft YaHei";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 14px;
-}
-
 .main {
   position: absolute;
   top: 114px;
+  display: flex;
   /* padding:0 24px; */
 }
 
-.main>div {
+.main > div {
   display: inline-block;
 }
 
@@ -546,10 +461,10 @@ body{
   flex-shrink: 0;
 
   border: 1px solid #98e7fc;
-  background-color: #031027;
+  /* background-color: #031027; */
 
   line-height: 1;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
+  /* background: rgba(0, 0, 0, 0.2) none repeat scroll !important; */
 }
 
 .maincenter {
@@ -568,13 +483,12 @@ body{
   height: 361px;
   flex-shrink: 0;
   border: 1px solid #98e7fc;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
+  /* background: rgba(0, 0, 0, 0.2) none repeat scroll !important; */
   margin: 24px 0;
 }
 
 .mainleft {
   padding: 0 23px;
-
 }
 
 .leftboxtitle {
@@ -622,7 +536,7 @@ body{
   /* 85.714% */
 }
 
-.shiplegend>div {
+.shiplegend > div {
   display: inline-block;
 }
 
