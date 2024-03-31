@@ -1,48 +1,41 @@
 <template>
-    <div class="comparison">
-        
-        <div class="header">
-            <div class="headertitle">コンテナ監視システム</div>
-            <div class="headertext">
-                <span class="headtime">
-                    {{ date }}
-                </span>
-                <span class="headtime" style="margin-left: 25px;">
-                    {{ week }}
-                </span>
-                <span class="headtime">
-                    {{ time }}
-                </span>
-            </div>
-            <div><img src="../assets/return.svg"
-                    style="width: 17px;height: 17px;position: absolute;top: -4px;cursor:pointer" /><span @click="back"
-                    style="position: absolute;left: 20px;width: 40px;top: -4px;cursor:pointer">戻る</span></div>
+    <div>
+        <HeadersBox />
+        <div class="comparison">
+            <div style="cursor:pointer;z-index: 999;" @click="back">
+            <div style="display: inline-block;position: absolute;left: 20px;top: -80px;"><img src="../assets/return.svg"
+                    alt=""></div>
+            <div style="display: inline-block;position: absolute;left: 39px;top: -80px;color: #fff;">戻る</div>
         </div>
-        <div id="charts" ></div>
+        <div id="charts"></div>
+    </div>
     </div>
 </template>
 <script>
 import * as echarts from 'echarts';
 import sensor from '../static/传感器.json';
+import HeadersBox from "../components/Headers.vue";
 
 export default ({
     data() {
         return {
             name: "",
             echartsData: {
-                xAxisData:[],name:[],value1:[],value2:[]
+                xAxisData: [], name: [], value1: [], value2: []
             },
             date: '',
             time: '',
             week: '',
-            last:'',
-            now:''
+            last: '',
+            now: ''
         }
     },
-    
+    components: {
+        HeadersBox,
+    },
     mounted() {
         console.log(this.$route.query);
-        this.now=this.$route.query.now
+        this.now = this.$route.query.now
         this.name = this.$route.query.name
         this.last = this.$route.query.last
         this.tttt()
@@ -59,7 +52,7 @@ export default ({
                 this.$router.push("/");
 
             } else {
-                this.$router.push({ path: "/conter", query: { name: this.now,last:this.last } });
+                this.$router.push({ path: "/conter", query: { name: this.now, last: this.last } });
             }
         },
         tempType(item) {
@@ -69,12 +62,12 @@ export default ({
             option = {
                 title: {
                     text: '两天内的数据对比',
-                    textStyle:{
-                        color:'white'
+                    textStyle: {
+                        color: 'white'
                     }
                 },
                 legend: {
-                    data:item.name
+                    data: item.name
                 },
                 grid: {
                     top: "5%",
@@ -115,17 +108,17 @@ export default ({
                         type: 'line',
                         stack: 'Total',
                         data: item.value1,
-                        lineStyle:{
-                            color:"blue"
+                        lineStyle: {
+                            color: "blue"
                         }
                     },
                     {
-                        name:item.name[1],
+                        name: item.name[1],
                         type: 'line',
                         stack: 'Total',
                         data: item.value2,
-                        lineStyle:{
-                            color:"orange"
+                        lineStyle: {
+                            color: "orange"
                         }
                     }
                 ]
@@ -182,15 +175,15 @@ export default ({
         tttt() {
             sensor.forEach(item => {
                 if (item.equipmentName == this.name) {
-                    if(this.echartsData.name.indexOf(item.updateTime.split(" ")[0].slice(-5)) == -1){
+                    if (this.echartsData.name.indexOf(item.updateTime.split(" ")[0].slice(-5)) == -1) {
                         this.echartsData.name.push(item.updateTime.split(" ")[0].slice(-5))
                     }
-                    if(this.echartsData.xAxisData.indexOf(item.updateTime.split(" ")[1])== -1){
+                    if (this.echartsData.xAxisData.indexOf(item.updateTime.split(" ")[1]) == -1) {
                         this.echartsData.xAxisData.push(item.updateTime.split(" ")[1])
                     }
-                    if(this.echartsData.name[0] == item.updateTime.split(" ")[0].slice(-5)){
+                    if (this.echartsData.name[0] == item.updateTime.split(" ")[0].slice(-5)) {
                         this.echartsData.value1.push(item.value)
-                    }else{
+                    } else {
                         this.echartsData.value2.push(item.value)
                     }
                 }
@@ -203,76 +196,18 @@ export default ({
 
 <style scoped>
 .comparison {
-    background-color: #1E6BA3;
     height: 100vh;
     width: 100%;
     color: white;
-}
-
-.header {
-    background-image: url(../assets/编组\ 3.png);
-    background-size: 100% 100%;
-    width: 100%;
-    height: 80px;
-    position: relative;
-    top: 0;
-}
-
-.headertitle {
-    color: #FFF;
-    text-align: center;
-    font-family: "Microsoft YaHei";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 9px;
-    padding-top: 10px;
-}
-
-.headertext {
-    padding-top: 5px;
-    text-align: center;
-}
-
-.headertime {
-    color: #FFF;
-    font-family: "Microsoft YaHei";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 14px;
-}
-
-.header>div:nth-child(3) {
     position: absolute;
-    top: 40%;
-    left: 2%;
-    cursor: pointer;
-}
-
-.header>div:nth-child(3)>img {
-    width: 13.5px;
-    height: 9.75px;
-    margin-right: 10px;
-}
-
-.header>div:nth-child(3)>span {
-    width: 30px;
-    height: 18px;
-    font-family: Microsoft YaHei;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 18.48px;
-    letter-spacing: 2px;
-    text-align: left;
-    color: white
+    top:114px;
+    display: flex;
 }
 
 #charts {
     width: 70%;
     height: 75%;
-    margin:2%  auto;
+    margin: 2% auto;
     border: 1px solid #0a1720;
 }
 </style>
