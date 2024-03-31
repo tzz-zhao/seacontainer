@@ -205,7 +205,7 @@ export default ({
 .comparison {
     background-color: #1E6BA3;
     height: 100vh;
-    width: 100vh;
+    width: 100%;
     color: white;
 }
 
