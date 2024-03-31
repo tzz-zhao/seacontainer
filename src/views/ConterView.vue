@@ -57,7 +57,7 @@
                         <div></div>
                         <span>センサー情報</span>
                     </div>
-                    <button  @click="exportToCSV">出力</button>
+                    <button @click="exportToCSV">出力</button>
                 </div>
                 <div class="echartsTable">
                     <div v-for="(item, index) in echartsData" :key="index">
@@ -89,10 +89,10 @@ export default {
         return {
             sensorarr: [],
             echartsData: [
-                { title: "温度 ℃", type: "temperature", data: [], xAxisData: [] ,yname:"°C",pieces:{gt:0}},
-                { title: "湿度 %", type: "humidity", data: [], xAxisData: [],yname:"%rh" ,pieces:{gt:0.8}},
-                { title: "開閉", type: "open", data: [], xAxisData: [] ,pieces:{gt:0}},
-                { title: "振動 g", type: "vibration", data: [], xAxisData: [],yname:"",pieces:{gt:2} },
+                { title: "温度 ℃", type: "temperature", data: [], xAxisData: [], yname: "°C", pieces: { gt: 0 } },
+                { title: "湿度 %", type: "humidity", data: [], xAxisData: [], yname: "%rh", pieces: { gt: 0.8 } },
+                { title: "開閉", type: "open", data: [], xAxisData: [], pieces: { gt: 0 } },
+                { title: "振動 g", type: "vibration", data: [], xAxisData: [], yname: "", pieces: { gt: 2 } },
             ],
             date: '',
             time: '',
@@ -116,7 +116,7 @@ export default {
         setInterval(() => {
             this.currentTime()
         }, 500)
-       
+
     },
     beforeCreate() {
         console.log(this.$route.query.name);
@@ -124,24 +124,24 @@ export default {
     },
     methods: {
         exportToCSV() {
-      const data = sensorTimeDate
+            const data = sensorTimeDate
 
-      const csv = Papa.unparse(data);
+            const csv = Papa.unparse(data);
 
-      // 调用 saveCSV 方法将数据保存为CSV文件
-      this.saveCSV(csv, 'data.csv');
-    },
-    saveCSV(csv, fileName) {
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', fileName);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    },
+            // 调用 saveCSV 方法将数据保存为CSV文件
+            this.saveCSV(csv, 'data.csv');
+        },
+        saveCSV(csv, fileName) {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', fileName);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
         //时间处理事件
         currentTime() {
             var date = new Date();
@@ -210,6 +210,7 @@ export default {
             console.log(this.sensorarr);
 
         },
+        //返回
         back() {
 
             if (typeof (this.last) == "undefined") {
@@ -263,9 +264,9 @@ export default {
                 },
                 yAxis: {
                     type: 'value',
-                    name:item.yname,
-                    nameTextStyle:{
-                        color:"white"
+                    name: item.yname,
+                    nameTextStyle: {
+                        color: "white"
                     },
                     axisLabel: {
                         //x轴文字的配置
@@ -278,15 +279,15 @@ export default {
                         show: false
                     }
                 },
-                visualMap:{
+                visualMap: {
                     type: 'piecewise',
-                    show:false,
+                    show: false,
                     seriesIndex: 0,
-                    pieces:[
+                    pieces: [
                         {
-                            gt:item.pieces.gt,
-                            lte:100,
-                            color:"#ff0000"
+                            gt: item.pieces.gt,
+                            lte: 100,
+                            color: "#ff0000"
                         },]
                 },
                 series: [
@@ -321,25 +322,25 @@ export default {
             option && myChart.setOption(option);
         },
         handleClick(row) {
-            console.log(row.id);
-            this.$router.push({ path: "/comparison", query: { name: row.equipmentName, id: row.id } });
+            console.log(row,"44444");
+            this.$router.push({ path: "/comparison", query: { name: row.equipmentName} });
         },
         //传导图表数据
         transmission() {
             sensorTimeDate.forEach(item => {
                 this.echartsData.forEach(item1 => {
                     if (item.equipmentType === item1.type) {
-                        if(item.equipmentType == "open"){
+                        if (item.equipmentType == "open") {
                             item1.data.push(item.value ? 1 : 0)
-                        }else{item1.data.push(item.value)}
+                        } else { item1.data.push(item.value) }
                         item1.xAxisData.push(item.updateTime.slice(-5))
                     }
                 })
             })
-            console.log(this.echartsData,"11111111111");
+            console.log(this.echartsData, "11111111111");
         },
         //导出按钮
-        Deriver(){
+        Deriver() {
             // let data = new Blob([res],{
             //     type:"application/vnd.ms-excel;charect=utf-8"
             // })
@@ -347,7 +348,7 @@ export default {
             let link = document.createElement('a')
             // link.href = 
             link.href = "../statics/传感器数据.json"
-            link.download = '传感器数据.csv'  
+            link.download = '传感器数据.csv'
             link.click();
             // window.URL.revokeObjectURL(url)
         }
