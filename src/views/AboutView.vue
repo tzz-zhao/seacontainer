@@ -13,7 +13,8 @@
           {{ time }}
         </span>
         <div class="back">
-          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px;cursor:pointer" /><span @click="back"
+          <img src="../assets/return.svg" style="width: 18px; position: absolute; top: 2px;cursor:pointer" /><span
+            @click="back"
             style="font-size: 14px; position: absolute; top: 2px; width: 50px; left: 11px;cursor:pointer">戻る</span>
         </div>
       </div>
@@ -101,11 +102,11 @@
           </div>
           <div>
             <div>
-              <div v-for="(item,index) in this.Trajectorydata.status" :key="index">
+              <div v-for="(item, index) in this.Trajectorydata.status" :key="index">
                 <div>{{ item.descriptionCn }}</div>
-                <div>{{item.eventTime}}</div>
+                <div>{{ item.eventTime }}</div>
               </div>
-            
+
             </div>
           </div>
           <div>
@@ -143,7 +144,7 @@ import freighttrack from "../static/货物跟踪.json";
 import containerdata from "../static/集装箱.json";
 import A05 from "../static/定位563201600.json"
 // import proj4 from 'proj4';
-import {convertToBD09} from "../static/经纬切换"
+import { convertToBD09 } from "../static/经纬切换"
 export default {
   watch: {},
   name: "map-view",
@@ -176,46 +177,46 @@ export default {
       polyline: null,
       Trajectoryinformation: {},
       Trajectorydata: {},
-      A05:A05,
-      path:[],
-      patharr:[]
+      A05: A05,
+      path: [],
+      patharr: []
     };
   },
   methods: {
-  
+
     datatreating() {
       // console.log(A05,"船舶路线");
-      this.A05.forEach((item)=>{
+      this.A05.forEach((item) => {
         const latDecimal = item.lat / 1e6;
         const lonDecimal = item.lon / 1e6;
         console.log(latDecimal);
-       
-        
-            const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
-            this.path.push({ coures: item.course, location: location, posTime: item.posTime });
-       
+
+
+        const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
+        this.path.push({ coures: item.course, location: location, posTime: item.posTime });
+
       })
-      console.log(this.path,"船舶路线");
-      this.path.forEach((item)=>{
+      console.log(this.path, "船舶路线");
+      this.path.forEach((item) => {
         this.patharr.push(item.location)
       })
-      console.log(this.receive,"接收的船名");
-     
+      console.log(this.receive, "接收的船名");
+
       this.ship.forEach((item) => {
         if (this.receive == item.nameEn) {
           let num = 0;
           for (let i = 0; i < this.freighttrack.length; i++) {
             if (this.freighttrack[i].vessel == item.nameEn) {
               num++;
-             
+
             }
           }
           // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
           this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
-        } 
+        }
       });
 
-      console.log(this.shipnamearr,"船只数据");
+      console.log(this.shipnamearr, "船只数据");
       this.ship.forEach((item) => {
         if (item.nameEn == this.receive) {
           this.Trajectoryinformation = item
@@ -284,9 +285,9 @@ export default {
       this.$router.push({ path: "conter", query: { name: e.target.dataset.v, last: this.receive } });
     },
 
-    
+
     initAMap() {
-      
+
       // let arr = [[174.10, 24.52], [-123.6, 49.18], [113.474725, 30.692175]];
       AMapLoader.load({
         key: "	0046e0eb262c30e4372c3034d350a6c4", // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -295,7 +296,7 @@ export default {
       })
         .then((AMap) => {
           this.map = new AMap.Map("container", {
-            lang:'en',
+            lang: 'en',
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
             zoom: 2, // 初始化地图级别
@@ -317,14 +318,18 @@ export default {
           // 自动调整地图视野，使整条轨迹可见
           // this.map.setFitView(this.polyline);
           for (let i = 0; i < this.shipnamearr.length; i++) {
+          //  let img="../assets/ship.png"
             let backgroundColor = this.shipnamearr[i].status == 0 ? '#5ad8a6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
             var marker = new AMap.Marker({
               position: this.shipnamearr[i]?.location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
-              content: `<div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;color='#fff'" @click='shipmessage' data-id="${this.shipnamearr[i].name}">${this.shipnamearr[i].num} </div> `,
-              offset: new AMap.Pixel(0,-15),
+             
+              content: `<div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;color='#fff';" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
+                
+                ${this.shipnamearr[i].num} </div> `,
+              offset: new AMap.Pixel(0, -15),
             });
-         
+
             marker.on("mouseover", (mapEvent) => {
               // if (this.infoWindow) {
               //   this.infoWindow.close();
@@ -403,7 +408,7 @@ export default {
   },
   beforeCreate() {
     console.log(this.$route.query.name, "接受信息");
-    
+
   },
 };
 </script>
@@ -890,6 +895,7 @@ div::-webkit-scrollbar-corner {
 
 .listArticle>div:nth-child(6)>div {
   margin: 20px 29px;
+
 }
 
 .listArticle>div:nth-child(6)>div>div {
@@ -906,11 +912,13 @@ div::-webkit-scrollbar-corner {
 }
 
 .amap-marker-content {
-        width: 22px!important; /* 设置宽度 */
-        height: 22px!important; /* 设置高度 */
-    }
+  width: 22px !important;
+  /* 设置宽度 */
+  height: 22px !important;
+  /* 设置高度 */
+}
+
 //     /deep/ .amap-marker-content {
 //     width: 100px;
 //     height: 100px;
-// }
-</style>
+// }</style>

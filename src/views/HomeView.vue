@@ -382,7 +382,7 @@ export default {
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
             zoom: 2, // 初始化地图级别
-            center: [50, 40], // 初始化地图中心点位置
+            center: [180, 40], // 初始化地图中心点位置
           });
           for (let i = 0; i < this.shipnamearr.length; i++) {
             let backgroundColor = this.shipnamearr[i].status == 0 ? '#5AD8A6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
