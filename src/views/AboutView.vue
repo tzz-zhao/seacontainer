@@ -319,15 +319,17 @@ export default {
           // this.map.setFitView(this.polyline);
           for (let i = 0; i < this.shipnamearr.length; i++) {
           //  let img="../assets/ship.png"
-            let backgroundColor = this.shipnamearr[i].status == 0 ? '#5ad8a6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
+            // let backgroundColor = this.shipnamearr[i].status == 0 ? '#5ad8a6' : (this.shipnamearr[i].status == 1 ? '#CBD1D7' : (this.shipnamearr[i].status == 5 ? '#5B8FF9' : '#D3AA22'));
             var marker = new AMap.Marker({
               position: this.shipnamearr[i]?.location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
               map: this.map,
-             
-              content: `<div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;color='#fff';" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
+            /*
+            <div class="marker" style="color:#fff;background:${backgroundColor} ;border-radius:50%;height:22px;width:22px;font-size:10px;  text-align: center;line-height:22px;color='#fff';" @click='shipmessage' data-id="${this.shipnamearr[i].name}">
                 
-                ${this.shipnamearr[i].num} </div> `,
-              offset: new AMap.Pixel(0, -15),
+                ${this.shipnamearr[i].num} </div> 
+            */  
+              content: `<img src=${require('../assets/ship.png')} />`,
+              offset: new AMap.Pixel(0, -40),
             });
 
             marker.on("mouseover", (mapEvent) => {
