@@ -88,10 +88,10 @@ export default {
         return {
             sensorarr: [],
             echartsData: [
-                { title: "温度 ℃", type: "temperature", data: [], xAxisData: [] ,yname:"°C"},
-                { title: "湿度 %", type: "humidity", data: [], xAxisData: [],yname:"%rh" },
-                { title: "開閉", type: "open", data: [], xAxisData: [] },
-                { title: "振動 g", type: "vibration", data: [], xAxisData: [],yname:"" },
+                { title: "温度 ℃", type: "temperature", data: [], xAxisData: [] ,yname:"°C",pieces:{gt:0}},
+                { title: "湿度 %", type: "humidity", data: [], xAxisData: [],yname:"%rh" ,pieces:{gt:0.8}},
+                { title: "開閉", type: "open", data: [], xAxisData: [] ,pieces:{gt:0}},
+                { title: "振動 g", type: "vibration", data: [], xAxisData: [],yname:"",pieces:{gt:2} },
             ],
             date: '',
             time: '',
@@ -230,7 +230,6 @@ export default {
                 xAxis: {
                     type: 'category',
                     data: item.xAxisData,
-                    // boundaryGap: false,
                     axisLabel: {
                         //x轴文字的配置
                         show: true,
@@ -258,6 +257,17 @@ export default {
                     axisLine: {
                         show: false
                     }
+                },
+                visualMap:{
+                    type: 'piecewise',
+                    show:false,
+                    seriesIndex: 0,
+                    pieces:[
+                        {
+                            gt:item.pieces.gt,
+                            lte:100,
+                            color:"#ff0000"
+                        },]
                 },
                 series: [
                     {
@@ -292,6 +302,7 @@ export default {
         },
         handleClick(row) {
             console.log(row.id);
+            this.$router.push({ path: "/comparison", query: { name: row.equipmentName, id: row.id } });
         },
         //传导图表数据
         transmission() {
