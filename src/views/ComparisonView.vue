@@ -15,13 +15,14 @@
 import * as echarts from 'echarts';
 import sensor from '../static/传感器.json';
 import HeadersBox from "../components/Headers.vue";
+import { resizeMyCharts } from "../static/echarts自适应.js"
 
 export default ({
     data() {
         return {
             name: "",
             echartsData: {
-                xAxisData: [], name: [], value1: [], value2: []
+                xAxisData: [], name: [], value1: [], value2: [],color:"white"
             },
             date: '',
             time: '',
@@ -38,7 +39,7 @@ export default ({
         this.now = this.$route.query.now
         this.name = this.$route.query.name
         this.last = this.$route.query.last
-        this.tttt()
+        this.dispose()
         this.currentTime()
         this.tempType(this.echartsData)
         setInterval(() => {
@@ -58,12 +59,13 @@ export default ({
         tempType(item) {
             var chartDom = document.getElementById('charts');
             var myChart = echarts.init(chartDom);
+            resizeMyCharts(myChart)
             var option;
             option = {
                 title: {
                     text: '两天内的数据对比',
                     textStyle: {
-                        color: 'white'
+                        color: item.color
                     }
                 },
                 legend: {
@@ -82,11 +84,19 @@ export default ({
                         //x轴文字的配置
                         show: true,
                         textStyle: {
-                            color: "white",
+                            color: item.color,
                         },
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: item.color
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: item.color
+                        }
                     }
                 },
                 yAxis: {
@@ -95,11 +105,19 @@ export default ({
                         //x轴文字的配置
                         show: true,
                         textStyle: {
-                            color: "white",
+                            color: item.color,
                         },
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: item.color
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: item.color
+                        }
                     }
                 },
                 series: [
@@ -172,7 +190,7 @@ export default ({
             this.date = strDate
         },
         //图表数据处理
-        tttt() {
+        dispose() {
             sensor.forEach(item => {
                 if (item.equipmentName == this.name) {
                     if (this.echartsData.name.indexOf(item.updateTime.split(" ")[0].slice(-5)) == -1) {
@@ -190,13 +208,31 @@ export default ({
             })
             console.log(this.echartsData);
         }
+    },
+    computed: {
+        newtheme() {
+            return this.$store.state.theme
+        }
+    },
+    watch: {
+        newtheme: {
+            handler(val) {
+                if (val == "light") {
+                    this.echartsData.color = 'black'
+                    this.tempType(this.echartsData)
+                } else {
+                    this.echartsData.color = 'white'
+                    this.tempType(this.echartsData)
+                }
+            }
+        }
     }
 })
 </script>
 
 <style scoped>
 .comparison {
-    height: 100vh;
+    height: calc(100vh - 114px);
     width: 100%;
     color: white;
     position: absolute;

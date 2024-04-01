@@ -72,6 +72,7 @@ import sensor from "../static/传感器.json";
 import sensorTimeDate from "../static/传感器日均.json";
 import Papa from "papaparse";
 import HeadersBox from "../components/Headers.vue";
+import { resizeMyCharts } from "../static/echarts自适应.js"
 
 /*sensorarr-传感器列表数据 
 echartsData-面积图数据 
@@ -85,10 +86,46 @@ export default {
         return {
             sensorarr: [],
             echartsData: [
-                { title: "温度 ℃", type: "temperature", data: [], xAxisData: [], yname: "°C", pieces: { gt: 0 }, lineStyle: {} },
-                { title: "湿度 %", type: "humidity", data: [], xAxisData: [], yname: "%rh", pieces: { gt: 0.8 }, lineStyle: {} },
-                { title: "開閉", type: "open", data: [], xAxisData: [], pieces: { gt: 0 }, lineStyle: {} },
-                { title: "振動 g", type: "vibration", data: [], xAxisData: [], yname: "", pieces: { gt: 2 }, lineStyle: {} },
+                {
+                    title: "温度 ℃",
+                    type: "temperature",
+                    series: { data: [], type: "line" },
+                    xAxisData: [],
+                    yAxis: { name: "°C", type: "value", min: null, max: null, interval: null },
+                    pieces: { gt: 0 },
+                    lineStyle: {},
+                    color: "white"
+                },
+                {
+                    title: "湿度 %",
+                    type: "humidity",
+                    series: { data: [], type: "line" },
+                    xAxisData: [],
+                    yAxis: { name: "%rh", type: "value", min: 0, max: 100, interval: 10 },
+                    pieces: { gt: 80 },
+                    lineStyle: {},
+                    color: "white"
+                },
+                {
+                    title: "開閉",
+                    type: "open",
+                    series: { data: [], type: "line" },
+                    xAxisData: [],
+                    yAxis: { type: "category", data: ["閉", "開"] },
+                    pieces: { gt: 0 },
+                    lineStyle: {},
+                    color: "white"
+                },
+                {
+                    title: "振動 g",
+                    type: "vibration",
+                    series: { data: [], type: "line" },
+                    xAxisData: [],
+                    yAxis: { name: "g", type: "value", min: null, max: null, interval: null },
+                    pieces: { gt: 2 },
+                    lineStyle: {},
+                    color: "white"
+                },
             ],
             date: "",
             time: "",
@@ -118,6 +155,7 @@ export default {
         console.log(this.$route.query.last);
     },
     methods: {
+        //导出按钮
         exportToCSV() {
             const data = sensorTimeDate;
 
@@ -217,6 +255,7 @@ export default {
         tempType(item) {
             var chartDom = document.getElementById(`${item.type}`);
             var myChart = echarts.init(chartDom);
+            resizeMyCharts(myChart)
             var option;
             option = {
                 xAxis: {
@@ -226,35 +265,46 @@ export default {
                         //x轴文字的配置
                         show: true,
                         textStyle: {
-                            color: "white",
+                            color: item.color,
                         },
                     },
                     axisLine: {
                         show: true,
                         lineStyle: item.lineStyle
                     },
+                    splitLine: {
+                        lineStyle: {
+                            color: item.color
+                        }
+                    }
                 },
                 yAxis: {
-                    type: "value",
-                    name: item.yname,
+                    type: item.yAxis.type,
+                    name: item.yAxis.name,
+                    min: item.yAxis.min,
+                    max: item.yAxis.max,
+                    interval: item.yAxis.interval,
+                    data: item.yAxis.data,
                     nameTextStyle: {
-                        color: "white",
+                        color: item.color,
                     },
                     axisLabel: {
                         //y轴文字的配置
                         show: true,
                         textStyle: {
-                            color: "white",
+                            color: item.color,
                         },
                     },
-                    axisLine: {
-                        show: true,
+                    splitLine: {
+                        lineStyle: {
+                            color: item.color
+                        }
                     }
                 },
                 visualMap: {
                     type: "piecewise",
                     show: false,
-                    hoverLink:false,
+                    hoverLink: false,
                     pieces: [
                         {
                             gt: item.pieces.gt,
@@ -270,8 +320,8 @@ export default {
                 },
                 series: [
                     {
-                        data: item.data,
-                        type: "line",
+                        data: item.series.data,
+                        type: item.series.type,
                         areaStyle: {
                             origin: "start",
                         },
@@ -287,8 +337,8 @@ export default {
             };
             option && myChart.setOption(option);
         },
+        //跳转
         handleClick(row) {
-            console.log(row, "44444");
             this.$router.push({ path: "/comparison", query: { name: row.equipmentName, last: this.last, now: this.name } });
         },
         //传导图表数据
@@ -303,36 +353,60 @@ export default {
                             item1.lineStyle.color = 'white'
                         }
                         if (item.equipmentType == "open") {
-                            item1.data.push(item.value ? 1 : 0);
-                        } else {
-                            item1.data.push(item.value);
+                            item1.series.data.push(item.value ? 1 : 0);
+                        } else if (item.equipmentType == 'humidity') {
+                            item1.series.data.push(item.value * 100)
+                        }
+                        else {
+                            item1.series.data.push(item.value);
                         }
                         item1.xAxisData.push(item.updateTime.slice(-5));
-
                     }
                 });
             });
-        },
-        //导出按钮
-        Deriver() {
-            // let data = new Blob([res],{
-            //     type:"application/vnd.ms-excel;charect=utf-8"
-            // })
-            // let url = URL.createObjectURL(data)
-            let link = document.createElement("a");
-            // link.href =
-            link.href = "../statics/传感器数据.json";
-            link.download = "传感器数据.csv";
-            link.click();
-            // window.URL.revokeObjectURL(url)
+            console.log(this.echartsData, "66666666666");
         },
     },
+    computed: {
+        newtheme() {
+            return this.$store.state.theme
+        }
+    },
+    watch: {
+        newtheme: {
+            handler(val) {
+                if (val == "light") {
+                    this.echartsData.forEach((item) => {
+                        item.color = 'black'
+                        this.tempType(item)
+                    })
+                } else {
+                    this.echartsData.forEach((item) => {
+                        item.color = 'white'
+                        this.tempType(item)
+                    })
+                }
+            }
+        }
+    }
 };
 </script>
 <style scoped>
+::v-deep .el-table td.el-table__cell {
+    border-bottom: none;
+}
+
+::v-deep .el-table th.el-table__cell.is-leaf {
+    border-bottom: none;
+}
+
+::v-deep .el-table::before {
+    display: none;
+}
+
 .sensor {
-    background-color: #1e6ba3;
-    height: 100vh;
+    background-color: #0e457b;
+    height:calc(100vh - 114px);;
     width: 100%;
     position: absolute;
     top: 114px;
@@ -351,7 +425,7 @@ export default {
 
 .left-list {
     width: 27%;
-    height: 90vh;
+    height: 90%;
     border: 1px solid #98e7fc;
     background: #07365d;
     opacity: 0.6px;

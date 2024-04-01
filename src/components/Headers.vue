@@ -119,8 +119,8 @@ export default {
   overflow: hidden;
 
   /* color: #ffffff; */
-  width: 1920px;
-  height: 945px;
+  width: 100%;
+  height: 100vh;
   white-space: nowrap; /* 使文本不换行 */
 }
 .home.light {
@@ -133,8 +133,7 @@ export default {
 }
 
 .head {
-  /* background-image: url(../assets/编组\ 3.png); */
-  width: 1920px;
+  width: 100%;
   height: 80px;
   position: absolute;
   top: 0;
@@ -142,10 +141,12 @@ export default {
 
 .head.light {
   background-image: url("../assets/light.png");
+  background-size: 100% 100%;
 }
 
 .head.black {
   background-image: url(../assets/编组\ 3.png);
+  background-size: 100% 100%;
 }
 
 .headtitle {

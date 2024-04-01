@@ -426,40 +426,6 @@ export default {
   height: 945px;
 }
 
-.head {
-  background-image: url(../assets/编组\ 3.png);
-  width: 1920px;
-  height: 80px;
-  position: absolute;
-  top: 0;
-}
-
-.headtitle {
-  color: #fff;
-  text-align: center;
-  font-family: "Microsoft YaHei";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 9px;
-  padding-top: 10px;
-}
-
-.headtext {
-  padding-top: 5px;
-  text-align: center;
-}
-
-.headtime {
-  color: #fff;
-  font-family: "Microsoft YaHei";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 14px;
-}
-
 .main {
   position: absolute;
   top: 114px;

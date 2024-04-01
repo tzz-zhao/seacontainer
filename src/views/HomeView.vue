@@ -194,6 +194,7 @@ import freighttrack from "../static/货物跟踪.json";
 import sensor from "../static/传感器.json";
 import containerList from "../static/集装箱.json";
 import HeadersBox from "@/components/Headers.vue";
+
 export default {
   watch: {},
   name: "map-view",
@@ -454,7 +455,8 @@ body {
   position: absolute;
   top: 114px;
   display: flex;
-  /* padding:0 24px; */
+  width: 100%;
+  height: calc(100% - 114px);
 }
 
 .main > div {
