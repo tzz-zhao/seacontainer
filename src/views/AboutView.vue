@@ -141,6 +141,7 @@ import shiptracking from "../static/船舶跟踪.json";
 import freighttrack from "../static/货物跟踪.json";
 import containerdata from "../static/集装箱.json";
 import A05 from "../static/定位563201600.json";
+import locationdata from '../static/定位.json'
 import W178 from "../static/定位636021814.json";
 // import proj4 from 'proj4';
 import { convertToBD09 } from "../static/经纬切换";
@@ -183,7 +184,10 @@ export default {
       path: [],
       patharr: [],
       start: [],
-      end: []
+      end: [],
+      locationdata:locationdata,
+      msi:'',
+
     };
   },
   components: {
@@ -204,28 +208,24 @@ export default {
       //   this.path.push({ coures: item.course, location: location, posTime: item.posTime });
 
       // })
-      this.W178.forEach((item, index) => {
-        const latDecimal = item.lat / 1e6;
-        const lonDecimal = item.lon / 1e6;
-        // console.log(latDecimal);
+      // this.W178.forEach((item, index) => {
+      //   const latDecimal = item.lat / 1e6;
+      //   const lonDecimal = item.lon / 1e6;
+      //   // console.log(latDecimal);
 
-        const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
+      //   const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
 
-        this.path.push({ coures: item.course, location: location, posTime: item.posTime });
+      //   this.path.push({ coures: item.course, location: location, posTime: item.posTime });
 
 
-        if (index == 0) {
-          this.start.push({ coures: item.course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.posTime })
-        }
-        if (index == this.W178.length - 1) {
-          this.end.push({ coures: item.course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.posTime })
-        }
-      });
-      console.log(this.start, this.end);
-      console.log(this.path, "船舶路线");
-      this.path.forEach((item) => {
-        this.patharr.push(item.location);
-      });
+      //   if (index == 0) {
+      //     this.start.push({ coures: item.course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.posTime })
+      //   }
+      //   if (index == this.W178.length - 1) {
+      //     this.end.push({ coures: item.course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.posTime })
+      //   }
+      // });
+      
       console.log(this.receive, "接收的船名");
 
       this.ship.forEach((item) => {
@@ -238,8 +238,10 @@ export default {
           }
           // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
           this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
+          this.msi=item.mmsi
         }
       });
+      console.log(this.msi,'点击货船的mmsi');
 
       console.log(this.shipnamearr, "船只数据");
       this.ship.forEach((item) => {
@@ -248,7 +250,33 @@ export default {
         }
       });
       console.log(this.Trajectoryinformation, "右侧信息");
+      console.log(this.locationdata,"所有定位信息");
+      this.locationdata.forEach((item) => {
+      if(this.msi==item.mmsi){
+        for(let i=0;i<item.data.length;i++){
+          const latDecimal = item.data[i].lat / 1e6;
+        const lonDecimal = item.data[i].lon / 1e6;
+        // console.log(latDecimal);
 
+        const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
+
+        this.path.push({ coures: item.data[i].course, location: location, posTime: item.data[i].posTime });
+
+
+        if (i == 0) {
+          this.start.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+        }
+        if (i == item.data.length - 1) {
+          this.end.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+        }
+        }
+      }
+      });
+      console.log(this.start, this.end);
+      console.log(this.path, "船舶路线");
+      this.path.forEach((item) => {
+        this.patharr.push(item.location);
+      });
       this.shiptracking.forEach((item) => {
         if (item.nameEn == this.receive) {
           this.Trajectorydata = item;
