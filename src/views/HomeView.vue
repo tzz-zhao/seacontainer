@@ -1,12 +1,11 @@
 <template>
   <div class="box">
-   
     <HeadersBox></HeadersBox>
     <div class="main">
       <div class="mainleft">
-        <div class="leftbox" style="position: relative">
+        <div class="leftbox">
           <div class="leftboxtitle">
-            <div class="arrows">
+            <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
             </div>
             <div class="lefttext">船舶集計</div>
@@ -29,10 +28,9 @@
               <div style="display: inline-block; margin-left: 5px">その他</div>
             </div>
           </div>
-
-          <div id="shipbar" :style="myChartStyle" style="margin-left: 15px"></div>
+          <div id="shipbar" :style="myChartStyle"></div>
         </div>
-        <div class="leftbotbox" style="position: relative">
+        <div class="leftbotbox">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -42,52 +40,43 @@
           <div class="shipsearch">
             <div class="searchdiv">
               <div class="searchimg">
-                <!-- <img src="../assets/search.svg" alt="" /> -->
-                <svg t="1711877375552" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2412" width="200" height="200">
+                <svg t="1711877375552" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                  xmlns="http://www.w3.org/2000/svg" p-id="2412" width="200" height="200">
                   <path
                     d="M443.733333 776.533333c-179.2-25.6-307.2-192-281.6-375.466666 25.6-179.2 192-307.2 375.466667-281.6 179.2 25.6 307.2 192 281.6 375.466666-25.6 179.2-196.266667 307.2-375.466667 281.6M981.333333 938.666667l-213.333333-213.333334c59.733333-59.733333 98.133333-132.266667 110.933333-221.866666 29.866667-217.6-119.466667-413.866667-332.8-448-213.333333-29.866667-413.866667 119.466667-448 337.066666-29.866667 217.6 119.466667 413.866667 332.8 448 106.666667 17.066667 209.066667-12.8 285.866667-72.533333v4.266667l213.333333 213.333333c12.8 12.8 34.133333 12.8 46.933334 0s17.066667-34.133333 4.266666-46.933333"
                     p-id="2413"></path>
                 </svg>
               </div>
-              <!-- <div class="searchtext">请输入船名</div> -->
               <input v-model="search" type="text" placeholder="船舶名を入力してください" class="searchtext" />
             </div>
             <div class="searchbutton" @click="shipsearch">検索</div>
           </div>
           <div class="listbox">
             <div class="listtitle">
-              <div class="listone listson">船舶名</div>
-              <div class="listtwo listson">船籍</div>
-              <div class="listfour listson">目的地</div>
-              <div class="listthree listson">操作</div>
+              <div class="listson">船舶名</div>
+              <div class="listson">船籍</div>
+              <div class="listson">目的地</div>
+              <div class="listson">操作</div>
             </div>
 
-            <div style="overflow-x: hidden; height: 200px; position: absolute; width: 332px">
-              <div class="shipmessage" style="top: 0px" v-for="(item, index) in shipnamearr" :key="index">
-                <div class="messageson" style="left: 33px; font-size: 9px">
+            <div>
+              <div class="shipmessage" v-for="(item, index) in shipnamearr" :key="index">
+                <div class="messageson">
                   {{ item.name }}
                 </div>
-                <div class="messageson" style="left: 146px">
+                <div class="messageson">
                   {{ item.flagName }}
                 </div>
-                <div class="messageson" style="left: 196px; font-size: 8px">
+                <div class="messageson">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" style="left: 271px; cursor: pointer" @click="look" :data-v="item.name">確認</div>
+                <div class="messageson underline" @click="look" :data-v="item.name" style="cursor: pointer;">確認</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="maincenter" id="container">
-        <!-- <div class="circle" style="right: 274.37px;top: 76px;">
-          <div class="circlecolor">
-            <div class="circletext">
-              12
-            </div>
-          </div>
-        </div> -->
-      </div>
+      <div class="maincenter" id="container"></div>
       <div class="mainleft">
         <div class="leftbox">
           <div class="leftboxtitle">
@@ -96,46 +85,35 @@
             </div>
             <div class="lefttext">アラート</div>
           </div>
-
-          <div class="listtitle" style="width: 348px; height: 32px; margin-left: 18px; position: relative; line-height: 20px; display: flex; align-items: center">
-            <div class="listone listson" style="left: 10px">No</div>
-            <div class="listtwo listson" style="left: 58px">船舶名</div>
-            <div class="listthree listson" style="left: 140px">時間</div>
-            <div class="listthree listson" style="left: 220px">種類</div>
-            <div class="listthree listson" style="left: 300px">操作</div>
+          <div class="ListTitle">
+            <div>No</div>
+            <div>船舶名</div>
+            <div>時間</div>
+            <div>種類</div>
+            <div>操作</div>
           </div>
-          <div style="height: 221px; position: absolute; overflow: auto">
-            <div
-              v-for="(item, index) in containerList.filter((p) => p.status !== 0)"
-              :key="index"
-              style="width: 348px; height: 32px; margin-left: 18px; position: relative; display: flex; align-items: center">
-              <div class="listone listson" style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
+          <div class="shipclass">
+            <div v-for="(item, index) in containerList.filter((p) => p.status !== 0)" :key="index">
+              <div style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
                 {{ index + 1 }}
               </div>
-              <div
-                class="listtwo listson"
-                :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel"
-                style="width: 80px; left: 58px; top: 0; height: 100%; line-height: 32px; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+              <div :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
-              <div class="listthree listson" style="left: 140px; top: 0; height: 100%; display: flex; align-items: center; font-size: 9px">
+              <div>
                 {{ item.date.split(":")[0] + ":" + item.date.split(":")[1] }}
               </div>
-              <div class="listthree listson" style="left: 235px; top: 0; height: 100%; display: flex; align-items: center">
-                <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2" style="color: red">異常</span>
+              <div>
+                <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2"
+                  style="color: red">異常</span>
               </div>
-
-              <div
-                class="listthree listson"
-                style="left: 300px; top: 0; height: 100%; display: flex; align-items: center; cursor: pointer"
-                @click="sensoralarm"
-                :data-v="item.containerNumber">
+              <div style="cursor: pointer" @click="sensoralarm" :data-v="item.containerNumber">
                 確認
               </div>
             </div>
           </div>
         </div>
-        <div class="leftbotbox" style="position: relative">
+        <div class="leftbotbox">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -145,37 +123,32 @@
           <div class="shipsearch">
             <div class="searchdiv">
               <div class="searchimg">
-                <svg t="1711877375552" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2412" width="200" height="200">
+                <svg t="1711877375552" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                  xmlns="http://www.w3.org/2000/svg" p-id="2412" width="200" height="200">
                   <path
                     d="M443.733333 776.533333c-179.2-25.6-307.2-192-281.6-375.466666 25.6-179.2 192-307.2 375.466667-281.6 179.2 25.6 307.2 192 281.6 375.466666-25.6 179.2-196.266667 307.2-375.466667 281.6M981.333333 938.666667l-213.333333-213.333334c59.733333-59.733333 98.133333-132.266667 110.933333-221.866666 29.866667-217.6-119.466667-413.866667-332.8-448-213.333333-29.866667-413.866667 119.466667-448 337.066666-29.866667 217.6 119.466667 413.866667 332.8 448 106.666667 17.066667 209.066667-12.8 285.866667-72.533333v4.266667l213.333333 213.333333c12.8 12.8 34.133333 12.8 46.933334 0s17.066667-34.133333 4.266666-46.933333"
                     p-id="2413"></path>
                 </svg>
               </div>
-              <!-- <div class="searchtext">请输入船名</div> -->
               <input v-model="freightnumber" type="text" placeholder="BL番号を入力してください" class="searchtext" />
             </div>
             <div class="searchbutton" @click="freightsearch">搜索</div>
           </div>
-          <div class="listbox">
-            <div class="listtitle">
-              <div class="listone listson">BL番号</div>
-              <div class="listtwo listson">行き先</div>
-              
-              <div class="listthree listson">操作</div>
+          <div>
+            <div class="hullNumber">
+              <div>BL番号</div>
+              <div>行き先</div>
+              <div>操作</div>
             </div>
-
-            <div style="overflow-x: hidden; height: 200px; position: absolute; width: 332px">
-              <div class="shipmessage" style="top: 0px" v-for="(item, index) in freightarr" :key="index">
-                <div class="messageson" style="left: 33px; font-size: 9px">
+            <div style="overflow: auto;height: 250px;">
+              <div class="hull" v-for="(item, index) in freightarr" :key="index">
+                <div>
                   {{ item.billNumber }}
                 </div>
-                <!-- <div class="messageson" style="left: 146px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 40px" :title="item.billNumber">
-                  {{ item.billNumber }}
-                </div> -->
-                <div class="messageson" style="left: 146px; font-size: 8px'text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
+                <div>
                   {{ item.pod }}
                 </div>
-                <div class="messageson underline" style="left: 271px; cursor:pointer;" @click="look" :data-v="item.vessel">確認</div>
+                <div class="underline" style="cursor:pointer;" @click="look" :data-v="item.vessel">確認</div>
               </div>
             </div>
           </div>
@@ -235,8 +208,8 @@ export default {
     },
     datasearch() {
       // this.freightarr = this.freighttrack;
-      this.freighttrack.forEach((item)=>{
-        if(item.billNumber!=null){
+      this.freighttrack.forEach((item) => {
+        if (item.billNumber != null) {
           this.freightarr.push(item)
         }
       })
@@ -451,127 +424,113 @@ export default {
 body {
   overflow-x: auto;
 }
+
 .main {
   position: absolute;
-  top: 114px;
+  top: 70px;
   display: flex;
   width: 100%;
-  height: calc(100% - 114px);
-}
-
-.main > div {
-  display: inline-block;
-}
-
-.leftbox {
-  width: 380px;
-  height: 385px;
-  flex-shrink: 0;
-
-  border: 1px solid #98e7fc;
-  /* background-color: #031027; */
-
-  line-height: 1;
-  /* background: rgba(0, 0, 0, 0.2) none repeat scroll !important; */
-}
-
-.maincenter {
-  /* background-image: url(../assets/ditu.png); */
-  width: 1062px;
-  height: 774px;
-  flex-shrink: 0;
-  margin-bottom: 24px;
-  position: relative;
-  top: 0;
-}
-
-.leftbotbox {
-  /* padding-top: 16px; */
-  width: 378.01px;
-  height: 361px;
-  flex-shrink: 0;
-  border: 1px solid #98e7fc;
-  /* background: rgba(0, 0, 0, 0.2) none repeat scroll !important; */
-  margin: 24px 0;
+  height: calc(100% - 70px);
+  align-items: center;
+  justify-content: space-between;
+  padding: 1%;
+  box-sizing: border-box;
 }
 
 .mainleft {
-  padding: 0 23px;
+  width: 21%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.maincenter {
+  width: 55%;
+  height: 100%;
+}
+
+.mainleft>div {
+  width: 100%;
+  height: 49%;
+  border: 1px solid #98e7fc;
+  box-sizing: border-box;
+  padding: 3% 1%;
 }
 
 .leftboxtitle {
-  width: 348px;
+  width: 97%;
   height: 30px;
-  flex-shrink: 0;
-  /* margin-top: 16px */
+  margin: auto;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 3%;
   background: linear-gradient(270deg, rgba(47, 186, 255, 0) 0%, rgba(77, 210, 255, 0.8) 63.77%, rgba(84, 216, 255, 0.8) 86.69%, rgba(92, 222, 255, 0) 100%);
-  margin: 16px 16px 16px 16px;
-  position: relative;
 }
 
 .lefttext {
-  position: absolute;
+  margin-left: 3%;
   color: #fff;
   font-family: "Microsoft YaHei";
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
-  letter-spacing: 2px;
-  top: 6px;
-  left: 32px;
-}
-
-.arrows {
-  width: 8px;
-  height: 12px;
-  position: absolute;
-  top: 8px;
-  left: 12px;
 }
 
 .shiplegend {
-  position: absolute;
-  top: 78px;
-  padding: 0 54px;
   color: #fff;
-  height: 12px;
   font-family: "Microsoft YaHei";
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 12px;
-  /* 85.714% */
+  width: 90%;
+  margin: 3% auto;
 }
 
-.shiplegend > div {
+.shiplegend>div {
   display: inline-block;
 }
 
-.arrows1 {
-  width: 8px;
-  height: 12px;
-  position: absolute;
-  top: 4px;
-  left: 12px;
+#shipbar {
+  width: 100%;
+  height: 100%;
 }
 
 .shipsearch {
-  width: 332px;
+  width: 97%;
   height: 30px;
-  margin-left: 22px;
+  margin: 3% auto;
+  display: flex;
   border: 0.8px solid rgba(255, 255, 255, 0.36);
   background: rgba(255, 255, 255, 0.12);
-  position: relative;
+}
+
+.searchdiv {
+  width: 76%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.searchimg {
+  width: 7%;
+  height: 18px;
+  opacity: 0.8;
+}
+
+.searchtext {
+  width: 93%;
+  height: 26px;
+  background: #031027;
+  opacity: 0.3;
+  color: #fff;
 }
 
 .searchbutton {
-  width: 82px;
+  width: 24%;
   height: 30px;
   background-color: #15517a;
-  position: absolute;
-  right: 0;
-  top: 0;
   text-align: center;
   line-height: 30px;
   color: #fff;
@@ -582,193 +541,149 @@ body {
   font-weight: 400;
 }
 
-.searchdiv {
-  position: relative;
-}
-
-.searchtext {
-  position: absolute;
-  left: 36px;
-  top: -1px;
-  height: 26px;
-
-  width: 206px;
-  background: #031027;
-  opacity: 0.3;
-  color: #fff;
-}
-
-.searchimg {
-  position: absolute;
-  top: 7px;
-  left: 11px;
-  width: 18px;
-  height: 18px;
-  opacity: 0.8;
-}
-
 .searchimg svg {
   width: 18px;
   height: 18px;
 }
+
 .listbox {
-  width: 332px;
-  position: relative;
-  margin-left: 22px;
-  margin-top: 14px;
+  width: 97%;
+  margin: auto;
 }
 
 .listtitle {
-  width: 332px;
+  width: 100%;
   height: 32px;
-  flex-shrink: 0;
   background-color: rgba(47, 186, 255, 0.25);
-  fill: #fff;
-  stroke-width: 1px;
-  stroke: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .listson {
-  display: inline-block;
-  position: absolute;
-  top: 6px;
   color: #fff;
+  width: 25%;
   font-size: 14px;
   opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.listone {
-  left: 33px;
-}
-
-.listtwo {
-  left: 146px;
-}
-
-.listfour {
-  left: 196px;
-}
-
-.listthree {
-  left: 271px;
+.listbox>div:nth-child(2) {
+  width: 100%;
 }
 
 .shipmessage {
-  position: relative;
+  width: 100%;
   height: 31px;
   line-height: 31px;
+  display: flex;
 }
 
 .messageson {
-  position: absolute;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 10px;
   opacity: 0.8;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
 }
 
-.active {
-  background: rgba(255, 255, 255, 0.12);
+.ListTitle {
+  width: 97%;
+  margin: 3% auto;
+  height: 32px;
+  background-color: rgba(47, 186, 255, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ListTitle>div {
+  width: 10%;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shipclass>div>div {
+  width: 10%;
+}
+
+.ListTitle>div:nth-child(2),
+.ListTitle>div:nth-child(3),
+.shipclass>div>div:nth-child(2),
+.shipclass>div>div:nth-child(3) {
+  width: 35%;
+}
+
+.shipclass {
+  width: 97%;
+  margin: 3% auto;
+}
+
+.shipclass>div {
+  width: 100%;
+  font-size: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.shipclass>div>div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
+}
+
+.hullNumber {
+  width: 100%;
+  height: 32px;
+  background-color: rgba(47, 186, 255, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hullNumber>div {
+  width: 33%;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hull {
+  width: 100%;
+  height: 31px;
+  font-size: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hull>div{
+  width: 33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .underline {
   text-decoration: underline;
-}
-
-.foot {
-  position: relative;
-  top: 810px;
-  height: 300px;
-  padding: 0 26px;
-}
-
-.ftleft {
-  position: absolute;
-  bottom: 24px;
-  width: 924px;
-  height: 260px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
-  background: #031027;
-  margin-bottom: 24px;
-  border: 1px solid #98e7fc;
-}
-
-.ftright {
-  position: absolute;
-  right: 26px;
-  bottom: 24px;
-  width: 924px;
-  height: 260px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll !important;
-  background: #031027;
-  margin-bottom: 24px;
-  border: 1px solid #98e7fc;
-}
-
-.linespan {
-  position: absolute;
-  right: 170px;
-  top: 64px;
-  font-size: 14px;
-}
-
-.circle {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  fill: rgba(0, 96, 181, 0.28);
-  background-image: url(../assets/yuan.svg);
-  background-size: cover;
-  filter: drop-shadow(0px 0px 7.3px rgba(0, 96, 181, 0.65));
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: rgba(0, 96, 181, 0.65);
-  border-radius: 50%;
-
-  font-size: 10px;
-
-  text-align: center;
-}
-
-.circlecolor {
-  background-color: #0060b5;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-}
-
-.circletext {
-  line-height: 22px;
-}
-
-.marker {
-  height: 22px;
-  width: 22px;
-}
-
-div::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  /**/
-}
-
-div::-webkit-scrollbar-track {
-  background: rgb(239, 239, 239);
-  border-radius: 2px;
-}
-
-div::-webkit-scrollbar-thumb {
-  background: #bfbfbf;
-  border-radius: 10px;
-}
-
-div::-webkit-scrollbar-thumb:hover {
-  background: #333;
-}
-
-div::-webkit-scrollbar-corner {
-  background: #179a16;
 }
 </style>

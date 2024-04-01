@@ -10,7 +10,7 @@
             p-id="2399"></path>
         </svg>
       </div>
-      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px">戻る</div>
+      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px" :class="$store.state.theme === 'black' ? 'light' : 'black'">戻る</div>
     </div>
     <div class="sensor">
       <div class="center">
@@ -590,5 +590,12 @@ div::-webkit-scrollbar-thumb:hover {
 
 div::-webkit-scrollbar-corner {
   background: #179a16;
+}
+.black {
+    color: #0a1720;
+}
+
+.light {
+    color: white
 }
 </style>
