@@ -2,15 +2,17 @@
   <div class="home">
     <HeadersBox />
     <div style="cursor: pointer; z-index: 999" class="go-back" @click="back">
-      <div style="display: inline-block; position: absolute; left: 20px; top: 30px;display: flex;align-items: center;justify-content: center;">
-        <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2398" width="16" height="16">
+      <div
+        style="display: inline-block; position: absolute; left: 20px; top: 30px;display: flex;align-items: center;justify-content: center;">
+        <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="2398" width="16" height="16">
           <path
             d="M588.468659 257.265591H123.316451L371.227243 58.55359a31.947267 31.947267 0 1 0-39.614611-49.837737l-319.472671 255.578137v11.501016a30.669376 30.669376 0 0 0 0 4.472617v3.194727a30.669376 30.669376 0 0 0 0 4.472617v11.501016l319.472671 255.578137a31.947267 31.947267 0 1 0 40.253556-49.837737L123.316451 321.160125h465.152208C792.292223 321.160125 958.418011 464.283881 958.418011 640.632795s-166.125789 319.47267-369.949352 319.472671H95.841801a31.947267 31.947267 0 0 0 0 63.894534h492.626858C830.628943 1024 1022.312545 852.123703 1022.312545 640.632795s-191.683602-383.367205-433.843886-383.367204z"
-            :fill="$store.state.theme === 'black' ? '#fff':'#36366f'"
-            p-id="2399"></path>
+            :fill="$store.state.theme === 'black' ? '#fff' : '#36366f'" p-id="2399"></path>
         </svg>
       </div>
-      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px" :class="$store.state.theme === 'black' ? 'light' : 'black'">戻る</div>
+      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px"
+        :class="$store.state.theme === 'black' ? 'light' : 'black'">戻る</div>
     </div>
     <div class="main">
       <div class="container-box">
@@ -30,27 +32,24 @@
                   p-id="2413"></path>
               </svg>
             </div>
-            <!-- <div class="searchtext">请输入船名</div> -->
             <input v-model="search" type="text" placeholder="コンテナ番号を入力してください" class="searchtext" />
           </div>
           <div class="searchbutton" @click="shipsearch">検索</div>
         </div>
         <div class="listbox">
           <div class="listtitle">
-            <div class="listone listson">コンテナ番号</div>
-            <div class="listtwo listson">状態</div>
-            <div class="listthree listson">操作</div>
+            <div class="listson">コンテナ番号</div>
+            <div class="listson">状態</div>
+            <div class="listson">操作</div>
           </div>
-
-          <div style="overflow-x: hidden; position: absolute; width: 332px; height: 602px">
-            <div v-for="(item, index) in containerarr" :key="index" class="shipmessage" style="top: 0px">
-              <div class="messageson" style="left: 33px">
+          <div>
+            <div v-for="(item, index) in containerarr" :key="index" class="shipmessage">
+              <div class="messageson">
                 {{ item.number }}
               </div>
-              <div class="messageson" style="left: 196px" :style="getColor(item)"
+              <div class="messageson" :style="getColor(item)"
                 v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
-              <div class="messageson underline" style="left: 271px; cursor: pointer" :data-v="item.number"
-                @click="gosensor">確認</div>
+              <div class="messageson underline" style="cursor: pointer" :data-v="item.number" @click="gosensor">確認</div>
             </div>
           </div>
         </div>
@@ -70,8 +69,7 @@
                 d="M1.51864 12.78C1.01243 14.535 0.506215 16.245 0 18H28.6011C29.1435 15.345 30.3367 12.735 32 10.215C21.948 12.51 11.7514 13.05 1.51864 12.78ZM17.1028 13.86C17.2836 13.86 17.3921 14.04 17.3921 14.22C17.3921 14.445 17.2475 14.58 17.1028 14.58C16.922 14.58 16.8136 14.4 16.8136 14.22C16.8136 14.04 16.922 13.86 17.1028 13.86ZM21.2249 8.235H22.7797C22.9243 8.235 23.0328 8.37 23.0328 8.55V10.215C23.0328 10.395 22.9243 10.53 22.7797 10.53H21.2249C21.0802 10.53 20.9718 10.395 20.9718 10.215V8.55C20.9718 8.37 21.0802 8.235 21.2249 8.235ZM4.80904 8.325H6.36384C6.47232 8.325 6.54463 8.415 6.54463 8.55V9.855C6.54463 9.99 6.47232 10.08 6.36384 10.08H4.80904C4.70056 10.08 4.62825 9.99 4.62825 9.855V8.55C4.62825 8.46 4.70056 8.325 4.80904 8.325ZM7.12316 8.325H8.67797C8.78644 8.325 8.85876 8.415 8.85876 8.55V9.855C8.85876 9.99 8.78644 10.08 8.67797 10.08H7.12316C7.01469 10.08 6.94237 9.99 6.94237 9.855V8.55C6.94237 8.46 7.05085 8.325 7.12316 8.325ZM9.54576 8.325H11.1006C11.209 8.325 11.2814 8.415 11.2814 8.55V9.855C11.2814 9.99 11.209 10.08 11.1006 10.08H9.54576C9.43729 10.08 9.36497 9.99 9.36497 9.855V8.55C9.32881 8.46 9.43729 8.325 9.54576 8.325ZM14.2102 8.505C14.2463 8.505 14.3186 8.55 14.3548 8.55C14.391 8.595 14.391 8.64 14.391 8.73V11.745C14.391 11.79 14.3548 11.88 14.3548 11.88C14.2825 11.97 14.2463 11.97 14.2102 11.97H13.0893C13.0531 11.97 12.9808 11.925 12.9446 11.925C12.9085 11.88 12.9085 11.835 12.9085 11.79V8.775C12.9085 8.73 12.9446 8.64 12.9446 8.595C12.9808 8.55 13.0169 8.55 13.0893 8.55H14.2102V8.505ZM16.4158 8.235H17.9706C18.1153 8.235 18.2237 8.37 18.2237 8.55V10.215C18.2237 10.395 18.1153 10.53 17.9706 10.53H16.4158C16.2712 10.53 16.1627 10.395 16.1627 10.215V8.55C16.1627 8.37 16.2712 8.235 16.4158 8.235ZM18.8384 8.235H20.4294C20.574 8.235 20.6825 8.37 20.6825 8.55V10.215C20.6825 10.395 20.574 10.53 20.4294 10.53H18.8746C18.7299 10.53 18.6215 10.395 18.6215 10.215V8.55C18.5853 8.37 18.6938 8.235 18.8384 8.235ZM20.0678 13.86C20.2486 13.86 20.3571 14.04 20.3571 14.22C20.3571 14.445 20.2124 14.58 20.0678 14.58C19.887 14.58 19.7785 14.4 19.7785 14.22C19.7785 14.04 19.887 13.86 20.0678 13.86ZM18.6215 13.86C18.8023 13.86 18.9107 14.04 18.9107 14.22C18.9107 14.445 18.7661 14.58 18.6215 14.58C18.4407 14.58 18.3322 14.4 18.3322 14.22C18.3322 14.04 18.4768 13.86 18.6215 13.86ZM2.78418 6.615H11.2452V4.365H11.0644V3.465L10.3051 0H11.896L13.1616 3.105H19.7785V4.365H19.0554L18.5853 6.615H26.5401V8.235H26.4678L26.7209 9.09C27.5164 9 28.3119 8.865 29.1073 8.685C29.9028 8.505 30.6983 8.325 31.4938 8.1L31.6384 8.055V9.855L31.4215 9.9V8.37C31.096 8.46 30.7706 8.55 30.4814 8.64V10.08L30.2644 10.125V8.685C29.939 8.775 29.6497 8.82 29.3243 8.91V10.305L29.1073 10.35V8.955C28.7819 9 28.4927 9.09 28.1672 9.135V10.53L27.9503 10.575V9.18C27.5887 9.225 27.2271 9.315 26.8294 9.36L27.2271 10.71C27.0102 10.755 26.8294 10.8 26.6124 10.8L26.3232 9.81L26.1785 10.89L25.9616 10.935L26.2147 9.315L25.9254 8.28H23.9006V11.295C20.8271 11.745 17.7537 12.015 14.6441 12.195C14.7164 12.105 14.7525 11.97 14.7525 11.79V8.775C14.7525 8.595 14.7164 8.46 14.6079 8.37C14.5356 8.28 14.391 8.19 14.2825 8.19H13.1616C13.0169 8.19 12.9085 8.235 12.8362 8.37C12.7638 8.46 12.6915 8.64 12.6915 8.775V11.79C12.6915 11.97 12.7277 12.105 12.8362 12.195L12.9085 12.285C10.0158 12.42 7.12316 12.465 4.19435 12.42H3.65198C3.25424 12.42 2.8565 12.42 2.45876 12.375L3.32655 8.28H2.92881V6.615H2.78418ZM12.113 6.615H13.7401V4.365H12.113V6.615ZM14.391 6.615H16.1627V4.365H14.391V6.615ZM16.8136 6.615H17.9706L18.4407 4.365H16.8136V6.615Z"
                 :fill="theme === 'black' ? '#fff' : '#36366f'" />
             </svg>
-            <span
-              style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;width: 172px;display: inline-block;"
+            <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;display: inline-block;"
               :title="receive">船舶名：{{ this.receive }}</span>
           </div>
           <span>移動</span>
@@ -111,22 +109,6 @@
             <img src="../assets/Check.svg" alt="" />
             <span>到达港：{{ Trajectorydata.delivery?.name }}</span>
           </div>
-          <!-- <div>
-            <div>
-              <div>
-                <div>到达</div>
-                <div>2023-12-12 21:00(周一)</div>
-              </div>
-              <div>
-                <div>停泊</div>
-                <div>2023-12-13 21:00(周二)</div>
-              </div>
-              <div>
-                <div>卸货</div>
-                <div>2023-12-14 21:00(周三)</div>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -185,8 +167,8 @@ export default {
       patharr: [],
       start: [],
       end: [],
-      locationdata:locationdata,
-      msi:'',
+      locationdata: locationdata,
+      msi: '',
 
     };
   },
@@ -225,7 +207,7 @@ export default {
       //     this.end.push({ coures: item.course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.posTime })
       //   }
       // });
-      
+
       console.log(this.receive, "接收的船名");
 
       this.ship.forEach((item) => {
@@ -238,10 +220,10 @@ export default {
           }
           // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
           this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
-          this.msi=item.mmsi
+          this.msi = item.mmsi
         }
       });
-      console.log(this.msi,'点击货船的mmsi');
+      console.log(this.msi, '点击货船的mmsi');
 
       console.log(this.shipnamearr, "船只数据");
       this.ship.forEach((item) => {
@@ -250,27 +232,27 @@ export default {
         }
       });
       console.log(this.Trajectoryinformation, "右侧信息");
-      console.log(this.locationdata,"所有定位信息");
+      console.log(this.locationdata, "所有定位信息");
       this.locationdata.forEach((item) => {
-      if(this.msi==item.mmsi){
-        for(let i=0;i<item.data.length;i++){
-          const latDecimal = item.data[i].lat / 1e6;
-        const lonDecimal = item.data[i].lon / 1e6;
-        // console.log(latDecimal);
+        if (this.msi == item.mmsi) {
+          for (let i = 0; i < item.data.length; i++) {
+            const latDecimal = item.data[i].lat / 1e6;
+            const lonDecimal = item.data[i].lon / 1e6;
+            // console.log(latDecimal);
 
-        const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
+            const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
 
-        this.path.push({ coures: item.data[i].course, location: location, posTime: item.data[i].posTime });
+            this.path.push({ coures: item.data[i].course, location: location, posTime: item.data[i].posTime });
 
 
-        if (i == 0) {
-          this.start.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+            if (i == 0) {
+              this.start.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+            }
+            if (i == item.data.length - 1) {
+              this.end.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+            }
+          }
         }
-        if (i == item.data.length - 1) {
-          this.end.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
-        }
-        }
-      }
       });
       console.log(this.start, this.end);
       console.log(this.path, "船舶路线");
@@ -479,134 +461,111 @@ export default {
 };
 </script>
 <style scoped>
-.home {
-  position: relative;
-  overflow: hidden;
-  background-color: #1e6ba3;
-  color: #ffffff;
-  width: 1920px;
-  height: 945px;
-}
-
 .main {
   position: absolute;
-  top: 114px;
-  /* padding:0 24px; */
+  top: 70px;
+  display: flex;
+  width: 100%;
+  height: calc(100% - 70px);
+  align-items: center;
+  justify-content: space-between;
+  padding: 1%;
+  box-sizing: border-box;
 }
 
-.main>div {
-  display: inline-block;
-}
-
-.leftbox {
-  width: 380px;
-  height: 329px;
-  flex-shrink: 0;
-
-  border: 1px solid #98e7fc;
-  background-color: #031027;
-
-  line-height: 1;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll;
+.container-box {
+  width: 21%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid #98E7FC;
+  box-sizing: border-box;
+  padding: 0.5% 0.2%;
 }
 
 .maincenter {
-  align-self: flex-end;
-  /* background-image: url(../assets/ditu.png); */
-  width: 1062px;
-  height: 774px;
-  flex-shrink: 0;
-  position: relative;
-  top: 0;
-}
-
-.leftbotbox {
-  /* padding-top: 16px; */
-  width: 378.01px;
-  height: 361px;
-  flex-shrink: 0;
-  border: 1px solid #98e7fc;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll;
-  margin: 24px 0;
-}
-
-.mainleft {
-  padding: 0 23px;
+  width: 55%;
+  height: 100%;
 }
 
 .leftboxtitle {
-  width: 348px;
+  width: 97%;
   height: 30px;
-  flex-shrink: 0;
-  /* margin-top: 16px */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 3%;
   background: linear-gradient(270deg, rgba(47, 186, 255, 0) 0%, rgba(77, 210, 255, 0.8) 63.77%, rgba(84, 216, 255, 0.8) 86.69%, rgba(92, 222, 255, 0) 100%);
-  margin: 16px 16px 16px 16px;
-  position: relative;
 }
 
 .lefttext {
-  position: absolute;
+  margin-left: 3%;
   color: #fff;
   font-family: "Microsoft YaHei";
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
-  letter-spacing: 2px;
-  top: 6px;
-  left: 32px;
-}
-
-.arrows {
-  width: 8px;
-  height: 12px;
-  position: absolute;
-  top: 8px;
-  left: 12px;
 }
 
 .shiplegend {
-  position: absolute;
-  top: 78px;
-  padding: 0 54px;
   color: #fff;
-  height: 12px;
   font-family: "Microsoft YaHei";
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 12px;
-  /* 85.714% */
+  width: 90%;
+  margin: 3% auto;
 }
 
 .shiplegend>div {
   display: inline-block;
 }
 
-.arrows1 {
-  width: 8px;
-  height: 12px;
-  position: absolute;
-  top: 4px;
-  left: 12px;
-}
-
 .shipsearch {
-  width: 332px;
+  width: 97%;
   height: 30px;
-  margin-left: 22px;
+  margin: 3% auto;
+  display: flex;
   border: 0.8px solid rgba(255, 255, 255, 0.36);
   background: rgba(255, 255, 255, 0.12);
-  position: relative;
+}
+
+.searchdiv {
+  width: 76%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.searchimg {
+  width: 10%;
+  height: 30px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchimg svg {
+  width: 18px;
+  height: 18px;
+}
+
+.searchtext {
+  width: 93%;
+  height: 26px;
+  background: #031027;
+  opacity: 0.3;
+  color: #fff;
+  font-weight: bold;
 }
 
 .searchbutton {
-  width: 82px;
+  width: 24%;
   height: 30px;
   background-color: #15517a;
-  position: absolute;
-  right: 0;
-  top: 0;
   text-align: center;
   line-height: 30px;
   color: #fff;
@@ -617,84 +576,49 @@ export default {
   font-weight: 400;
 }
 
-.searchdiv {
-  position: relative;
-}
-
-.searchtext {
-  position: absolute;
-  left: 36px;
-  top: -1px;
-  height: 26px;
-
-  width: 206px;
-  background: #031027;
-  opacity: 0.3;
-  color: #fff;
-}
-
-.searchimg {
-  position: absolute;
-  top: 7px;
-  left: 11px;
-  width: 18px;
-  height: 18px;
-  opacity: 0.8;
-}
-
-.searchimg svg {
-  width: 18px;
-  height: 18px;
-}
-
 .listbox {
-  width: 332px;
-  position: relative;
-  margin-left: 22px;
-  margin-top: 14px;
+  width: 97%;
+  margin: 0 auto;
 }
 
 .listtitle {
-  width: 332px;
+  width: 100%;
   height: 32px;
-  flex-shrink: 0;
   background-color: rgba(47, 186, 255, 0.25);
-  fill: #fff;
-  stroke-width: 1px;
-  stroke: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .listson {
-  display: inline-block;
-  position: absolute;
-  top: 6px;
+  color: #fff;
+  width: 33%;
+  font-size: 14px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shipmessage {
+  width: 100%;
+  margin: 2% 0;
+  display: flex;
   color: #fff;
   font-size: 14px;
   opacity: 0.8;
 }
 
-.listone {
-  left: 33px;
-}
-
-.listtwo {
-  left: 196px;
-}
-
-.listthree {
-  left: 271px;
-}
-
-.shipmessage {
-  position: relative;
-  height: 31px;
-  line-height: 31px;
-}
-
 .messageson {
-  position: absolute;
-  font-size: 14px;
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
   opacity: 0.8;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
 }
 
 .active {
@@ -705,75 +629,120 @@ export default {
   text-decoration: underline;
 }
 
-.foot {
-  position: relative;
-  top: 810px;
-  height: 300px;
-  padding: 0 26px;
-}
-
-.ftleft {
-  position: absolute;
-  bottom: 24px;
-  width: 924px;
-  height: 260px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll;
-  background: #031027;
-  margin-bottom: 24px;
-  border: 1px solid #98e7fc;
-}
-
-.ftright {
-  position: absolute;
-  right: 26px;
-  bottom: 24px;
-  width: 924px;
-  height: 260px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll;
-  background: #031027;
-  margin-bottom: 24px;
-  border: 1px solid #98e7fc;
-}
-
-.linespan {
-  position: absolute;
-  right: 41px;
-  top: 139px;
-  font-size: 14px;
-}
-
-.circle {
-  width: 32px;
+.title {
+  width: 94%;
   height: 32px;
+  display: flex;
+  box-sizing: border-box;
+  margin: 3%;
+  background-color: #2FBAFF3F;
+  color: white;
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  font-weight: 400;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title>div {
+  display: flex;
+  align-items: center;
+}
+
+.title>div>span {
+  margin-left: 10px;
+}
+
+.title>span {
+  margin-right: 10px;
+}
+
+.titleSec {
+  width: 94%;
+  margin: 0 3%;
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding-bottom:2%;
+  border-bottom:1px solid #d0d0d0;
+}
+.titleSec>div{
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+.titleSec>div:nth-child(2){
+  margin: 0 1%;
+}
+.listArticle {
+  box-sizing: border-box;
+  margin: 3%;
+  padding: 0 1%;
+  height: 90%;
+  overflow: auto;
+  color: white;
+  font-size: 16px;
+}
+
+.listArticle>div:nth-child(1) {
+  display: flex;
+  align-items: center;
+}
+
+.listArticle>div:nth-child(1)>img {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
-  fill: rgba(0, 96, 181, 0.28);
-  background-image: url(../assets/yuan.svg);
-  background-size: cover;
-  filter: drop-shadow(0px 0px 7.3px rgba(0, 96, 181, 0.65));
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: rgba(0, 96, 181, 0.65);
-  border-radius: 50%;
-
-  font-size: 10px;
-
-  text-align: center;
+  margin-right: 1%;
 }
 
-.circlecolor {
-  background-color: #0060b5;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  position: absolute;
-  top: 5px;
-  left: 5px;
+.listArticle>div:nth-child(2) {
+  height: 3%;
+  border-left: 1px solid #2ce7e7;
+  margin-left: 3%;
 }
 
-.circletext {
-  line-height: 22px;
+.listArticle>div:nth-child(3) {
+  display: flex;
+  align-items: center;
 }
+
+.listArticle>div:nth-child(3)>img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-right: 1%;
+}
+
+.listArticle>div:nth-child(4) {
+  border-left: 1px solid #2ce7e7;
+  margin-left: 3%;
+}
+
+.listArticle>div:nth-child(4)>div {
+  padding: 1% 4%;
+}
+
+.listArticle>div:nth-child(4)>div>div {
+  height: 18px;
+  padding: 4% 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listArticle>div:nth-child(5) {
+  display: flex;
+  align-items: center;
+}
+
+.listArticle>div:nth-child(5)>img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-right: 1%;
+}
+
 
 .marker {
   height: 22px;
@@ -804,165 +773,3 @@ div::-webkit-scrollbar-corner {
   background: #179a16;
 }
 </style>
-
-<style lang="scss" scoped>
-.main {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.container-box {
-  flex-shrink: 0;
-  width: 378px;
-  height: 774px;
-  background: rgba(0, 0, 0, 0.2) none repeat scroll;
-  border: 1px solid #98e7fc;
-  box-sizing: border-box;
-}
-
-.title {
-  margin: 20px 16px;
-  width: 348px;
-  height: 32px;
-  background-color: #2fbaff3f;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.title>div>span {
-  margin: 0 15px;
-}
-
-.titleSec {
-  width: 348px;
-  margin: 20px 16px;
-  font-size: 14px;
-  height: 32px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #ebebeb;
-}
-
-.titleSec>div {
-  display: flex;
-  flex-direction: column;
-}
-
-.titleSec>div>img {
-  width: 60px;
-  height: 8.8px;
-  margin: 0 10px;
-}
-
-.listArticle {
-  box-sizing: border-box;
-  margin: 20px 16px;
-  padding: 0 15px;
-  height: 544px;
-  overflow: auto;
-}
-
-.listArticle>div:nth-child(1) {
-  display: flex;
-  align-items: center;
-}
-
-.listArticle>div:nth-child(1)>img {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  margin-right: 15px;
-}
-
-.listArticle>div:nth-child(2) {
-  height: 26px;
-  border-left: 1px solid #2ce7e7;
-  margin-left: 10px;
-}
-
-.listArticle>div:nth-child(3) {
-  display: flex;
-  align-items: center;
-}
-
-.listArticle>div:nth-child(3)>img {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  margin-right: 15px;
-}
-
-.listArticle>div:nth-child(4) {
-  border-left: 1px solid #2ce7e7;
-  margin-left: 10px;
-}
-
-.listArticle>div:nth-child(4)>div {
-  margin: 20px 29px;
-}
-
-.listArticle>div:nth-child(4)>div>div {
-  height: 18px;
-  padding: 10px 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.listArticle>div:nth-child(5) {
-  display: flex;
-  align-items: center;
-}
-
-.listArticle>div:nth-child(5)>img {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  margin-right: 15px;
-}
-
-.listArticle>div:nth-child(6) {
-  border-left: 1px solid #d0d0d0;
-  margin-left: 10px;
-}
-
-.listArticle>div:nth-child(6)>div {
-  margin: 20px 29px;
-}
-
-.listArticle>div:nth-child(6)>div>div {
-  height: 18px;
-  padding: 10px 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.back {
-  position: absolute;
-  left: 30px;
-  top: 25px;
-}
-
-.black {
-    color: #0a1720;
-}
-
-.light {
-    color: white
-}
-
-.amap-marker-content {
-  width: 22px !important;
-  /* 设置宽度 */
-  height: 22px !important;
-  /* 设置高度 */
-}
-
-//     /deep/ .amap-marker-content {
-//     width: 100px;
-//     height: 100px;
-// }</style>
