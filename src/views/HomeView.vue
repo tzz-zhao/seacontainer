@@ -451,6 +451,15 @@ export default {
 body {
   overflow-x: auto;
 }
+.box{
+
+ position: relative;
+ overflow: hidden;
+ background-color: #1e6ba3;
+ color: #ffffff;
+ width: 1920px;
+ height: 945px;
+}
 .main {
   position: absolute;
   top: 114px;
