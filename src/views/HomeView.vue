@@ -514,9 +514,12 @@ body {
 }
 
 .searchimg {
-  width: 7%;
-  height: 18px;
+  width: 10%;
+  height: 30px;
   opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .searchtext {
