@@ -344,13 +344,13 @@ export default {
           console.log(this.end[0]?.location, '终点');
           var startMarker = new AMap.Marker({
             position: this.start[0]?.location, // 起点经纬度坐标
-            content: `<div style="width:30px;font-size:15px;background:blue;color">起点<div>`,
+            content: `<div style="width:30px;font-size:15px;background:#84AF9B;color">起点<div>`,
             title: '起点', // 起点标识文本
             // offset: new AMap.Pixel(0, 0),
           });
           var endMarker = new AMap.Marker({
             position: this.end[0]?.location, // 终点经纬度坐标
-            content: `<div style="width:30px;font-size:15px;background:blue;color:#000;">终点<div>`,
+            content: `<div style="width:30px;font-size:15px;background:#84AF9B;">终点<div>`,
             title: '终点',// 终点标识文本
             // offset: new AMap.Pixel(0, -50),
           });
