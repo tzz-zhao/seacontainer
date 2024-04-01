@@ -241,7 +241,7 @@ export default {
                         color: "white",
                     },
                     axisLabel: {
-                        //x轴文字的配置
+                        //y轴文字的配置
                         show: true,
                         textStyle: {
                             color: "white",
@@ -254,7 +254,7 @@ export default {
                 visualMap: {
                     type: "piecewise",
                     show: false,
-                    seriesIndex: 0,
+                    hoverLink:false,
                     pieces: [
                         {
                             gt: item.pieces.gt,
@@ -264,7 +264,7 @@ export default {
                         {
                             lt: item.pieces.gt,
                             glt: -100,
-                            color: 'hwb(211 22% 43% / 0.5)'
+                            color: 'rgba(57, 100, 145, 0.5)'
                         }
                     ],
                 },
@@ -312,7 +312,6 @@ export default {
                     }
                 });
             });
-            console.log(this.echartsData, "11111111111");
         },
         //导出按钮
         Deriver() {
