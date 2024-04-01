@@ -458,7 +458,7 @@ body {
  background-color: #1e6ba3;
  color: #ffffff;
  width: 1920px;
- height: 945px;
+ height: 100%;
 }
 .main {
   position: absolute;
