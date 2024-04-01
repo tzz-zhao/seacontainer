@@ -70,7 +70,7 @@
                 <div class="messageson">
                   {{ item.dest }}
                 </div>
-                <div class="messageson underline" @click="look" :data-v="item.name" style="cursor: pointer;">確認</div>
+                <div class="messageson underline" @click="lookship" :data-v="item.name" style="cursor: pointer;">確認</div>
               </div>
             </div>
           </div>
@@ -400,6 +400,11 @@ export default {
       console.log(e.target.dataset.v);
       console.log(e.target.dataset.con);
       this.$router.push({ path: "/about", query: { name: e.target.dataset.v,con:e.target.dataset.con } });
+    },
+    lookship(e){
+      console.log(e.target.dataset.v);
+      
+      this.$router.push({ path: "/ship", query: { name: e.target.dataset.v } });
     },
     getSensor() {
       const data = JSON.parse(JSON.stringify(this.sensor))
