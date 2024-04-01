@@ -88,6 +88,7 @@
           <div class="ListTitle">
             <div>No</div>
             <div>船舶名</div>
+            <div>集装箱号</div>
             <div>時間</div>
             <div>種類</div>
             <div>操作</div>
@@ -140,7 +141,7 @@
               <div>行き先</div>
               <div>操作</div>
             </div>
-            <div style="overflow: auto;height: 250px;">
+            <div style="overflow: auto;height: 240px;">
               <div class="hull" v-for="(item, index) in freightarr" :key="index">
                 <div>
                   {{ item.billNumber }}
@@ -579,9 +580,11 @@ body {
 
 .shipmessage {
   width: 100%;
-  height: 31px;
-  line-height: 31px;
+  margin: 1% 0;
   display: flex;
+}
+.shipmessage>div:nth-child(1){
+  display: block;
 }
 
 .messageson {
@@ -607,24 +610,16 @@ body {
 }
 
 .ListTitle>div {
-  width: 10%;
+  width: 20%;
   color: #fff;
   font-size: 14px;
   opacity: 0.8;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.shipclass>div>div {
-  width: 10%;
-}
-
-.ListTitle>div:nth-child(2),
-.ListTitle>div:nth-child(3),
-.shipclass>div>div:nth-child(2),
-.shipclass>div>div:nth-child(3) {
-  width: 35%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
 }
 
 .shipclass {
@@ -643,6 +638,7 @@ body {
 }
 
 .shipclass>div>div {
+  width: 20%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -650,7 +646,23 @@ body {
   white-space: nowrap;
   overflow: hidden
 }
-
+.shipclass>div>div:nth-child(1),.ListTitle>div:nth-child(1){
+  width: 8%;
+}
+.ListTitle>div:nth-child(2),.ListTitle>div:nth-child(3){
+  width: 25%;
+}
+.shipclass>div>div:nth-child(2),.shipclass>div>div:nth-child(3){
+  width: 25%;
+  display: block;
+}
+.shipclass>div>div:nth-child(4),.ListTitle>div:nth-child(4){
+  width: 20%;
+}
+.ListTitle>div:nth-child(5),.ListTitle>div:nth-child(6),
+.shipclass>div>div:nth-child(5),.shipclass>div>div:nth-child(6){
+  width: 10%;
+}
 .hullNumber {
   width: 100%;
   height: 32px;
@@ -668,11 +680,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
 }
 
 .hull {
   width: 100%;
-  height: 31px;
+  margin: 1% 0;
   font-size: 10px;
   color: white;
   display: flex;
@@ -684,6 +699,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
 }
 
 .underline {
