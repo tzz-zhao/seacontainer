@@ -93,7 +93,7 @@
             <div>操作</div>
           </div>
           <div class="shipclass">
-            <div v-for="(item, index) in containerList.filter((p) => p.status !== 0)" :key="index">
+            <div v-for="(item, index) in sensor.filter((p) => p.status !== 0)" :key="index">
               <div style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
                 {{ index + 1 }}
               </div>
@@ -101,13 +101,13 @@
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
               <div>
-                {{ item.date.split(":")[0] + ":" + item.date.split(":")[1] }}
+                <!-- {{ item.date.split(":")[0] + ":" + item.date.split(":")[1] }} -->
               </div>
               <div>
                 <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2"
                   style="color: red">異常</span>
               </div>
-              <div style="cursor: pointer" @click="sensoralarm" :data-v="item.containerNumber">
+              <div style="cursor: pointer" @click="sensoralarm" :data-v="item.equipmentName">
                 確認
               </div>
             </div>
@@ -204,7 +204,7 @@ export default {
 
     sensoralarm(e) {
       console.log(e.target.dataset.v);
-      this.$router.push({ path: "conter", query: { name: e.target.dataset.v } });
+      this.$router.push({ path: "comparison", query: { name: e.target.dataset.v } });
     },
     datasearch() {
       // this.freightarr = this.freighttrack;

@@ -30,6 +30,11 @@ const routes = [
     path:'/comparison',
     name:'comparison',
     component:()=>import('../views/ComparisonView.vue')
+  },
+  {
+    path:'/ship',
+    name:'ship',
+    component:()=>import('../views/ShipView.vue')
   }
 ]
 
