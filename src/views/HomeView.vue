@@ -61,7 +61,7 @@
 
             <div>
               <div class="shipmessage" v-for="(item, index) in shipnamearr" :key="index">
-                <div class="messageson">
+                <div class="messageson" style="margin-left: 10px;">
                   {{ item.name }}
                 </div>
                 <div class="messageson">
@@ -606,6 +606,7 @@ body {
   width: 100%;
   margin: 1% 0;
   display: flex;
+  line-height: 25px;
 }
 
 .shipmessage>div:nth-child(1) {
@@ -730,6 +731,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 25px
 }
 
 .hull>div {
