@@ -591,7 +591,7 @@
         "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-28 15:00:00",
         "value": false,
-        "status": 0
+        "status": 1
     },
     {
         "equipmentId": 4,
@@ -789,6 +789,6 @@
         "containerNumber": "WHSU6844788",
         "updateTime": "2024-03-28 15:00:00",
         "value": 0.2,
-        "status": 0
+        "status": 1
     }
 ]

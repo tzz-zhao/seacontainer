@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     back() {
-      if (typeof this.name == "undefined") {
+      if (typeof this.last == "undefined") {
         this.$router.push("/");
       } else {
         this.$router.push({ path: "/conter", query: { name: this.now, last: this.last } });

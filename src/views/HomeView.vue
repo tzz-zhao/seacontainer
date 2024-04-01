@@ -94,15 +94,19 @@
             <div>操作</div>
           </div>
           <div class="shipclass">
-            <div v-for="(item, index) in sensor.filter((p) => p.status !== 0)" :key="index">
+            <!-- sensor.filter((p) => p.status !== 0) -->
+            <div v-for="(item, index) in getSensor()" :key="index">
               <div style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
                 {{ index + 1 }}
               </div>
-              <div :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel">
+              <div :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel" style="margin-left:18px ;">
                 {{ freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel }}
               </div>
+              <div :title="freighttrack.find((p) => p.containerNumber === item.containerNumber)?.vessel">
+                {{ item.containerNumber }}
+              </div>
               <div>
-                <!-- {{ item.date.split(":")[0] + ":" + item.date.split(":")[1] }} -->
+                {{  item.updateTime.split("-")[1]+ '-'+item.updateTime.split("-")[2] }}
               </div>
               <div>
                 <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2"
@@ -396,6 +400,20 @@ export default {
       console.log(e.target.dataset.v);
       this.$router.push({ path: "/about", query: { name: e.target.dataset.v } });
     },
+    getSensor() {
+      const data = JSON.parse(JSON.stringify(this.sensor))
+      const sortedData = data.sort((a, b) => new Date(b.updateTime) - new Date(a.updateTime));
+      const filteredData = sortedData.reduce((acc, currentValue) => {
+        const existingItem = acc.find(item => item.equipmentId === currentValue.equipmentId);
+        if (!existingItem) {
+          acc.push(currentValue);
+        }
+        return acc;
+      }, []);
+      console.log('filteredData ==>',filteredData);
+
+      return filteredData.filter(p => p.status !== 0)
+    }
   },
   mounted() {
     // this.$nextTick(() => {
@@ -583,7 +601,8 @@ body {
   margin: 1% 0;
   display: flex;
 }
-.shipmessage>div:nth-child(1){
+
+.shipmessage>div:nth-child(1) {
   display: block;
 }
 
@@ -646,23 +665,35 @@ body {
   white-space: nowrap;
   overflow: hidden
 }
-.shipclass>div>div:nth-child(1),.ListTitle>div:nth-child(1){
+
+.shipclass>div>div:nth-child(1),
+.ListTitle>div:nth-child(1) {
   width: 8%;
 }
-.ListTitle>div:nth-child(2),.ListTitle>div:nth-child(3){
+
+.ListTitle>div:nth-child(2),
+.ListTitle>div:nth-child(3) {
   width: 25%;
 }
-.shipclass>div>div:nth-child(2),.shipclass>div>div:nth-child(3){
+
+.shipclass>div>div:nth-child(2),
+.shipclass>div>div:nth-child(3) {
   width: 25%;
   display: block;
 }
-.shipclass>div>div:nth-child(4),.ListTitle>div:nth-child(4){
+
+.shipclass>div>div:nth-child(4),
+.ListTitle>div:nth-child(4) {
   width: 20%;
 }
-.ListTitle>div:nth-child(5),.ListTitle>div:nth-child(6),
-.shipclass>div>div:nth-child(5),.shipclass>div>div:nth-child(6){
+
+.ListTitle>div:nth-child(5),
+.ListTitle>div:nth-child(6),
+.shipclass>div>div:nth-child(5),
+.shipclass>div>div:nth-child(6) {
   width: 10%;
 }
+
 .hullNumber {
   width: 100%;
   height: 32px;
@@ -694,7 +725,8 @@ body {
   align-items: center;
   justify-content: center;
 }
-.hull>div{
+
+.hull>div {
   width: 33%;
   display: flex;
   align-items: center;
