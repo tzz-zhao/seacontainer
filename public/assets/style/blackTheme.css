@@ -9,3 +9,15 @@
   color: #fff;
   /* border: 1px solid transparent !important; */
 }
+
+.go-back {
+  color: #fff !important;
+}
+
+.el-switch-headers span{
+  color: #fff !important;
+}
+
+.el-switch-headers span.is-active span{
+  color: #409EFF !important;
+}

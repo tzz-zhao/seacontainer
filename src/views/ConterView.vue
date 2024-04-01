@@ -1,7 +1,20 @@
 <template>
   <div>
     <HeadersBox> </HeadersBox>
-    <div style="cursor: pointer; z-index: 999" @click="back">
+    <!-- <div style="cursor: pointer; z-index: 999" @click="back">
+            <div
+                style="display: inline-block; position: absolute; left: 20px; top: 30px; display: flex; align-items: center; justify-content: center">
+                <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="2398" width="16" height="16">
+                    <path
+                        d="M588.468659 257.265591H123.316451L371.227243 58.55359a31.947267 31.947267 0 1 0-39.614611-49.837737l-319.472671 255.578137v11.501016a30.669376 30.669376 0 0 0 0 4.472617v3.194727a30.669376 30.669376 0 0 0 0 4.472617v11.501016l319.472671 255.578137a31.947267 31.947267 0 1 0 40.253556-49.837737L123.316451 321.160125h465.152208C792.292223 321.160125 958.418011 464.283881 958.418011 640.632795s-166.125789 319.47267-369.949352 319.472671H95.841801a31.947267 31.947267 0 0 0 0 63.894534h492.626858C830.628943 1024 1022.312545 852.123703 1022.312545 640.632795s-191.683602-383.367205-433.843886-383.367204z"
+                        :fill="$store.state.theme === 'black' ? '#fff' : '#36366f'" p-id="2399"></path>
+                </svg>
+            </div>
+            <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px">戻る</div>
+        </div> -->
+
+    <div style="cursor: pointer; z-index: 999" class="go-back" @click="back">
       <div style="display: inline-block; position: absolute; left: 20px; top: 30px; display: flex; align-items: center; justify-content: center">
         <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2398" width="16" height="16">
           <path
@@ -74,7 +87,7 @@ import sensor from "../static/传感器.json";
 import sensorTimeDate from "../static/传感器日均.json";
 import Papa from "papaparse";
 import HeadersBox from "../components/Headers.vue";
-import { resizeMyCharts } from "../static/echarts自适应.js"
+import { resizeMyCharts } from "../static/echarts自适应.js";
 
 /*sensorarr-传感器列表数据 
 echartsData-面积图数据 
@@ -84,84 +97,128 @@ sensor - 传感器数据
 （name，last） - 跳转传参数据
 */
 export default {
-    data() {
-        return {
-            sensorarr: [],
-            echartsData: [
-                {
-                    title: "温度 ℃",
-                    type: "temperature",
-                    series: { data: [], type: "line" },
-                    xAxisData: [],
-                    yAxis: { name: "°C", type: "value", min: null, max: null, interval: null },
-                    pieces: { gt: 0 },
-                    lineStyle: {},
-                    color: "white"
-                },
-                {
-                    title: "湿度 %",
-                    type: "humidity",
-                    series: { data: [], type: "line" },
-                    xAxisData: [],
-                    yAxis: { name: "%rh", type: "value", min: 0, max: 100, interval: 10 },
-                    pieces: { gt: 80 },
-                    lineStyle: {},
-                    color: "white"
-                },
-                {
-                    title: "開閉",
-                    type: "open",
-                    series: { data: [], type: "line" },
-                    xAxisData: [],
-                    yAxis: { type: "category", data: ["閉", "開"] },
-                    pieces: { gt: 0 },
-                    lineStyle: {},
-                    color: "white"
-                },
-                {
-                    title: "振動 g",
-                    type: "vibration",
-                    series: { data: [], type: "line" },
-                    xAxisData: [],
-                    yAxis: { name: "g", type: "value", min: null, max: null, interval: null },
-                    pieces: { gt: 2 },
-                    lineStyle: {},
-                    color: "white"
-                },
-            ],
-            date: "",
-            time: "",
-            week: "",
-            name: "",
-            last: "",
-            sensordata: sensor,
-            search: "",
+  data() {
+    return {
+      sensorarr: [],
+      echartsData: [
+        {
+          title: "温度 ℃",
+          type: "temperature",
+          series: { data: [], type: "line" },
+          xAxisData: [],
+          yAxis: { name: "°C", type: "value", min: null, max: null, interval: null },
+          pieces: { gt: 0 },
+          lineStyle: {},
+          color: "white",
+        },
+        {
+          title: "湿度 %",
+          type: "humidity",
+          series: { data: [], type: "line" },
+          xAxisData: [],
+          yAxis: { name: "%rh", type: "value", min: 0, max: 100, interval: 10 },
+          pieces: { gt: 80 },
+          lineStyle: {},
+          color: "white",
+        },
+        {
+          title: "開閉",
+          type: "open",
+          series: { data: [], type: "line" },
+          xAxisData: [],
+          yAxis: { type: "category", data: ["閉", "開"] },
+          pieces: { gt: 0 },
+          lineStyle: {},
+          color: "white",
+        },
+        {
+          title: "振動 g",
+          type: "vibration",
+          series: { data: [], type: "line" },
+          xAxisData: [],
+          yAxis: { name: "g", type: "value", min: null, max: null, interval: null },
+          pieces: { gt: 2 },
+          lineStyle: {},
+          color: "white",
+        },
+      ],
+      date: "",
+      time: "",
+      week: "",
+      name: "",
+      last: "",
+      sensordata: sensor,
+      search: "",
+    };
+  },
+  components: { HeadersBox },
+  mounted() {
+    this.transmission();
+    this.name = this.$route.query.name;
+    this.last = this.$route.query.last;
+    this.echartsData.forEach((item) => {
+      this.tempType(item);
+    });
+    this.datadispose();
+    this.currentTime();
+    setInterval(() => {
+      this.currentTime();
+    }, 500);
+  },
+  beforeCreate() {
+    console.log(this.$route.query.name);
+    console.log(this.$route.query.last);
+  },
+  methods: {
+    //导出按钮
+    exportToCSV() {
+      const data = JSON.parse(JSON.stringify(sensorTimeDate));
+      const jsonNewArr = [];
+      data.forEach((item) => {
+        let lineOne;
+        let lineTwo;
+        let lineThree;
+        let lineFour;
+        let lineFive;
+        let lineSix;
+        let lineSeven;
+        for (const key in item) {
+          if (Object.hasOwnProperty.call(item, key)) {
+            if (key === "equipmentId") {
+              lineOne = { 设备编号: item[key] };
+            } else if (key === "equipmentName") {
+              lineTwo = { 设备名称: item[key] };
+            } else if (key === "equipmentType") {
+              lineThree = { 设备类型: item[key] };
+            } else if (key === "containerNumber") {
+              lineFour = { 所属集装箱: item[key] };
+            } else if (key === "updateTime") {
+              lineFive = { 更新时间: item[key] };
+            } else if (key === "value") {
+              lineSix = { 值: item[key] };
+            } else if (key === "status") {
+              lineSeven = { 状态: item[key] };
+            }
+          }
+        }
+        const josnNew = {
+          ...lineOne,
+          ...lineTwo,
+          ...lineThree,
+          ...lineFour,
+          ...lineFive,
+          ...lineSix,
+          ...lineSeven,
+          所属货船: this.$route.query.last,
         };
-    },
-    components: { HeadersBox },
-    mounted() {
-        this.transmission();
-        this.name = this.$route.query.name;
-        this.last = this.$route.query.last;
-        this.echartsData.forEach((item) => {
-            this.tempType(item);
-        });
-        this.datadispose();
-        this.currentTime();
-        setInterval(() => {
-            this.currentTime();
-        }, 500);
-    },
-    beforeCreate() {
-        console.log(this.$route.query.name);
-        console.log(this.$route.query.last);
-    },
-    methods: {
-        //导出按钮
-        exportToCSV() {
-            const data = sensorTimeDate;
+        // console.log(josnNew);
+        jsonNewArr.push(josnNew);
+      });
 
-      const csv = Papa.unparse(data);
+      console.log("data =>", data);
+
+      console.log(Papa);
+      const csv = Papa.unparse(jsonNewArr);
 
       // 调用 saveCSV 方法将数据保存为CSV文件
       this.saveCSV(csv, "data.csv");
@@ -243,176 +300,175 @@ export default {
         }
       }
 
-            this.sensorarr = arr;
-            console.log("search", this.sensorarr);
+      this.sensorarr = arr;
+      console.log("search", this.sensorarr);
+    },
+    tableRowClassName({ row, rowIndex }) {
+      if (rowIndex % 2 === 0 && row) {
+        return "warning-row";
+      } else {
+        return "success-row";
+      }
+    },
+    //面积图函数
+    tempType(item) {
+      var chartDom = document.getElementById(`${item.type}`);
+      var myChart = echarts.init(chartDom);
+      resizeMyCharts(myChart);
+      var option;
+      option = {
+        xAxis: {
+          type: "category",
+          data: item.xAxisData,
+          axisLabel: {
+            //x轴文字的配置
+            show: true,
+            textStyle: {
+              color: item.color,
+            },
+          },
+          axisLine: {
+            show: true,
+            lineStyle: item.lineStyle,
+          },
+          splitLine: {
+            lineStyle: {
+              color: item.color,
+            },
+          },
         },
-        tableRowClassName({ row, rowIndex }) {
-            if (rowIndex % 2 === 0 && row) {
-                return "warning-row";
+        yAxis: {
+          type: item.yAxis.type,
+          name: item.yAxis.name,
+          min: item.yAxis.min,
+          max: item.yAxis.max,
+          interval: item.yAxis.interval,
+          data: item.yAxis.data,
+          nameTextStyle: {
+            color: item.color,
+          },
+          axisLabel: {
+            //y轴文字的配置
+            show: true,
+            textStyle: {
+              color: item.color,
+            },
+          },
+          splitLine: {
+            lineStyle: {
+              color: item.color,
+            },
+          },
+        },
+        visualMap: {
+          type: "piecewise",
+          show: false,
+          hoverLink: false,
+          pieces: [
+            {
+              gt: item.pieces.gt,
+              lte: 100,
+              color: "rgba(250,0,0,0.5)",
+            },
+            {
+              lt: item.pieces.gt,
+              glt: -100,
+              color: "rgba(57, 100, 145, 0.5)",
+            },
+          ],
+        },
+        series: [
+          {
+            data: item.series.data,
+            type: item.series.type,
+            areaStyle: {
+              origin: "start",
+            },
+          },
+        ],
+        grid: {
+          // 让图表占满容器
+          top: "40px",
+          left: "30px",
+          right: "30px",
+          bottom: "20px",
+        },
+      };
+      option && myChart.setOption(option);
+    },
+    //跳转
+    handleClick(row) {
+      this.$router.push({ path: "/comparison", query: { name: row.equipmentName, last: this.last, now: this.name } });
+    },
+    //传导图表数据
+    transmission() {
+      sensorTimeDate.forEach((item) => {
+        this.echartsData.forEach((item1) => {
+          if (item.equipmentType === item1.type) {
+            if (item.value < 0) {
+              item1.lineStyle.color = "red";
+              console.log(item.equipmentName);
             } else {
-                return "success-row";
+              item1.lineStyle.color = "white";
             }
-        },
-        //面积图函数
-        tempType(item) {
-            var chartDom = document.getElementById(`${item.type}`);
-            var myChart = echarts.init(chartDom);
-            resizeMyCharts(myChart)
-            var option;
-            option = {
-                xAxis: {
-                    type: "category",
-                    data: item.xAxisData,
-                    axisLabel: {
-                        //x轴文字的配置
-                        show: true,
-                        textStyle: {
-                            color: item.color,
-                        },
-                    },
-                    axisLine: {
-                        show: true,
-                        lineStyle: item.lineStyle
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: item.color
-                        }
-                    }
-                },
-                yAxis: {
-                    type: item.yAxis.type,
-                    name: item.yAxis.name,
-                    min: item.yAxis.min,
-                    max: item.yAxis.max,
-                    interval: item.yAxis.interval,
-                    data: item.yAxis.data,
-                    nameTextStyle: {
-                        color: item.color,
-                    },
-                    axisLabel: {
-                        //y轴文字的配置
-                        show: true,
-                        textStyle: {
-                            color: item.color,
-                        },
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: item.color
-                        }
-                    }
-                },
-                visualMap: {
-                    type: "piecewise",
-                    show: false,
-                    hoverLink: false,
-                    pieces: [
-                        {
-                            gt: item.pieces.gt,
-                            lte: 100,
-                            color: "rgba(250,0,0,0.5)",
-                        },
-                        {
-                            lt: item.pieces.gt,
-                            glt: -100,
-                            color: 'rgba(57, 100, 145, 0.5)'
-                        }
-                    ],
-                },
-                series: [
-                    {
-                        data: item.series.data,
-                        type: item.series.type,
-                        areaStyle: {
-                            origin: "start",
-                        },
-                    },
-                ],
-                grid: {
-                    // 让图表占满容器
-                    top: "40px",
-                    left: "30px",
-                    right: "30px",
-                    bottom: "20px",
-                },
-            };
-            option && myChart.setOption(option);
-        },
-        //跳转
-        handleClick(row) {
-            this.$router.push({ path: "/comparison", query: { name: row.equipmentName, last: this.last, now: this.name } });
-        },
-        //传导图表数据
-        transmission() {
-            sensorTimeDate.forEach((item) => {
-                this.echartsData.forEach((item1) => {
-                    if (item.equipmentType === item1.type) {
-                        if (item.value < 0) {
-                            item1.lineStyle.color = 'red'
-                            console.log(item.equipmentName);
-                        } else {
-                            item1.lineStyle.color = 'white'
-                        }
-                        if (item.equipmentType == "open") {
-                            item1.series.data.push(item.value ? 1 : 0);
-                        } else if (item.equipmentType == 'humidity') {
-                            item1.series.data.push(item.value * 100)
-                        }
-                        else {
-                            item1.series.data.push(item.value);
-                        }
-                        item1.xAxisData.push(item.updateTime.slice(-5));
-                    }
-                });
-            });
-            console.log(this.echartsData, "66666666666");
-        },
-    },
-    computed: {
-        newtheme() {
-            return this.$store.state.theme
-        }
-    },
-    watch: {
-        newtheme: {
-            handler(val) {
-                if (val == "light") {
-                    this.echartsData.forEach((item) => {
-                        item.color = 'black'
-                        this.tempType(item)
-                    })
-                } else {
-                    this.echartsData.forEach((item) => {
-                        item.color = 'white'
-                        this.tempType(item)
-                    })
-                }
+            if (item.equipmentType == "open") {
+              item1.series.data.push(item.value ? 1 : 0);
+            } else if (item.equipmentType == "humidity") {
+              item1.series.data.push(item.value * 100);
+            } else {
+              item1.series.data.push(item.value);
             }
+            item1.xAxisData.push(item.updateTime.slice(-5));
+          }
+        });
+      });
+      console.log(this.echartsData, "66666666666");
+    },
+  },
+  computed: {
+    newtheme() {
+      return this.$store.state.theme;
+    },
+  },
+  watch: {
+    newtheme: {
+      handler(val) {
+        if (val == "light") {
+          this.echartsData.forEach((item) => {
+            item.color = "black";
+            this.tempType(item);
+          });
+        } else {
+          this.echartsData.forEach((item) => {
+            item.color = "white";
+            this.tempType(item);
+          });
         }
-    }
+      },
+    },
+  },
 };
 </script>
 <style scoped>
 ::v-deep .el-table td.el-table__cell {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 ::v-deep .el-table th.el-table__cell.is-leaf {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 ::v-deep .el-table::before {
-    display: none;
+  display: none;
 }
 
 .sensor {
-    background-color: #0e457b;
-    height:calc(100vh - 114px);;
-    width: 100%;
-    position: absolute;
-    top: 114px;
-    display: flex;
+  background-color: #0e457b;
+  height: calc(100vh - 114px);
+  width: 100%;
+  position: absolute;
+  top: 114px;
+  display: flex;
 }
 
 .center {
@@ -426,13 +482,13 @@ export default {
 }
 
 .left-list {
-    width: 27%;
-    height: 90%;
-    border: 1px solid #98e7fc;
-    background: #07365d;
-    opacity: 0.6px;
-    box-sizing: border-box;
-    padding: 1%;
+  width: 27%;
+  height: 90%;
+  border: 1px solid #98e7fc;
+  background: #07365d;
+  opacity: 0.6px;
+  box-sizing: border-box;
+  padding: 1%;
 }
 
 .title {

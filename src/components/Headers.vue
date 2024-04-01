@@ -15,7 +15,7 @@
       </div>
       
       
-      <el-switch @change="changeHandler" style="position: absolute; right: 50px; bottom: 0" v-model="themeText" active-text="深" inactive-text="浅"> </el-switch>
+      <el-switch @change="changeHandler" class="el-switch-headers" style="position: absolute; right: 50px; bottom: 0" v-model="themeText" active-text="深" inactive-text="浅"> </el-switch>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
       //this.date = strDate;
       var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
 
-      var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      var week = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"];
       var strDate1 = year + "/" + dateArr[0] + "/" + dateArr[1];
       var date1 = new Date(strDate1);
       let w = week[date1.getDay()];
