@@ -61,7 +61,7 @@ export default {
       if (typeof this.last == "undefined") {
         this.$router.push("/");
       } else {
-        this.$router.push({ path: "/conter", query: { name: this.now, last: this.last } });
+        this.$router.push({ path: "/conter", query: { name: this.now, last: this.last ,con:this.$route.query.con} });
       }
     },
     tempType(item) {

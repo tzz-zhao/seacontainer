@@ -153,7 +153,7 @@
                 <div>
                   {{ item.pod }}
                 </div>
-                <div class="underline" style="cursor:pointer;" @click="look" :data-v="item.vessel">確認</div>
+                <div class="underline" style="cursor:pointer;" @click="look" :data-v="item.vessel" :data-con="item.containerNumber">確認</div>
               </div>
             </div>
           </div>
@@ -398,7 +398,8 @@ export default {
     },
     look(e) {
       console.log(e.target.dataset.v);
-      this.$router.push({ path: "/about", query: { name: e.target.dataset.v } });
+      console.log(e.target.dataset.con);
+      this.$router.push({ path: "/about", query: { name: e.target.dataset.v,con:e.target.dataset.con } });
     },
     getSensor() {
       const data = JSON.parse(JSON.stringify(this.sensor))

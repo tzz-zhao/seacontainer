@@ -2,15 +2,17 @@
   <div class="home">
     <HeadersBox />
     <div style="cursor: pointer; z-index: 999" class="go-back" @click="back">
-      <div style="display: inline-block; position: absolute; left: 20px; top: 30px;display: flex;align-items: center;justify-content: center;">
-        <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2398" width="16" height="16">
+      <div
+        style="display: inline-block; position: absolute; left: 20px; top: 30px;display: flex;align-items: center;justify-content: center;">
+        <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="2398" width="16" height="16">
           <path
             d="M588.468659 257.265591H123.316451L371.227243 58.55359a31.947267 31.947267 0 1 0-39.614611-49.837737l-319.472671 255.578137v11.501016a30.669376 30.669376 0 0 0 0 4.472617v3.194727a30.669376 30.669376 0 0 0 0 4.472617v11.501016l319.472671 255.578137a31.947267 31.947267 0 1 0 40.253556-49.837737L123.316451 321.160125h465.152208C792.292223 321.160125 958.418011 464.283881 958.418011 640.632795s-166.125789 319.47267-369.949352 319.472671H95.841801a31.947267 31.947267 0 0 0 0 63.894534h492.626858C830.628943 1024 1022.312545 852.123703 1022.312545 640.632795s-191.683602-383.367205-433.843886-383.367204z"
-            :fill="$store.state.theme === 'black' ? '#fff':'#36366f'"
-            p-id="2399"></path>
+            :fill="$store.state.theme === 'black' ? '#fff' : '#36366f'" p-id="2399"></path>
         </svg>
       </div>
-      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px" :class="$store.state.theme === 'black' ? 'light' : 'black'">戻る</div>
+      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px"
+        :class="$store.state.theme === 'black' ? 'light' : 'black'">戻る</div>
     </div>
     <div class="main">
       <div class="container-box">
@@ -185,8 +187,8 @@ export default {
       patharr: [],
       start: [],
       end: [],
-      locationdata:locationdata,
-      msi:'',
+      locationdata: locationdata,
+      msi: '',
 
     };
   },
@@ -225,7 +227,7 @@ export default {
       //     this.end.push({ coures: item.course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.posTime })
       //   }
       // });
-      
+
       console.log(this.receive, "接收的船名");
 
       this.ship.forEach((item) => {
@@ -238,10 +240,10 @@ export default {
           }
           // this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat] });
           this.shipnamearr.push({ name: item.nameEn, num: num, location: [item.lon, item.lat], flagName: item.flagName, dest: item.dest, status: item.navStatus });
-          this.msi=item.mmsi
+          this.msi = item.mmsi
         }
       });
-      console.log(this.msi,'点击货船的mmsi');
+      console.log(this.msi, '点击货船的mmsi');
 
       console.log(this.shipnamearr, "船只数据");
       this.ship.forEach((item) => {
@@ -250,27 +252,27 @@ export default {
         }
       });
       console.log(this.Trajectoryinformation, "右侧信息");
-      console.log(this.locationdata,"所有定位信息");
+      console.log(this.locationdata, "所有定位信息");
       this.locationdata.forEach((item) => {
-      if(this.msi==item.mmsi){
-        for(let i=0;i<item.data.length;i++){
-          const latDecimal = item.data[i].lat / 1e6;
-        const lonDecimal = item.data[i].lon / 1e6;
-        // console.log(latDecimal);
+        if (this.msi == item.mmsi) {
+          for (let i = 0; i < item.data.length; i++) {
+            const latDecimal = item.data[i].lat / 1e6;
+            const lonDecimal = item.data[i].lon / 1e6;
+            // console.log(latDecimal);
 
-        const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
+            const location = convertToBD09(Number(lonDecimal), Number(latDecimal));
 
-        this.path.push({ coures: item.data[i].course, location: location, posTime: item.data[i].posTime });
+            this.path.push({ coures: item.data[i].course, location: location, posTime: item.data[i].posTime });
 
 
-        if (i == 0) {
-          this.start.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+            if (i == 0) {
+              this.start.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+            }
+            if (i == item.data.length - 1) {
+              this.end.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
+            }
+          }
         }
-        if (i == item.data.length - 1) {
-          this.end.push({ coures: item.data[i].course, location: [Number(lonDecimal), Number(latDecimal)], posTime: item.data[i].posTime })
-        }
-        }
-      }
       });
       console.log(this.start, this.end);
       console.log(this.path, "船舶路线");
@@ -305,7 +307,13 @@ export default {
           });
         }
       });
-
+      // this
+      if (typeof (this.$route.query.con) != 'undefined') {
+        const currentItem = JSON.parse(JSON.stringify([this.containerarr.find(p => p?.number === this.$route.query.con)] || []))
+        console.log('currentItem =>', currentItem);
+        this.containerarr = currentItem
+      }
+      // this.containerarr.splice(,1)
       console.log(this.containerarr, "船只关联货物");
     },
     currentTime() {
@@ -335,7 +343,7 @@ export default {
 
     gosensor(e) {
       console.log(e.target.dataset.v);
-      this.$router.push({ path: "conter", query: { name: e.target.dataset.v, last: this.receive } });
+      this.$router.push({ path: "conter", query: { name: e.target.dataset.v, last: this.receive ,con:this.$route.query.con} });
     },
 
     initAMap() {
@@ -474,7 +482,7 @@ export default {
     }
   },
   beforeCreate() {
-    console.log(this.$route.query.name, "接受信息");
+    console.log(this.$route.query.name, this.$route.query.con, "接受信息");
   },
 };
 </script>
@@ -948,11 +956,11 @@ div::-webkit-scrollbar-corner {
 }
 
 .black {
-    color: #0a1720;
+  color: #0a1720;
 }
 
 .light {
-    color: white
+  color: white
 }
 
 .amap-marker-content {

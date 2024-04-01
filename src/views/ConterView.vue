@@ -286,7 +286,7 @@ export default {
       if (typeof this.last == "undefined") {
         this.$router.push("/");
       } else {
-        this.$router.push({ path: "/about", query: { name: this.last } });
+        this.$router.push({ path: "/about", query: { name: this.last,con:this.$route.query.con } });
       }
     },
     //列表搜索
@@ -398,7 +398,7 @@ export default {
     },
     //跳转
     handleClick(row) {
-      this.$router.push({ path: "/comparison", query: { name: row.equipmentName, last: this.last, now: this.name } });
+      this.$router.push({ path: "/comparison", query: { name: row.equipmentName, last: this.last, now: this.name,con:this.$route.query.con } });
     },
     //传导图表数据
     transmission() {
