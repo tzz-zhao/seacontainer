@@ -26,6 +26,28 @@
   color: #36366f !important;
   background: rgb(238 242 251) !important;
 }
+.ListTitle{
+  color: #36366f !important;
+  background: rgb(238 242 251) !important;
+}
+.ListTitle>div{
+  color: #36366f !important;
+  font-weight: bold
+}
+.hullNumber{
+  color: #36366f !important;
+  background: rgb(238 242 251) !important;
+}
+.hullNumber>div{
+  color: #36366f !important;
+  font-weight: bold
+}
+.shipclass>div{
+  color: #36366f !important;
+}
+.hull{
+  color: #36366f !important;
+}
 
 .listson {
   font-weight: bold;
