@@ -109,7 +109,7 @@
                 {{  item.updateTime.split("-")[1]+ '-'+item.updateTime.split("-")[2] }}
               </div>
               <div>
-                <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2"
+                <span v-if="item.status == 1" style="color: orange">警告</span><span v-if="item.status == 2"
                   style="color: red">異常</span>
               </div>
               <div style="cursor: pointer" @click="sensoralarm" :data-v="item.equipmentName">
@@ -145,7 +145,7 @@
               <div>行き先</div>
               <div>操作</div>
             </div>
-            <div style="overflow: auto;height: 240px;">
+            <div style="overflow: auto;height: 250px;">
               <div class="hull" v-for="(item, index) in freightarr" :key="index">
                 <div>
                   {{ item.billNumber }}
@@ -604,7 +604,7 @@ body {
 
 .shipmessage {
   width: 100%;
-  margin: 1% 0;
+  margin: 3% 0;
   display: flex;
   line-height: 25px;
 }
@@ -711,7 +711,7 @@ body {
 }
 
 .hullNumber>div {
-  width: 33%;
+  width: 31%;
   color: #fff;
   font-size: 14px;
   opacity: 0.8;
@@ -725,23 +725,26 @@ body {
 
 .hull {
   width: 100%;
-  margin: 1% 0;
+  margin: 3% 0;
   font-size: 10px;
   color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   line-height: 25px
 }
 
 .hull>div {
-  width: 33%;
+  width: 31%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden
+}
+.hull>div:nth-child(1){
+  justify-content: flex-start;
 }
 
 .underline {

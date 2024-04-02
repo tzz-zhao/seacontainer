@@ -55,6 +55,17 @@ export default {
     setInterval(() => {
       this.currentTime();
     }, 500);
+    if (this.$store.state.theme == "light") {
+      this.echartsData.forEach((item) => {
+        item.color = "black";
+        this.tempType(item);
+      });
+    } else {
+      this.echartsData.forEach((item) => {
+        item.color = "white";
+        this.tempType(item);
+      });
+    }
   },
   methods: {
     back() {
