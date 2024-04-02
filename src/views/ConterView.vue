@@ -15,15 +15,17 @@
         </div> -->
 
     <div style="cursor: pointer; z-index: 999" class="go-back" @click="back">
-      <div style="display: inline-block; position: absolute; left: 20px; top: 30px; display: flex; align-items: center; justify-content: center">
-        <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2398" width="16" height="16">
+      <div
+        style="display: inline-block; position: absolute; left: 20px; top: 30px; display: flex; align-items: center; justify-content: center">
+        <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="2398" width="16" height="16">
           <path
             d="M588.468659 257.265591H123.316451L371.227243 58.55359a31.947267 31.947267 0 1 0-39.614611-49.837737l-319.472671 255.578137v11.501016a30.669376 30.669376 0 0 0 0 4.472617v3.194727a30.669376 30.669376 0 0 0 0 4.472617v11.501016l319.472671 255.578137a31.947267 31.947267 0 1 0 40.253556-49.837737L123.316451 321.160125h465.152208C792.292223 321.160125 958.418011 464.283881 958.418011 640.632795s-166.125789 319.47267-369.949352 319.472671H95.841801a31.947267 31.947267 0 0 0 0 63.894534h492.626858C830.628943 1024 1022.312545 852.123703 1022.312545 640.632795s-191.683602-383.367205-433.843886-383.367204z"
-            :fill="$store.state.theme === 'black' ? '#fff' : '#36366f'"
-            p-id="2399"></path>
+            :fill="$store.state.theme === 'black' ? '#fff' : '#36366f'" p-id="2399"></path>
         </svg>
       </div>
-      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px" :class="$store.state.theme === 'black' ? 'light' : 'black'">戻る</div>
+      <div style="display: inline-block; position: absolute; left: 39px; top: 28px; margin-left: 5px"
+        :class="$store.state.theme === 'black' ? 'light' : 'black'">戻る</div>
     </div>
     <div class="sensor">
       <div class="center">
@@ -37,17 +39,14 @@
             <button @click="sensorsearch">検索</button>
           </div>
           <div class="list-table">
-            <el-table
-              :data="sensorarr"
-              style="width: 100%"
+            <el-table :data="sensorarr" style="width: 100%"
               :header-cell-style="{ background: $store.state.theme === 'black' ? '#11517C' : '#fff', color: $store.state.theme === 'black' ? 'white' : '#36366f' }"
-              :highlight-current-row="false"
-              :row-class-name="tableRowClassName">
+              :highlight-current-row="false" :row-class-name="tableRowClassName">
               <el-table-column prop="equipmentName" label="センサー名" width="180"> </el-table-column>
               <el-table-column prop="status" label="状態" width="180">
                 <template slot-scope="scope">
                   <span v-if="scope.row.status == 0">正常</span>
-                  <span v-if="scope.row.status == 1" style="color: yellow">警告</span>
+                  <span v-if="scope.row.status == 1" style="color: orange">警告</span>
                   <span v-if="scope.row.status == 2" style="color: red">異常</span>
                 </template>
               </el-table-column>
@@ -116,7 +115,7 @@ export default {
           type: "humidity",
           series: { data: [], type: "line" },
           xAxisData: [],
-          yAxis: { name: "%rh", type: "value", min: 0, max: 100, interval: 10 },
+          yAxis: { name: "%rh", type: "value", min: null, max: null },
           pieces: { gt: 80 },
           lineStyle: {},
           color: "white",
@@ -153,9 +152,11 @@ export default {
   },
   components: { HeadersBox },
   mounted() {
-    this.transmission();
     this.name = this.$route.query.name;
     this.last = this.$route.query.last;
+    if (this.$route.query.name == sensorTimeDate[0].containerNumber) {
+      this.transmission();
+    }
     this.echartsData.forEach((item) => {
       this.tempType(item);
     });
@@ -164,6 +165,17 @@ export default {
     setInterval(() => {
       this.currentTime();
     }, 500);
+    if (this.$store.state.theme == "light") {
+      this.echartsData.forEach((item) => {
+        item.color = "black";
+        this.tempType(item);
+      });
+    } else {
+      this.echartsData.forEach((item) => {
+        item.color = "white";
+        this.tempType(item);
+      });
+    }
   },
   beforeCreate() {
     console.log(this.$route.query.name);
@@ -286,7 +298,7 @@ export default {
       if (typeof this.last == "undefined") {
         this.$router.push("/");
       } else {
-        this.$router.push({ path: "/about", query: { name: this.last,con:this.$route.query.con } });
+        this.$router.push({ path: "/about", query: { name: this.last, con: this.$route.query.con } });
       }
     },
     //列表搜索
@@ -398,7 +410,7 @@ export default {
     },
     //跳转
     handleClick(row) {
-      this.$router.push({ path: "/comparison", query: { name: row.equipmentName, last: this.last, now: this.name,con:this.$route.query.con } });
+      this.$router.push({ path: "/comparison", query: { name: row.equipmentName, last: this.last, now: this.name, con: this.$route.query.con } });
     },
     //传导图表数据
     transmission() {
@@ -422,7 +434,6 @@ export default {
           }
         });
       });
-      console.log(this.echartsData, "66666666666");
     },
   },
   computed: {
@@ -501,7 +512,7 @@ export default {
   padding: 0 3%;
 }
 
-.title > div {
+.title>div {
   width: 0;
   height: 0;
   border-top: 6px solid transparent;
@@ -510,7 +521,7 @@ export default {
   margin-right: 4%;
 }
 
-.title > span {
+.title>span {
   font-family: Microsoft YaHei;
   font-size: 14px;
   font-weight: 700;
@@ -526,7 +537,7 @@ export default {
   margin-top: 18px;
 }
 
-.list-search > input {
+.list-search>input {
   width: 80%;
   height: 28px;
   border: none;
@@ -536,7 +547,7 @@ export default {
   padding: 0 15px;
 }
 
-.list-search > button {
+.list-search>button {
   width: 20%;
   height: 30px;
   background: #15517a;
@@ -551,7 +562,7 @@ export default {
   overflow-x: hidden;
 }
 
-::v-deep .el-table .el-table__body tr:hover > td {
+::v-deep .el-table .el-table__body tr:hover>td {
   background-color: inherit;
   /* 继承父元素背景色或者指定为初始背景色 */
 }
@@ -573,7 +584,7 @@ export default {
   width: 71%;
   height: 90%;
   border: 1px solid #98e7fc;
-  background: #07365d !important;
+  background: #07365d ;
   box-sizing: border-box;
   padding: 1%;
 }
@@ -585,7 +596,7 @@ export default {
   height: 5%;
 }
 
-.echartTitle > button {
+.echartTitle>button {
   width: 70px;
   height: 33px;
   background: linear-gradient(181.25deg, rgba(40, 125, 165, 0) -23.42%, #2499bc 98.94%, #17567c 98.94%);
@@ -603,7 +614,7 @@ export default {
   justify-content: space-evenly;
 }
 
-.echartsTable > div {
+.echartsTable>div {
   width: 48%;
   height: 49%;
   box-sizing: border-box;
@@ -611,7 +622,7 @@ export default {
   padding: 1%;
 }
 
-.echartsTable > div .echartImg {
+.echartsTable>div .echartImg {
   height: 90%;
 }
 
@@ -647,11 +658,12 @@ div::-webkit-scrollbar-thumb:hover {
 div::-webkit-scrollbar-corner {
   background: #179a16;
 }
+
 .black {
-    color: #0a1720;
+  color: #0a1720;
 }
 
 .light {
-    color: white
+  color: white
 }
 </style>

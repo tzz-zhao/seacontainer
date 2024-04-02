@@ -3,6 +3,10 @@
   border: 1px solid transparent !important;
   color: #36366f;
   border-radius: 16px;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .leftbotbox {
@@ -10,48 +14,91 @@
   color: #36366f;
   border: 1px solid transparent !important;
   border-radius: 16px;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .leftboxtitle {
   color: #36366f !important;
   background: #fff !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .lefttext {
   color: #36366f !important;
-
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .listtitle {
   color: #36366f !important;
   background: rgb(238 242 251) !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 .ListTitle{
   color: #36366f !important;
   background: rgb(238 242 251) !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 .ListTitle>div{
   color: #36366f !important;
-  font-weight: bold
+  font-weight: bold;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 .hullNumber{
   color: #36366f !important;
   background: rgb(238 242 251) !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 .hullNumber>div{
   color: #36366f !important;
-  font-weight: bold
+  font-weight: bold;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 .shipclass>div{
   color: #36366f !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 .hull{
   color: #36366f !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .listson {
   font-weight: bold;
   color: #36366f !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .shipsearch {
@@ -74,6 +121,10 @@
 
 .shiplegend {
   color: #36366f !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .container-box {
@@ -83,18 +134,29 @@
 }
 
 .shipmessage {
-  color: #36366f !important;
+  color: black !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .title {
   background: #fff !important;
   color: #36366f !important;
-
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 .listArticle,
 .titleSec {
   color: #36366f !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 /* .title svg {
@@ -107,6 +169,10 @@
   color: #36366f !important;
   border: 1px solid transparent;
   border-radius: 16px;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 .echartsTable div{
   border: 0 !important;
@@ -131,6 +197,10 @@
 .warning-row{
   background-color: #fff !important;
   color: #36366f !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
 }
 
 
