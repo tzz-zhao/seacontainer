@@ -88,14 +88,14 @@
           <div class="ListTitle">
             <div>No</div>
             <div>船舶名</div>
-            <div>集装箱号</div>
+            <div>コンテナ番号</div>
             <div>時間</div>
             <div>種類</div>
             <div>操作</div>
           </div>
           <div class="shipclass">
             <!-- sensor.filter((p) => p.status !== 0) -->
-            <div v-for="(item, index) in getSensor()" :key="index">
+            <div v-for="(item, index) in getSensor()" :key="index" style="">
               <div style="left: 10px; top: 0; height: 100%; display: flex; align-items: center">
                 {{ index + 1 }}
               </div>
@@ -351,7 +351,7 @@ export default {
               console.log(mapEvent.originEvent.target.dataset.id);
               // console.log(mapEvent.target.dom?.getElementsByClassName("marker")[0].getAttribute("data-id"));
               // this.$router.push({ path: "/about", query: { name: mapEvent.target.dom?.getElementsByClassName("marker")[0].getAttribute("data-id") } });
-              this.$router.push({ path: "/about", query: { name: mapEvent.originEvent.target.dataset.id } });
+              this.$router.push({ path: "/ship", query: { name: mapEvent.originEvent.target.dataset.id } });
             });
             marker.on("mouseover", (mapEvent) => {
               if (mapEvent.originEvent.target.className !== "marker") return;
@@ -622,7 +622,8 @@ body {
   opacity: 0.8;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden
+  overflow: hidden;
+  font-size: 12px;
 }
 
 .ListTitle {
@@ -731,7 +732,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  line-height: 25px
+  line-height: 25px;
+  font-size: 12px;
 }
 
 .hull>div {
@@ -749,5 +751,28 @@ body {
 
 .underline {
   text-decoration: underline;
+}
+div::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  /**/
+}
+
+div::-webkit-scrollbar-track {
+  background: rgb(239, 239, 239);
+  border-radius: 2px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #bfbfbf;
+  border-radius: 10px;
+}
+
+div::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+div::-webkit-scrollbar-corner {
+  background: #179a16;
 }
 </style>

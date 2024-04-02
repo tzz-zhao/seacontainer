@@ -64,7 +64,7 @@
               <div></div>
               <span>センサー情報</span>
             </div>
-            <button @click="exportToCSV">出力</button>
+            <button @click="exportToCSV">DL</button>
           </div>
           <div class="echartsTable">
             <div v-for="(item, index) in echartsData" :key="index">
