@@ -356,13 +356,78 @@ export default {
             });
             this.polyline.setMap(this.map);
             var count = 0;
+            var marker = new AMap.Marker({
+              position: this.patharr[0], // 初始位置
+              map: this.map,
+              content: `<img src=${require("../assets/ship.png")} />`,
+              offset: new AMap.Pixel(-32.5, -20),
+            });
+            marker.on("mouseover", (mapEvent) => {
+              if (this.infoWindow) {
+                this.infoWindow.close();
+              }
+              if (mapEvent.originEvent.target.className !== "marker") return;
+              if (this.infoWindow && mapEvent.originEvent.target.dataset.id) {
+                this.infoWindow.close();
+              }
+              var info = [];
+              info.push(`<div style="color:#000;font-size:10px">${mapEvent.originEvent.target.dataset.id}</div>`);
+              this.infoWindow = new AMap.InfoWindow({
+                offset: new AMap.Pixel(11, -9),
+                content: info.join(""), //使用默认信息窗体框样式，显示信息内容
+              });
+              if (mapEvent.originEvent.target.dataset.id) {
+                this.infoWindow.open(this.map, mapEvent.target.getPosition());
+              }
+            });
             var timer = setInterval(() => {
               count++;
               if (count >= this.patharr.length) {
                 clearInterval(timer);
               }
+              // }  else if(count == parseInt(this.patharr.length)/2){
+              //   clearInterval(timer);
+              // }
+              // else {
+                var newPosition = this.patharr[count];
+              //   if (marker) {
+              //     marker.setPosition(newPosition);
+              //   }
+              // }
+
               var path = this.patharr.slice(0, count);
               this.polyline.setPath(path);
+
+              // 增加以下代码用于在路径中间位置停止更新新坐标
+              if (count < parseInt(this.patharr.length / 2)) {
+                if (marker) {
+                  marker.setPosition(newPosition); // 更新标记位置
+                }
+              }
+              // var newPosition = this.patharr[count];
+              // marker.setPosition(newPosition);
+              // for (let i = 0; i < this.shipnamearr.length; i++) {
+              // var marker = new AMap.Marker({
+              // position: this.shipnamearr[0]?.location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+              //   position: this.patharr[count], // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+              //   map: this.map,
+
+              //   content: `<img src=${require("../assets/ship.png")} />`,
+              //   offset: new AMap.Pixel(-32.5, -20),
+              // });
+
+
+              // marker.on('mouseout', () => {
+
+              // this.infoWindow.close();
+
+              // })
+
+              // 将创建的点标记添加到已有的地图实例：
+              this.map.add([marker]);
+              // }
+              this.polyline.setPath(path);
+
             }, 0.01);
           }
 
@@ -388,42 +453,7 @@ export default {
             offset: new AMap.Pixel(-17, -57),
           });
           this.map.add([startMarker, endMarker]);
-          for (let i = 0; i < this.shipnamearr.length; i++) {
-            var marker = new AMap.Marker({
-              position: this.shipnamearr[i]?.location, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-              map: this.map,
 
-              content: `<img src=${require("../assets/ship.png")} />`,
-              offset: new AMap.Pixel(-32.5, -20),
-            });
-
-            marker.on("mouseover", (mapEvent) => {
-              // if (this.infoWindow) {
-              //   this.infoWindow.close();
-              // }
-              if (mapEvent.originEvent.target.className !== "marker") return;
-              if (this.infoWindow && mapEvent.originEvent.target.dataset.id) {
-                this.infoWindow.close();
-              }
-              var info = [];
-              info.push(`<div style="color:#000;font-size:10px">${mapEvent.originEvent.target.dataset.id}</div>`);
-              this.infoWindow = new AMap.InfoWindow({
-                offset: new AMap.Pixel(11, -9),
-                content: info.join(""), //使用默认信息窗体框样式，显示信息内容
-              });
-              if (mapEvent.originEvent.target.dataset.id) {
-                this.infoWindow.open(this.map, mapEvent.target.getPosition());
-              }
-            });
-            // marker.on('mouseout', () => {
-
-            // this.infoWindow.close();
-
-            // })
-
-            // 将创建的点标记添加到已有的地图实例：
-            this.map.add([marker]);
-          }
         })
         .catch((e) => {
           console.log(e);
