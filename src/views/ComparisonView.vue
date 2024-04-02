@@ -55,24 +55,24 @@ export default {
     setInterval(() => {
       this.currentTime();
     }, 500);
-    if (this.$store.state.theme == "light") {
-      this.echartsData.forEach((item) => {
-        item.color = "black";
-        this.tempType(item);
-      });
-    } else {
-      this.echartsData.forEach((item) => {
-        item.color = "white";
-        this.tempType(item);
-      });
-    }
+    // if (this.$store.state.theme == "light") {
+    //   this.echartsData.forEach((item) => {
+    //     item.color = "black";
+    //     this.tempType(item);
+    //   });
+    // } else {
+    //   this.echartsData.forEach((item) => {
+    //     item.color = "white";
+    //     this.tempType(item);
+    //   });
+    // }
   },
   methods: {
     back() {
       if (typeof this.last == "undefined") {
         this.$router.push("/");
       } else {
-        this.$router.push({ path: "/conter", query: { name: this.now, last: this.last ,con:this.$route.query.con} });
+        this.$router.push({ path: "/conter", query: { name: this.now, last: this.last, con: this.$route.query.con } });
       }
     },
     tempType(item) {
@@ -84,11 +84,14 @@ export default {
         title: {
           text: "两天内的数据对比",
           textStyle: {
-            color: item.color,
+            color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
           },
         },
         legend: {
           data: item.name,
+          textStyle: {
+            color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
+          },
         },
         grid: {
           top: "5%",
@@ -103,18 +106,18 @@ export default {
             //x轴文字的配置
             show: true,
             textStyle: {
-              color: item.color,
+              color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
             },
           },
           axisLine: {
             show: true,
             lineStyle: {
-              color: item.color,
+              color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
             },
           },
           splitLine: {
             lineStyle: {
-              color: item.color,
+              color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
             },
           },
         },
@@ -124,18 +127,18 @@ export default {
             //x轴文字的配置
             show: true,
             textStyle: {
-              color: item.color,
+              color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
             },
           },
           axisLine: {
             show: true,
             lineStyle: {
-              color: item.color,
+              color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
             },
           },
           splitLine: {
             lineStyle: {
-              color: item.color,
+              color: this.$store.state.theme == "light" ? "#36366f" : "#fff",
             },
           },
         },
@@ -175,9 +178,9 @@ export default {
       }
       var strDate = year + "-" + dateArr[0] + "-" + dateArr[1];
 
-            //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
-            //this.date = strDate;
-            var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
+      //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
+      //this.date = strDate;
+      var strtime = dateArr[2] + ":" + dateArr[3] + ":" + dateArr[4];
 
       var week = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
       var strDate1 = year + "/" + dateArr[0] + "/" + dateArr[1];
@@ -216,7 +219,7 @@ export default {
     newtheme: {
       handler(val) {
         if (val == "light") {
-          this.echartsData.color = "black";
+          this.echartsData.color = "white";
           this.tempType(this.echartsData);
         } else {
           this.echartsData.color = "white";
@@ -234,22 +237,22 @@ export default {
   width: 100%;
   color: white;
   position: absolute;
-  top:  114px;
+  top: 114px;
   display: flex;
 }
 
 .black {
-    color: #0a1720;
+  color: #0a1720;
 }
 
 .light {
-    color: white
+  color: white;
 }
 
 #charts {
-    width: 70%;
-    height: 75%;
-    margin: 2% auto;
-    border: 1px solid #0a1720;
+  width: 70%;
+  height: 75%;
+  margin: 2% auto;
+  border: 1px solid transparent;
 }
 </style>

@@ -584,7 +584,7 @@ export default {
   width: 71%;
   height: 90%;
   border: 1px solid #98e7fc;
-  background: #07365d !important;
+  background: #07365d ;
   box-sizing: border-box;
   padding: 1%;
 }
