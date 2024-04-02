@@ -369,7 +369,7 @@ export default {
               map: this.map,
 
               content: `<img src=${require("../assets/ship.png")} />`,
-              offset: new AMap.Pixel(0, 0),
+              offset: new AMap.Pixel(-32.5, -20),
             });
 
             marker.on("mouseover", (mapEvent) => {
