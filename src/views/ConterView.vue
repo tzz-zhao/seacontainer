@@ -106,7 +106,7 @@ export default {
           series: { data: [], type: "line" },
           xAxisData: [],
           yAxis: { name: "°C", type: "value", min: null, max: null, interval: null },
-          pieces: { gt: 0 },
+          pieces: { min: -50, max: 4 },
           lineStyle: {},
           color: "white",
         },
@@ -116,7 +116,7 @@ export default {
           series: { data: [], type: "line" },
           xAxisData: [],
           yAxis: { name: "%rh", type: "value", min: null, max: null },
-          pieces: { gt: 80 },
+          pieces: { min: 65, max: 98 },
           lineStyle: {},
           color: "white",
         },
@@ -126,7 +126,7 @@ export default {
           series: { data: [], type: "line" },
           xAxisData: [],
           yAxis: { type: "category", data: ["閉", "開"] },
-          pieces: { gt: 0 },
+          pieces: { min: 0, max: 1 },
           lineStyle: {},
           color: "white",
         },
@@ -136,7 +136,7 @@ export default {
           series: { data: [], type: "line" },
           xAxisData: [],
           yAxis: { name: "g", type: "value", min: null, max: null, interval: null },
-          pieces: { gt: 2 },
+          pieces: { min: 0.05, max: 0.2 },
           lineStyle: {},
           color: "white",
         },
@@ -378,14 +378,17 @@ export default {
           hoverLink: false,
           pieces: [
             {
-              gt: item.pieces.gt,
-              lte: 100,
+              lt: item.pieces.min,
               color: "rgba(250,0,0,0.5)",
             },
             {
-              lt: item.pieces.gt,
-              glt: -100,
+              gte: item.pieces.min,
+              lte: item.pieces.max,
               color: "rgba(57, 100, 145, 0.5)",
+            },
+            {
+              gt: item.pieces.max,
+              color: "rgba(250,0,0,0.5)",
             },
           ],
         },
@@ -584,7 +587,7 @@ export default {
   width: 71%;
   height: 90%;
   border: 1px solid #98e7fc;
-  background: #07365d ;
+  background: #07365d;
   box-sizing: border-box;
   padding: 1%;
 }
