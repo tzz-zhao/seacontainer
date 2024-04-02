@@ -738,6 +738,7 @@ body {
 
 .hull>div {
   width: 31%;
+  margin-left: 4%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -746,7 +747,7 @@ body {
   overflow: hidden
 }
 .hull>div:nth-child(1){
-  justify-content: flex-start;
+  display: block;
 }
 
 .underline {
