@@ -106,8 +106,8 @@
                         <div v-show="typeof (item.atd) != 'undefined'">
                             ATD {{ item?.atd }}
                         </div>
-                        <div style="font-size: 18px;font-weight: 600;">
-                            <img src="../assets/Check-one.svg" alt="" style="position: absolute;left: -10px;top: 44px;">
+                        <div style="font-size: 18px;font-weight: 600;position: relative;padding-left: 10px;">
+                            <img src="../assets/Check-one.svg" alt="" style="position: absolute;left: -19px;top: 3px;">
                             {{ item?.portname_en }}
                         </div>
                         <div>
@@ -791,7 +791,7 @@ div::-webkit-scrollbar-corner {
 }
 
 .track {
-    position: relative;
+    /* position: relative; */
     padding-top: 15px;
     border-left: 1px solid #fff;
     margin-left: 15px;
