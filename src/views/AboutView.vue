@@ -67,7 +67,10 @@
             </svg>
             <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: inline-block" :title="receive">船舶名：{{ this.receive }}</span>
           </div>
-          <span>移動</span>
+          <span v-if=" this.navStatus==0 ">移動</span>
+          <span v-if=" this.navStatus==1 ">錨泊</span>
+          <span v-if=" this.navStatus==5 ">係留</span>
+          <span v-if=" this.navStatus!== 0 && this.navStatus !== 1 && this.navStatus !== 5 ">その他</span>
         </div>
         <div class="titleSec">
           <div>
@@ -168,6 +171,7 @@ export default {
       end: [],
       locationdata: locationdata,
       msi: "",
+      navStatus:''
     };
   },
   components: {
@@ -226,6 +230,7 @@ export default {
       this.ship.forEach((item) => {
         if (item.nameEn == this.receive) {
           this.Trajectoryinformation = item;
+          this.navStatus=item.navStatus
         }
       });
       console.log(this.Trajectoryinformation, "右侧信息");
