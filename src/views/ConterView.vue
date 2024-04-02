@@ -106,8 +106,7 @@ export default {
           series: { data: [], type: "line" },
           xAxisData: [],
           yAxis: { name: "°C", type: "value"},
-          pieces: { min: -50, max: 4 },
-          lineStyle: {},
+          pieces: { min: 0, max: 4 },
           color: "white",
         },
         {
@@ -117,7 +116,6 @@ export default {
           xAxisData: [],
           yAxis: { name: "%rh", type: "value" },
           pieces: { min: 65, max: 98 },
-          lineStyle: {},
           color: "white",
         },
         {
@@ -127,7 +125,6 @@ export default {
           xAxisData: [],
           yAxis: { type: "category", data: ["閉", "開"] },
           pieces: { min: 0, max: 1 },
-          lineStyle: {},
           color: "white",
         },
         {
@@ -137,7 +134,6 @@ export default {
           xAxisData: [],
           yAxis: { name: "g", type: "value" },
           pieces: { min: 0.05, max: 0.2 },
-          lineStyle: {},
           color: "white",
         },
       ],
@@ -339,9 +335,8 @@ export default {
               color: item.color,
             },
           },
-          axisLine: {
-            show: true,
-            lineStyle: item.lineStyle,
+          axisTick:{
+            show:false
           },
           splitLine: {
             lineStyle: {
@@ -417,12 +412,6 @@ export default {
       sensorTimeDate.forEach((item) => {
         this.echartsData.forEach((item1) => {
           if (item.equipmentType === item1.type) {
-            if (item.value < 0) {
-              item1.lineStyle.color = "red";
-              console.log(item.equipmentName);
-            } else {
-              item1.lineStyle.color = "white";
-            }
             if (item.equipmentType == "open") {
               item1.series.data.push(item.value ? 1 : 0);
             } else if (item.equipmentType == "humidity") {
