@@ -95,12 +95,12 @@
           <div>
             <div>
               <div v-for="(item, index) in this.Trajectorydata.status" :key="index">
-                <div v-if="item.descriptionCn=='提箱'">提箱</div>
-                <div v-if="item.descriptionCn=='进场'">进场</div>
-                <div v-if="item.descriptionCn=='装货'">装货</div>
-                <div v-if="item.descriptionCn=='卸货'">卸货</div>
-                <div v-if="item.descriptionCn=='提货'">提货</div>
-                <div v-if="item.descriptionCn=='还箱'">还箱</div>
+                <div v-if="item.descriptionCn=='提箱'">コンテナ出庫</div>
+                <div v-if="item.descriptionCn=='进场'">コンテナ入庫</div>
+                <div v-if="item.descriptionCn=='装货'">積込</div>
+                <div v-if="item.descriptionCn=='卸货'">荷卸</div>
+                <div v-if="item.descriptionCn=='提货'">引取</div>
+                <div v-if="item.descriptionCn=='还箱'">コンテナ返却</div>
                 <div>{{ item.eventTime }}</div>
               </div>
             </div>
