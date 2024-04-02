@@ -102,7 +102,7 @@
 }
 
 .shipsearch {
-  border: 1px solid #333 !important;
+  border: 1px solid #ebebeb !important;
 }
 
 .shipsearch svg {
@@ -185,7 +185,7 @@
 }
 
 .list-search{
-  border: 1px solid #333 !important;
+  border: 1px solid #ebebeb !important;
   background-color: #fff;
 }
 
@@ -212,8 +212,7 @@
 
 .go-back{
   color: #36366f !important;
-  font-family: PingFang SC;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16.8px;
+}
+.track{
+  border-left: 1px solid #ebebeb !important;
 }
