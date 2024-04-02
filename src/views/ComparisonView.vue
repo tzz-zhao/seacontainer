@@ -33,6 +33,7 @@ export default {
         value1: [],
         value2: [],
         color: "white",
+        title:"",
       },
       date: "",
       time: "",
@@ -82,7 +83,7 @@ export default {
       var option;
       option = {
         title: {
-          text: "两天内的数据对比",
+          text: item.title,
           textStyle: {
             color: item.color,
           },
@@ -146,7 +147,7 @@ export default {
             stack: "Total",
             data: item.value1,
             lineStyle: {
-              color: "blue",
+              color: "rgba(21, 241, 219, 1)",
             },
           },
           {
@@ -191,6 +192,7 @@ export default {
     dispose() {
       sensor.forEach((item) => {
         if (item.equipmentName == this.name) {
+          this.echartsData.title = item.equipmentName;
           if (this.echartsData.name.indexOf(item.updateTime.split(" ")[0].slice(-5)) == -1) {
             this.echartsData.name.push(item.updateTime.split(" ")[0].slice(-5));
           }

@@ -3,7 +3,7 @@
     <HeadersBox></HeadersBox>
     <div class="main">
       <div class="mainleft">
-        <div class="leftbox">
+        <div class="leftbox" style="min-height: 393px;min-width: 395px;">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -30,7 +30,7 @@
           </div>
           <div id="shipbar" :style="myChartStyle"></div>
         </div>
-        <div class="leftbotbox">
+        <div class="leftbotbox" style="min-height: 393px;min-width: 395px;">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -78,7 +78,7 @@
       </div>
       <div class="maincenter" id="container"></div>
       <div class="mainleft">
-        <div class="leftbox">
+        <div class="leftbox" style="min-height: 393px;min-width: 395px;">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />
@@ -118,7 +118,7 @@
             </div>
           </div>
         </div>
-        <div class="leftbotbox">
+        <div class="leftbotbox" style="min-height: 393px;min-width: 395px;">
           <div class="leftboxtitle">
             <div class="arrows1">
               <img src="../assets/矩形备份 8.svg" alt="" style="width: 100%" />

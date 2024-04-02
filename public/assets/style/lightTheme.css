@@ -150,8 +150,14 @@
   line-height: 16.8px;
 }
 
-.listArticle,
-.titleSec {
+.listArticle {
+  color: #36366f !important;
+  font-family: PingFang SC;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.8px;
+}
+.container-box > .titleSec{
   color: #36366f !important;
   font-family: PingFang SC;
   font-size: 12px;
