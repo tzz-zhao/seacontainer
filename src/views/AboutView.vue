@@ -337,17 +337,18 @@ export default {
         plugins: ["AMap.Scale"], //需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
       })
         .then((AMap) => {
+          let mapcenter = this.patharr[ parseInt(this.patharr.length / 2)];
           this.map = new AMap.Map("container", {
             lang: "en",
             // 设置地图容器id
             viewMode: "3D", // 是否为3D地图模式
             zoom: 2, // 初始化地图级别
-            center: [116.397428, 39.90923], // 初始化地图中心点位置
+            center: mapcenter, // 初始化地图中心点位置
           });
           // console.log("123==>", this.path);
 
           if (this.patharr.length > 0) {
-          
+
             // this.polyline = new AMap.Polyline({
             //   path: this.patharr, // 设置轨迹线的坐标点数组
             //   strokeColor: strcolor, // 线颜色
@@ -407,29 +408,37 @@ export default {
                   showDir: true, // 显示方向箭头
                 });
                 this.polyline.setMap(this.map);
-                // this.polyline.setOptions({ strokeColor: '#3366FF' }); // 前半段路径颜色为蓝色
-                // this.polyline.setPath(pathFront.slice(0, count));
+                this.polyline.setOptions({ strokeColor: '#3366FF' }); // 前半段路径颜色为蓝色
+                this.polyline.setPath(pathFront.slice(0, count));
                 marker.setPosition(this.patharr[count]);
+                // this.map.setFitView(this.marker); //视野跟随标点移动
               } else {
+
+                // 更新第二段路径
+                // if (this.polyline1) {
+                //     this.polyline1.setMap(null); // 从地图上移除第二段路径
+                // }
                 this.polyline1 = new AMap.Polyline({
                   path: pathBack, // 设置轨迹线的坐标点数组
-                  strokeColor: '#ccc', // 线颜色
+                  strokeColor: '#80c5ba', // 线颜色
                   strokeWeight: 4, // 线宽度
-                  // strokeOpacity: 1, // 线透明度
-                  // strokeStyle: "solid", // 线样式
+                  strokeStyle: "dashed", // 线样式
+                  lineDash: [5, 20], // 设置虚线样式
                   showDir: true, // 显示方向箭头
                 });
                 this.polyline1.setMap(this.map);
+
+
               }
               // if (marker) {
               //     marker.setPosition(newPosition); // 更新标记位置
               //   }
-              var path = this.patharr.slice(0, count);
-              this.polyline.setPath(path);
+              // var path = this.patharr.slice(0, count);
+              // this.polyline.setPath(path);
               // 将创建的点标记添加到已有的地图实例：
               this.map.add([marker]);
 
-              this.polyline.setPath(path);
+              // this.polyline.setPath(path);
 
             }, 0.01);
           }
