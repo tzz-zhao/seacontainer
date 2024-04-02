@@ -61,7 +61,7 @@
 
             <div>
               <div class="shipmessage" v-for="(item, index) in shipnamearr" :key="index">
-                <div class="messageson" style="margin-left: 10px;">
+                <div class="messageson" style="margin-left: 10px;" :title="item.name">
                   {{ item.name }}
                 </div>
                 <div class="messageson">
@@ -147,7 +147,7 @@
             </div>
             <div style="overflow: auto;height: 250px;">
               <div class="hull" v-for="(item, index) in freightarr" :key="index">
-                <div>
+                <div :title="item.billNumber">
                   {{ item.billNumber }}
                 </div>
                 <div>
@@ -738,6 +738,7 @@ body {
 
 .hull>div {
   width: 31%;
+  margin-left: 4%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -746,7 +747,7 @@ body {
   overflow: hidden
 }
 .hull>div:nth-child(1){
-  justify-content: flex-start;
+  display: block;
 }
 
 .underline {

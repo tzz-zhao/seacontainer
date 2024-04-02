@@ -15,7 +15,7 @@
       </div>
       
       
-      <el-switch @change="changeHandler" class="el-switch-headers" style="position: absolute; right: 50px; bottom: 0" v-model="themeText" > </el-switch>
+      <el-switch @change="changeHandler" class="el-switch-headers" style="position: absolute; right: 50px; bottom: 20px" v-model="themeText" > </el-switch>
     </div>
   </div>
 </template>
