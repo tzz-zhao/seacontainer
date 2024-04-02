@@ -131,7 +131,7 @@ export default {
           color: "white",
         },
         {
-          title: "振動 g",
+          title: "振動 G",
           type: "vibration",
           series: { data: [], type: "line" },
           xAxisData: [],
