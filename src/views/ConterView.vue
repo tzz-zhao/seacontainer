@@ -128,11 +128,11 @@ export default {
           color: "white",
         },
         {
-          title: "振動 g",
+          title: "振動 G",
           type: "vibration",
           series: { data: [], type: "line" },
           xAxisData: [],
-          yAxis: { name: "g", type: "value" },
+          yAxis: { name: "G", type: "value" },
           pieces: { min: 0.05, max: 0.2 },
           color: "white",
         },

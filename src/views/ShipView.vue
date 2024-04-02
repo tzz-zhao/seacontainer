@@ -77,7 +77,10 @@
                             style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;display: inline-block;"
                             :title="receive">船舶名：{{ this.receive }}</span>
                     </div>
-                    <span>移動</span>
+                    <span v-if="this.navStatus == 0">移動</span>
+                    <span v-if="this.navStatus == 1">錨泊</span>
+                    <span v-if="this.navStatus == 5">係留</span>
+                    <span v-if="this.navStatus !== 0 && this.navStatus !== 1 && this.navStatus !== 5">その他</span>
                 </div>
                 <div class="titleSec">
                     <div>
@@ -87,10 +90,10 @@
                     <div>
                         <svg width="61" height="10" viewBox="0 0 61 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="Group 39">
-                                <line id="Line 1" x1="6.55671e-08" y1="9.05078" x2="60" y2="9.05079" :stroke="$store.state.theme === 'black' ? 'white':'#36366F'"
-                                    stroke-width="1.5" />
-                                <path id="Line 2" d="M60.0001 8.99998L52.0127 1.46091" :stroke="$store.state.theme === 'black' ? 'white':'#36366F'"
-                                    stroke-width="1.5" />
+                                <line id="Line 1" x1="6.55671e-08" y1="9.05078" x2="60" y2="9.05079"
+                                    :stroke="$store.state.theme === 'black' ? 'white' : '#36366F'" stroke-width="1.5" />
+                                <path id="Line 2" d="M60.0001 8.99998L52.0127 1.46091"
+                                    :stroke="$store.state.theme === 'black' ? 'white' : '#36366F'" stroke-width="1.5" />
                             </g>
                         </svg>
 
@@ -106,8 +109,8 @@
                         <div v-show="typeof (item.atd) != 'undefined'">
                             ATD {{ item?.atd }}
                         </div>
-                        <div style="font-size: 18px;font-weight: 600;">
-                            <img src="../assets/Check-one.svg" alt="" style="position: absolute;left: -10px;top: 44px;">
+                        <div style="font-size: 18px;font-weight: 600;position: relative;padding-left: 10px;">
+                            <img src="../assets/Check-one.svg" alt="" style="position: absolute;left: -19px;top: 3px;">
                             {{ item?.portname_en }}
                         </div>
                         <div>
@@ -176,6 +179,7 @@ export default {
             msi: "",
 
             track: [],
+            navStatus: ''
         };
     },
     components: {
@@ -236,6 +240,7 @@ export default {
             this.ship.forEach((item) => {
                 if (item.nameEn == this.receive) {
                     this.Trajectoryinformation = item;
+                    this.navStatus = item.navStatus
                 }
             });
             console.log(this.Trajectoryinformation, "右侧信息");
@@ -355,7 +360,18 @@ export default {
                             showDir: true, // 显示方向箭头
                         });
                         this.polyline.setMap(this.map);
+                      
+                        var count = 0;
+                        var timer = setInterval( ()=> {
+                            count++;
+                            if (count >= this.patharr.length) {
+                                clearInterval(timer);
+                            }
+                            var path = this.patharr.slice(0, count);
+                            this.polyline.setPath(path);
+                        }, 0.01);
                     }
+                   
 
                     // 自动调整地图视野，使整条轨迹可见
                     this.map.setFitView(this.polyline);
@@ -617,7 +633,7 @@ export default {
     display: flex;
     color: #fff;
     font-size: 14px;
-   
+
 }
 
 .messageson {
@@ -626,7 +642,7 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 10px;
-   
+
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -670,16 +686,16 @@ export default {
 }
 
 .titleSec {
-  width: 94%;
-  margin: 0 3%;
-  font-family: PingFang SC;
-  font-size: 12px;
-  display: flex;
-  font-weight: 500;
-  line-height: 16.8px;
-  align-items: center;
-  padding-bottom: 2%;
-  border-bottom: 1px solid #d0d0d0;
+    width: 94%;
+    margin: 0 3%;
+    font-family: PingFang SC;
+    font-size: 12px;
+    display: flex;
+    font-weight: 500;
+    line-height: 16.8px;
+    align-items: center;
+    padding-bottom: 2%;
+    border-bottom: 1px solid #d0d0d0;
 }
 
 .titleSec>div {
@@ -791,7 +807,7 @@ div::-webkit-scrollbar-corner {
 }
 
 .track {
-    position: relative;
+    /* position: relative; */
     padding-top: 15px;
     border-left: 1px solid #fff;
     margin-left: 15px;
