@@ -602,7 +602,7 @@ export default {
   display: flex;
   color: #fff;
   font-size: 14px;
-  opacity: 0.8;
+
 }
 
 .messageson {
@@ -611,7 +611,7 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 10px;
-  opacity: 0.8;
+ 
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -654,12 +654,15 @@ export default {
   margin-right: 10px;
 }
 
+
 .titleSec {
   width: 94%;
   margin: 0 3%;
-  font-family: Microsoft YaHei;
-  font-size: 14px;
+  font-family: PingFang SC;
+  font-size: 12px;
   display: flex;
+  font-weight: 500;
+  line-height: 16.8px;
   align-items: center;
   padding-bottom: 2%;
   border-bottom: 1px solid #d0d0d0;
