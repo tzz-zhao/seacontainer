@@ -179,7 +179,7 @@ export default {
             msi: "",
 
             track: [],
-            navStatus:''
+            navStatus: ''
         };
     },
     components: {
@@ -240,7 +240,7 @@ export default {
             this.ship.forEach((item) => {
                 if (item.nameEn == this.receive) {
                     this.Trajectoryinformation = item;
-                    this.navStatus=item.navStatus
+                    this.navStatus = item.navStatus
                 }
             });
             console.log(this.Trajectoryinformation, "右侧信息");
@@ -360,7 +360,18 @@ export default {
                             showDir: true, // 显示方向箭头
                         });
                         this.polyline.setMap(this.map);
+                      
+                        var count = 0;
+                        var timer = setInterval( ()=> {
+                            count++;
+                            if (count >= this.patharr.length) {
+                                clearInterval(timer);
+                            }
+                            var path = this.patharr.slice(0, count);
+                            this.polyline.setPath(path);
+                        }, 0.01);
                     }
+                   
 
                     // 自动调整地图视野，使整条轨迹可见
                     this.map.setFitView(this.polyline);
