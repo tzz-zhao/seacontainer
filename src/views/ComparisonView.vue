@@ -3,12 +3,13 @@
     <HeadersBox />
     <div class="comparison">
       <div style="cursor: pointer; z-index: 999" class="go-back" @click="back">
-        <div style="display: inline-block; position: absolute; left: 20px; top: -80px; display: flex; align-items: center; justify-content: center">
-          <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2398" width="16" height="16">
+        <div
+          style="display: inline-block; position: absolute; left: 20px; top: -80px; display: flex; align-items: center; justify-content: center">
+          <svg t="1711938765168" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="2398" width="16" height="16">
             <path
               d="M588.468659 257.265591H123.316451L371.227243 58.55359a31.947267 31.947267 0 1 0-39.614611-49.837737l-319.472671 255.578137v11.501016a30.669376 30.669376 0 0 0 0 4.472617v3.194727a30.669376 30.669376 0 0 0 0 4.472617v11.501016l319.472671 255.578137a31.947267 31.947267 0 1 0 40.253556-49.837737L123.316451 321.160125h465.152208C792.292223 321.160125 958.418011 464.283881 958.418011 640.632795s-166.125789 319.47267-369.949352 319.472671H95.841801a31.947267 31.947267 0 0 0 0 63.894534h492.626858C830.628943 1024 1022.312545 852.123703 1022.312545 640.632795s-191.683602-383.367205-433.843886-383.367204z"
-              :fill="$store.state.theme === 'black' ? '#fff' : '#36366f'"
-              p-id="2399"></path>
+              :fill="$store.state.theme === 'black' ? '#fff' : '#36366f'" p-id="2399"></path>
           </svg>
         </div>
         <div style="display: inline-block; position: absolute; left: 39px; top: -80px; margin-left: 5px">戻る</div>
@@ -29,11 +30,12 @@ export default {
       name: "",
       echartsData: {
         xAxisData: [],
+        yAxis: { name: "", type: "" },
         name: [],
         value1: [],
         value2: [],
         color: "white",
-        title:"",
+        title: "",
       },
       date: "",
       time: "",
@@ -56,17 +58,6 @@ export default {
     setInterval(() => {
       this.currentTime();
     }, 500);
-    // if (this.$store.state.theme == "light") {
-    //   this.echartsData.forEach((item) => {
-    //     item.color = "black";
-    //     this.tempType(item);
-    //   });
-    // } else {
-    //   this.echartsData.forEach((item) => {
-    //     item.color = "white";
-    //     this.tempType(item);
-    //   });
-    // }
   },
   methods: {
     back() {
@@ -123,7 +114,9 @@ export default {
           },
         },
         yAxis: {
-          type: "value",
+          namr: item.yAxis.name,
+          type: item.yAxis.type,
+          data: item.yAxis.data,
           axisLabel: {
             //x轴文字的配置
             show: true,
@@ -147,7 +140,6 @@ export default {
           {
             name: item.name[0],
             type: "line",
-            stack: "Total",
             data: item.value1,
             lineStyle: {
               color: "rgba(21, 241, 219, 1)",
@@ -156,7 +148,6 @@ export default {
           {
             name: item.name[1],
             type: "line",
-            stack: "Total",
             data: item.value2,
             lineStyle: {
               color: "orange",
@@ -203,9 +194,18 @@ export default {
             this.echartsData.xAxisData.push(item.updateTime.split(" ")[1]);
           }
           if (this.echartsData.name[0] == item.updateTime.split(" ")[0].slice(-5)) {
-            this.echartsData.value1.push(item.value);
+            item.equipmentType == "humidity"?this.echartsData.value1.push(parseFloat(item.value * 100).toFixed(0)) : this.echartsData.value1.push(item.value);
           } else {
-            this.echartsData.value2.push(item.value);
+            item.equipmentType == "humidity"?this.echartsData.value2.push(parseFloat(item.value * 100).toFixed(0)) : this.echartsData.value2.push(item.value);
+          }
+          if (item.equipmentType == "temperature") {
+            this.echartsData.yAxis = { name: "℃", type: "value" };
+          } else if (item.equipmentType == "humidity") {
+            this.echartsData.yAxis = { name: "%", type: "value" };
+          } else if (item.equipmentType == "open") {
+            this.echartsData.yAxis = { name: "", type: "category", data: ["閉", "開"] };
+          } else {
+            this.echartsData.yAxis = { name: "g", type: "value" };
           }
         }
       });
