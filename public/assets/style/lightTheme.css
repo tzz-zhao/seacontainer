@@ -158,6 +158,9 @@
   font-weight: 500;
   line-height: 16.8px;
 }
+.titleSec>div{
+  color:#36366f !important;
+}
 
 /* .title svg {
   color:  !important;
@@ -185,6 +188,9 @@
 
 .list-search input{
   background: #fff !important;
+}
+.list-search button{
+  background-color: #4F4BFF !important;
 }
 
 

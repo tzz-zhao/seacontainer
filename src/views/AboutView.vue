@@ -44,7 +44,7 @@
               <div class="messageson">
                 {{ item.number }}
               </div>
-              <div class="messageson" :style="getColor(item)" v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
+              <div class="messageson" :style="getColor(item)" v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '異常'"></div>
               <div class="messageson underline" style="cursor: pointer" :data-v="item.number" @click="gosensor">確認</div>
             </div>
           </div>
@@ -85,12 +85,12 @@
         <div class="listArticle">
           <div>
             <img src="../assets/Check-one.svg" alt="" />
-            <span>接货地：{{ Trajectorydata.receipt?.name }}</span>
+            <span>集荷地：{{ Trajectorydata.receipt?.name }}</span>
           </div>
           <div></div>
           <div>
             <img src="../assets/Check-one.svg" alt="" />
-            <span>起运港：{{ Trajectorydata.receipt?.name }}</span>
+            <span>出発港：{{ Trajectorydata.receipt?.name }}</span>
           </div>
           <div>
             <div>
@@ -102,7 +102,7 @@
           </div>
           <div>
             <img src="../assets/Check.svg" alt="" />
-            <span>到达港：{{ Trajectorydata.delivery?.name }}</span>
+            <span>到着港：{{ Trajectorydata.delivery?.name }}</span>
           </div>
         </div>
       </div>
@@ -615,6 +615,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 12px;
 }
 
 .active {

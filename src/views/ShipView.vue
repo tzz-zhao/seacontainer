@@ -50,7 +50,7 @@
                                 {{ item.number }}
                             </div>
                             <div class="messageson" :style="getColor(item)"
-                                v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '异常'"></div>
+                                v-text="item.status === 0 ? '正常' : item.status === 1 ? '警告 ' : '異常'"></div>
                             <div class="messageson underline" style="cursor: pointer" :data-v="item.number"
                                 @click="gosensor">確認
                             </div>
@@ -95,13 +95,13 @@
                 <div class="listArticle" >
                     <div v-for="(item, index) in this.track" :key="index"  class="track">
                         <div v-show="typeof (item.atd) != 'undefined'">
-                            离泊       {{ item?.atd }}
+                            出港       {{ item?.atd }}
                         </div>
                         <div style="font-size: 18px;font-weight: 600;">
                            <img src="../assets/Check-one.svg" alt="" style="position: absolute;left: -10px;top: 44px;"> {{ item?.portname_en }}
                         </div>
                         <div>
-                            到达      {{ item?.ata }}
+                            到着      {{ item?.ata }}
                         </div>
                     </div>
                 </div>
@@ -620,6 +620,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 12px;
 }
 
 .active {
@@ -778,5 +779,8 @@ div::-webkit-scrollbar-corner {
 }
 .track{
     position: relative;padding-top:15px ;border-left: 1px solid #fff;margin-left: 15px;padding-left: 8px;
+}
+.track>div{
+    line-height: 27px;
 }
 </style>
