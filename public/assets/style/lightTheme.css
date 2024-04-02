@@ -55,7 +55,7 @@
 }
 
 .shipsearch {
-  border: 1px solid #333 !important;
+  border: 1px solid #ebebeb !important;
 }
 
 .shipsearch svg {
@@ -113,7 +113,7 @@
 }
 
 .list-search{
-  border: 1px solid #333 !important;
+  border: 1px solid #ebebeb !important;
   background-color: #fff;
 }
 
@@ -136,4 +136,7 @@
 
 .go-back{
   color: #36366f !important;
+}
+.track{
+  border-left: 1px solid #ebebeb !important;
 }

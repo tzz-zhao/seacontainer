@@ -112,7 +112,7 @@
                 <span v-if="item.status == 1" style="color: yellow">警告</span><span v-if="item.status == 2"
                   style="color: red">異常</span>
               </div>
-              <div style="cursor: pointer" @click="sensoralarm" :data-v="item.equipmentName">
+              <div style="cursor: pointer" @click="sensoralarm" :data-v="item.equipmentName" class="underline">
                 確認
               </div>
             </div>
@@ -137,7 +137,7 @@
               </div>
               <input v-model="freightnumber" type="text" placeholder="BL番号を入力してください" class="searchtext" />
             </div>
-            <div class="searchbutton" @click="freightsearch">搜索</div>
+            <div class="searchbutton" @click="freightsearch">検索</div>
           </div>
           <div>
             <div class="hullNumber">

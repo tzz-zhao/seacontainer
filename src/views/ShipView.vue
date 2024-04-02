@@ -93,12 +93,12 @@
                     </div>
                 </div>
                 <div class="listArticle" >
-                    <div v-for="(item, index) in this.track" :key="index" style="position: relative;padding-top:15px ;border-left: 1px solid #fff;margin-left: 15px;padding-left: 8px;">
-                        <div v-if="typeof (item.atd) != 'undefined'">
+                    <div v-for="(item, index) in this.track" :key="index"  class="track">
+                        <div v-show="typeof (item.atd) != 'undefined'">
                             离泊       {{ item?.atd }}
                         </div>
                         <div style="font-size: 18px;font-weight: 600;">
-                           <img src="../assets/Check-one.svg" alt="" style="position: absolute;left: -10px;top: 44px;"> {{ item?.portname_cn }}
+                           <img src="../assets/Check-one.svg" alt="" style="position: absolute;left: -10px;top: 44px;"> {{ item?.portname_en }}
                         </div>
                         <div>
                             到达      {{ item?.ata }}
@@ -780,5 +780,8 @@ div::-webkit-scrollbar-thumb:hover {
 
 div::-webkit-scrollbar-corner {
     background: #179a16;
+}
+.track{
+    position: relative;padding-top:15px ;border-left: 1px solid #fff;margin-left: 15px;padding-left: 8px;
 }
 </style>
